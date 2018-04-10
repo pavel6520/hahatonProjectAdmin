@@ -15,8 +15,8 @@ namespace hahatonProjectAdmin
     public partial class ConnectForm : Form
     {
         public MySqlConnection conn;
-        //private SendRepForm ReportForm;
-        //private SettingsForm SetForm;
+        private AdminPanelForm AdminPanel;
+        private SettingsForm SetForm;
         public string ConnectAdress;
         public string ConnectPort;
         public string NameDB;
@@ -56,7 +56,7 @@ namespace hahatonProjectAdmin
                     continue;
                 }
             }
-            /*if (!Program.IF.KeyExists("ConnSett", "Adress") || !Program.IF.KeyExists("ConnSett", "DBname") || !Program.IF.KeyExists("ConnSett", "Port"))//Проверка файла настроек
+            if (!Program.IF.KeyExists("ConnSett", "Adress") || !Program.IF.KeyExists("ConnSett", "DBname") || !Program.IF.KeyExists("ConnSett", "Port"))//Проверка файла настроек
             {
                 SetForm = new SettingsForm();
                 this.Hide();
@@ -66,7 +66,7 @@ namespace hahatonProjectAdmin
                     this.Show();
                 };
                 SetForm.ShowDialog();
-            }*/
+            }
         }
 
         private void ButtonConnect_Click(object sender, EventArgs e)
@@ -86,10 +86,14 @@ namespace hahatonProjectAdmin
                     if (conn.State == ConnectionState.Open)
                     {
                         login = TBLogin.Text;
-                        //ReportForm = new SendRepForm();
+                        AdminPanel = new AdminPanelForm();
                         this.Hide();
                         conn.Close();
-                        //ReportForm.Show();
+                        AdminPanel.FormClosing += (obj, arg) =>
+                        {
+                            Environment.Exit(0);
+                        };
+                        AdminPanel.Show();
                     }
                     else
                     {
@@ -103,18 +107,18 @@ namespace hahatonProjectAdmin
             }
             catch (Exception)
             {
-                MessageBox.Show("Не удалось подключится к базе данных. Проверьте настройки.\n", "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Не удалось подключится к базе данных. Проверьте настройки.", "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            /*SetForm = new SettingsForm();
+            SetForm = new SettingsForm();
 
             SetForm.FormClosing += (obj, arg) =>
             {
             };
-            SetForm.ShowDialog();*/
+            SetForm.ShowDialog();
         }
 
     }
