@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Llogin = new System.Windows.Forms.Label();
             this.Lpass = new System.Windows.Forms.Label();
             this.TBlogin = new System.Windows.Forms.TextBox();
@@ -75,7 +75,6 @@
             // 
             this.TBpass.Location = new System.Drawing.Point(121, 32);
             this.TBpass.Name = "TBpass";
-            this.TBpass.ReadOnly = true;
             this.TBpass.Size = new System.Drawing.Size(133, 20);
             this.TBpass.TabIndex = 3;
             // 
@@ -117,15 +116,15 @@
             this.TableIINN.AllowUserToDeleteRows = false;
             this.TableIINN.AllowUserToResizeColumns = false;
             this.TableIINN.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.TableIINN.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.TableIINN.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             this.TableIINN.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.TableIINN.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.INN,
             this.COmpName});
             this.TableIINN.Location = new System.Drawing.Point(12, 59);
             this.TableIINN.Name = "TableIINN";
-            this.TableIINN.Size = new System.Drawing.Size(444, 163);
+            this.TableIINN.Size = new System.Drawing.Size(443, 163);
             this.TableIINN.TabIndex = 7;
             // 
             // INN
@@ -168,7 +167,7 @@
             // 
             // BSave
             // 
-            this.BSave.Location = new System.Drawing.Point(179, 228);
+            this.BSave.Location = new System.Drawing.Point(380, 228);
             this.BSave.Name = "BSave";
             this.BSave.Size = new System.Drawing.Size(75, 23);
             this.BSave.TabIndex = 10;
@@ -180,7 +179,7 @@
             // 
             this.LErrTable.AutoSize = true;
             this.LErrTable.ForeColor = System.Drawing.Color.Red;
-            this.LErrTable.Location = new System.Drawing.Point(260, 233);
+            this.LErrTable.Location = new System.Drawing.Point(246, 233);
             this.LErrTable.Name = "LErrTable";
             this.LErrTable.Size = new System.Drawing.Size(128, 13);
             this.LErrTable.TabIndex = 11;
@@ -191,7 +190,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(574, 317);
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ClientSize = new System.Drawing.Size(467, 256);
             this.Controls.Add(this.LErrTable);
             this.Controls.Add(this.BSave);
             this.Controls.Add(this.DeleteTableLine);
@@ -204,6 +204,7 @@
             this.Controls.Add(this.TBlogin);
             this.Controls.Add(this.Lpass);
             this.Controls.Add(this.Llogin);
+            this.MaximizeBox = false;
             this.Name = "CreateUserForm";
             this.Text = "CreateUser";
             this.Load += new System.EventHandler(this.CreateUserForm_Load);

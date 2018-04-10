@@ -17,10 +17,8 @@ namespace hahatonProjectAdmin
         public MySqlConnection conn;
         private AdminPanelForm AdminPanel;
         private SettingsForm SetForm;
-        public string ConnectAdress;
-        public string ConnectPort;
-        public string NameDB;
         public string login;
+        private string ConnectStr;
 
         public ConnectForm()
         {
@@ -75,18 +73,17 @@ namespace hahatonProjectAdmin
             {
                 if (TBLogin.Text != "" && TBPass.Text != "")
                 {
-                    ConnectAdress = Program.IF.ReadINI("ConnSett", "Adress");
-                    NameDB = Program.IF.ReadINI("ConnSett", "DBname");
-                    ConnectPort = Program.IF.ReadINI("ConnSett", "Port");
-
-                    conn = new MySqlConnection("server=" + ConnectAdress + ";user=" + TBLogin.Text + ";database=" + NameDB + ";password=" + TBPass.Text + ";port=" + ConnectPort + ";");
+                    ConnectStr = "server=" + Program.IF.ReadINI("ConnSett", "Adress") + ";user=" + TBLogin.Text +
+                        ";database=" + Program.IF.ReadINI("ConnSett", "DBname") + ";password=" + TBPass.Text +
+                        ";port=" + Program.IF.ReadINI("ConnSett", "Port") + ";";
+                    conn = new MySqlConnection(ConnectStr);
 
                     conn.Open();
 
                     if (conn.State == ConnectionState.Open)
                     {
                         login = TBLogin.Text;
-                        AdminPanel = new AdminPanelForm();
+                        AdminPanel = new AdminPanelForm(ConnectStr);
                         this.Hide();
                         conn.Close();
                         AdminPanel.FormClosing += (obj, arg) =>

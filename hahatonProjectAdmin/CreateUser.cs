@@ -13,9 +13,12 @@ namespace hahatonProjectAdmin
 {
     public partial class CreateUserForm : Form
     {
-        public CreateUserForm()
+        private string ConnectStr;
+
+        public CreateUserForm(string str)
         {
             InitializeComponent();
+            ConnectStr = str;
         }
 
         private void CreateUserForm_Load(object sender, EventArgs e)
@@ -66,6 +69,7 @@ namespace hahatonProjectAdmin
             LErrTable.Hide();
             try
             {
+                //Program.ConnectForm.conn = new MySqlConnection(ConnectStr);
                 Program.ConnectForm.conn.Open();
             }
             catch (Exception)
@@ -79,57 +83,72 @@ namespace hahatonProjectAdmin
             {
                 com = new MySqlCommand("select distinct User from mysql.user", Program.ConnectForm.conn);
                 readed = com.ExecuteReader();
-
                 while (readed.Read())
                 {
                     if (TBlogin.Text == readed[0].ToString())
                     {
                         LerrLoginExist.Show();
+                        readed.Close();
                         Program.ConnectForm.conn.Close();
                         return;
                     }
                 }
-            }
+                readed.Close();
+                LerrLoginExist.Hide();
+
+                com = new MySqlCommand("show tables from project", Program.ConnectForm.conn);
+                readed = com.ExecuteReader();
+                while (readed.Read())
+                {
+                    for (int i = 0; i < TableIINN.RowCount; i++)
+                    {
+                        if (TableIINN.Rows[i].Cells[0].Value.ToString() == readed[0].ToString())
+                        {
+                            MessageBox.Show("ИНН компании " + TableIINN.Rows[i].Cells[1].Value.ToString() + " уже зарегистрирован.", "ИНН занят", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            readed.Close();
+                            Program.ConnectForm.conn.Close();
+                            return;
+                        }
+                    }
+                }
+                readed.Close();
+            /*}
             catch (MySqlException)
             {
-                MessageBox.Show("Ошибка доступа.");
+                Program.ConnectForm.conn.Close();
+                MessageBox.Show("У вас недостаточно прав. Обратитесь к администратору.", "Ошибка доступа", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            LerrLoginExist.Hide();
 
             try
-            {
+            {*/
                 for (int i = 0; i < TableIINN.RowCount; i++)
                 {
                     com = new MySqlCommand(
                         "CREATE TABLE project.`" + TableIINN.Rows[i].Cells[0].Value + "` (" +
-                        "Date date DEFAULT NULL, " +
-                        "FM1 int(11) DEFAULT NULL, " +
-                        "FM2 int(11) DEFAULT NULL, " +
-                        "FM3 decimal(10, 0) DEFAULT NULL, " +
-                        "GF1 int(11) DEFAULT NULL, " +
-                        "GF2 int(11) DEFAULT NULL, " +
-                        "GF3 decimal(10, 0) DEFAULT NULL, " +
-                        "CKR1 int(11) DEFAULT NULL, " +
-                        "CKR2 int(11) DEFAULT NULL, " +
-                        "CKR3 decimal(10, 0) DEFAULT NULL, " +
-                        "CPP1 int(11) DEFAULT NULL, " +
-                        "CPP2 int(11) DEFAULT NULL, " +
-                        "CPP3 decimal(10, 0) DEFAULT NULL, " +
-                        "CE1 int(11) DEFAULT NULL, " +
-                        "CE2 int(11) DEFAULT NULL, " +
-                        "CE3 decimal(10, 0) DEFAULT NULL);",
+                        "Date date DEFAULT NULL, " + 
+                        "FM1 int(11) DEFAULT NULL, FM2 int(11) DEFAULT NULL, FM3 decimal(10, 0) DEFAULT NULL, " +
+                        "GF1 int(11) DEFAULT NULL, GF2 int(11) DEFAULT NULL, GF3 decimal(10, 0) DEFAULT NULL, " +
+                        "CKR1 int(11) DEFAULT NULL, CKR2 int(11) DEFAULT NULL, CKR3 decimal(10, 0) DEFAULT NULL, " +
+                        "CPP1 int(11) DEFAULT NULL, CPP2 int(11) DEFAULT NULL, CPP3 decimal(10, 0) DEFAULT NULL, " +
+                        "CE1 int(11) DEFAULT NULL, CE2 int(11) DEFAULT NULL, CE3 decimal(10, 0) DEFAULT NULL);",
                         Program.ConnectForm.conn);
-                    //Отправить команду
+                    //MessageBox.Show(com.ExecuteNonQuery() + "");
+                    /*if(com.ExecuteNonQuery() != 0)
+                    {
+                        Program.ConnectForm.conn.Close();
+                        MessageBox.Show("У вас недостаточно прав. Обратитесь к администратору.\n\n\n" + (ConnectStr.Contains("pavel6520") ? ex + "" : ""), "Ошибка доступа", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }*/
+                    com.ExecuteNonQuery();
                 }
             }
-            catch (MySqlException)
+            catch (MySqlException ex)
             {
-                MessageBox.Show("Ошибка доступа.");
+                Program.ConnectForm.conn.Close();
+                MessageBox.Show("У вас недостаточно прав. Обратитесь к администратору.\n\n\n" + (ConnectStr.Contains("pavel6520") ? ex + "" : ""), "Ошибка доступа", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
-
             Program.ConnectForm.conn.Close();
         }
     }

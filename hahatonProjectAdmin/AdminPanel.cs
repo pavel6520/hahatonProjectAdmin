@@ -13,20 +13,23 @@ namespace hahatonProjectAdmin
     public partial class AdminPanelForm : Form
     {
         public CreateUserForm CreateUser;
+        private string ConnectStr;
 
-        public AdminPanelForm()
+        public AdminPanelForm(string str)
         {
             InitializeComponent();
+            ConnectStr = str;
         }
 
         private void BCreateUser_Click(object sender, EventArgs e)
         {
-            CreateUser = new CreateUserForm();
+            CreateUser = new CreateUserForm(ConnectStr);
             CreateUser.Show();
             Enabled = false;
             CreateUser.FormClosing += (obj, arg) =>
             {
                 Location = CreateUser.Location;
+                Activate();
                 Enabled = true;
             };
             CreateUser.Location = this.Location;
