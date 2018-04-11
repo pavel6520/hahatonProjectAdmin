@@ -36,14 +36,14 @@
             this.Bgenerate = new System.Windows.Forms.Button();
             this.LerrLoginExist = new System.Windows.Forms.Label();
             this.LerrLoginIncorrect = new System.Windows.Forms.Label();
-            this.TableIINN = new System.Windows.Forms.DataGridView();
+            this.TableINN = new System.Windows.Forms.DataGridView();
             this.INN = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.COmpName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AddTableLine = new System.Windows.Forms.Button();
             this.DeleteTableLine = new System.Windows.Forms.Button();
             this.BSave = new System.Windows.Forms.Button();
             this.LErrTable = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.TableIINN)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TableINN)).BeginInit();
             this.SuspendLayout();
             // 
             // Llogin
@@ -110,22 +110,22 @@
             this.LerrLoginIncorrect.Text = "Логин некорректный";
             this.LerrLoginIncorrect.Visible = false;
             // 
-            // TableIINN
+            // TableINN
             // 
-            this.TableIINN.AllowUserToAddRows = false;
-            this.TableIINN.AllowUserToDeleteRows = false;
-            this.TableIINN.AllowUserToResizeColumns = false;
-            this.TableIINN.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.TableIINN.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.TableIINN.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.TableIINN.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.TableINN.AllowUserToAddRows = false;
+            this.TableINN.AllowUserToDeleteRows = false;
+            this.TableINN.AllowUserToResizeColumns = false;
+            this.TableINN.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Silver;
+            this.TableINN.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.TableINN.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.TableINN.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.INN,
             this.COmpName});
-            this.TableIINN.Location = new System.Drawing.Point(12, 59);
-            this.TableIINN.Name = "TableIINN";
-            this.TableIINN.Size = new System.Drawing.Size(443, 163);
-            this.TableIINN.TabIndex = 7;
+            this.TableINN.Location = new System.Drawing.Point(12, 59);
+            this.TableINN.Name = "TableINN";
+            this.TableINN.Size = new System.Drawing.Size(443, 163);
+            this.TableINN.TabIndex = 7;
             // 
             // INN
             // 
@@ -196,7 +196,7 @@
             this.Controls.Add(this.BSave);
             this.Controls.Add(this.DeleteTableLine);
             this.Controls.Add(this.AddTableLine);
-            this.Controls.Add(this.TableIINN);
+            this.Controls.Add(this.TableINN);
             this.Controls.Add(this.LerrLoginIncorrect);
             this.Controls.Add(this.LerrLoginExist);
             this.Controls.Add(this.Bgenerate);
@@ -208,7 +208,7 @@
             this.Name = "CreateUserForm";
             this.Text = "CreateUser";
             this.Load += new System.EventHandler(this.CreateUserForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.TableIINN)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.TableINN)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -223,7 +223,7 @@
         private System.Windows.Forms.Button Bgenerate;
         private System.Windows.Forms.Label LerrLoginExist;
         private System.Windows.Forms.Label LerrLoginIncorrect;
-        private System.Windows.Forms.DataGridView TableIINN;
+        private System.Windows.Forms.DataGridView TableINN;
         private System.Windows.Forms.DataGridViewTextBoxColumn INN;
         private System.Windows.Forms.DataGridViewTextBoxColumn COmpName;
         private System.Windows.Forms.Button AddTableLine;

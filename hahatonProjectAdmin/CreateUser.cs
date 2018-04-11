@@ -23,7 +23,7 @@ namespace hahatonProjectAdmin
 
         private void CreateUserForm_Load(object sender, EventArgs e)
         {
-            TableIINN.Rows.Add();
+            TableINN.Rows.Add();
         }
 
         private void Bgenerate_Click(object sender, EventArgs e)
@@ -33,18 +33,18 @@ namespace hahatonProjectAdmin
 
         private void AddTableLine_Click(object sender, EventArgs e)
         {
-            TableIINN.Rows.Add();
+            TableINN.Rows.Add();
         }
 
         private void DeleteTableLine_Click(object sender, EventArgs e)
         {
-            foreach (DataGridViewRow row in TableIINN.SelectedRows)
+            foreach (DataGridViewRow row in TableINN.SelectedRows)
             {
-                TableIINN.Rows.Remove(row);
+                TableINN.Rows.Remove(row);
             }
-            if(TableIINN.RowCount == 0)
+            if(TableINN.RowCount == 0)
             {
-                TableIINN.Rows.Add();
+                TableINN.Rows.Add();
             }
         }
 
@@ -58,9 +58,9 @@ namespace hahatonProjectAdmin
             LerrLoginIncorrect.Hide();
             //Добавить проверку корректности логина
 
-            for (int i = 0; i < TableIINN.RowCount; i++)
+            for (int i = 0; i < TableINN.RowCount; i++)
             {
-                if(TableIINN.Rows[i].Cells[0].Value == null || TableIINN.Rows[i].Cells[1].Value == null)
+                if(TableINN.Rows[i].Cells[0].Value == null || TableINN.Rows[i].Cells[1].Value == null)
                 {
                     LErrTable.Show();
                     return;
@@ -102,11 +102,11 @@ namespace hahatonProjectAdmin
                 readed = com.ExecuteReader();
                 while (readed.Read())
                 {
-                    for (int i = 0; i < TableIINN.RowCount; i++)
+                    for (int i = 0; i < TableINN.RowCount; i++)
                     {
-                        if (TableIINN.Rows[i].Cells[0].Value.ToString() == readed[0].ToString())
+                        if (TableINN.Rows[i].Cells[0].Value.ToString() == readed[0].ToString())
                         {
-                            MessageBox.Show("ИНН компании " + TableIINN.Rows[i].Cells[1].Value.ToString() + " уже зарегистрирован.", "ИНН занят", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("ИНН компании " + TableINN.Rows[i].Cells[1].Value.ToString() + " уже зарегистрирован.", "ИНН занят", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             readed.Close();
                             Program.ConnectForm.conn.Close();
                             return;
@@ -130,19 +130,19 @@ namespace hahatonProjectAdmin
                     , Program.ConnectForm.conn);
                 com.ExecuteNonQuery();
                 
-                for (int i = 0; i < TableIINN.RowCount; i++)
+                for (int i = 0; i < TableINN.RowCount; i++)
                 {
                     //создание таблицы с именем ИНН для отчетов и выдача прав на чтение и дополнение
                     com = new MySqlCommand(
-                        "CREATE TABLE project.`" + TableIINN.Rows[i].Cells[0].Value + "` (" +
+                        "CREATE TABLE project.`" + TableINN.Rows[i].Cells[0].Value + "` (" +
                         "Date date DEFAULT NULL, " + 
                         "FM1 int(11) DEFAULT NULL, FM2 int(11) DEFAULT NULL, FM3 decimal(10, 0) DEFAULT NULL, " +
                         "GF1 int(11) DEFAULT NULL, GF2 int(11) DEFAULT NULL, GF3 decimal(10, 0) DEFAULT NULL, " +
                         "CKR1 int(11) DEFAULT NULL, CKR2 int(11) DEFAULT NULL, CKR3 decimal(10, 0) DEFAULT NULL, " +
                         "CPP1 int(11) DEFAULT NULL, CPP2 int(11) DEFAULT NULL, CPP3 decimal(10, 0) DEFAULT NULL, " +
                         "CE1 int(11) DEFAULT NULL, CE2 int(11) DEFAULT NULL, CE3 decimal(10, 0) DEFAULT NULL);" +
-                        "grant select, insert on project.`" + TableIINN.Rows[i].Cells[0].Value + "` to `" + TBlogin.Text + "`@'%';" +
-                        "insert into project.login_inn values('" + TBlogin.Text + "', '" + TableIINN.Rows[i].Cells[0].Value + "', '" + TableIINN.Rows[i].Cells[1].Value + "')",
+                        "grant select, insert on project.`" + TableINN.Rows[i].Cells[0].Value + "` to `" + TBlogin.Text + "`@'%';" +
+                        "insert into project.login_inn values('" + TBlogin.Text + "', '" + TableINN.Rows[i].Cells[0].Value + "', '" + TableINN.Rows[i].Cells[1].Value + "')",
                         Program.ConnectForm.conn);
                     //MessageBox.Show(com.ExecuteNonQuery() + "");
                     /*if(com.ExecuteNonQuery() != 0)
@@ -161,6 +161,7 @@ namespace hahatonProjectAdmin
                 return;
             }
             Program.ConnectForm.conn.Close();
+            MessageBox.Show("Успешно добавлено.", "Добавление", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

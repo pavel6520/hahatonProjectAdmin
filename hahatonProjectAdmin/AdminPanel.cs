@@ -25,12 +25,12 @@ namespace hahatonProjectAdmin
         {
             CreateUser = new CreateUserForm(ConnectStr);
             CreateUser.Show();
-            Enabled = false;
+            BCreateUser.Enabled = false;
             CreateUser.FormClosing += (obj, arg) =>
             {
-                Location = CreateUser.Location;
+                CenterToScreen();
                 Activate();
-                Enabled = true;
+                BCreateUser.Enabled = true;
             };
             CreateUser.Location = this.Location;
         }
