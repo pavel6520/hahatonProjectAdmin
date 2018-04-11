@@ -23,16 +23,26 @@ namespace hahatonProjectAdmin
 
         private void BCreateUser_Click(object sender, EventArgs e)
         {
+        }
+
+        private void TSMIuserCreate_Click(object sender, EventArgs e)
+        {
             CreateUser = new CreateUserForm(ConnectStr);
             CreateUser.Show();
-            BCreateUser.Enabled = false;
+            TSMIuserCreate.Enabled = false;
             CreateUser.FormClosing += (obj, arg) =>
             {
                 CenterToScreen();
                 Activate();
-                BCreateUser.Enabled = true;
+                TSMIuserCreate.Enabled = true;
             };
             CreateUser.Location = this.Location;
+            DGVinst.Rows[0].Cells[0].Style.BackColor = Color.Green;
+        }
+
+        private void AdminPanelForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }

@@ -86,10 +86,6 @@ namespace hahatonProjectAdmin
                         AdminPanel = new AdminPanelForm(ConnectStr);
                         this.Hide();
                         conn.Close();
-                        AdminPanel.FormClosing += (obj, arg) =>
-                        {
-                            Environment.Exit(0);
-                        };
                         AdminPanel.Show();
                     }
                     else

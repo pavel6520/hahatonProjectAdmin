@@ -140,9 +140,9 @@ namespace hahatonProjectAdmin
                         "GF1 int(11) DEFAULT NULL, GF2 int(11) DEFAULT NULL, GF3 decimal(10, 0) DEFAULT NULL, " +
                         "CKR1 int(11) DEFAULT NULL, CKR2 int(11) DEFAULT NULL, CKR3 decimal(10, 0) DEFAULT NULL, " +
                         "CPP1 int(11) DEFAULT NULL, CPP2 int(11) DEFAULT NULL, CPP3 decimal(10, 0) DEFAULT NULL, " +
-                        "CE1 int(11) DEFAULT NULL, CE2 int(11) DEFAULT NULL, CE3 decimal(10, 0) DEFAULT NULL);" +
+                        "CE1 int(11) DEFAULT NULL, CE2 int(11) DEFAULT NULL, CE3 decimal(10, 0) DEFAULT NULL) DEFAULT CHARSET=utf8;" +
                         "grant select, insert on project.`" + TableINN.Rows[i].Cells[0].Value + "` to `" + TBlogin.Text + "`@'%';" +
-                        "insert into project.login_inn values('" + TBlogin.Text + "', '" + TableINN.Rows[i].Cells[0].Value + "', '" + TableINN.Rows[i].Cells[1].Value + "')",
+                        "insert into project.login_inn values('" + TBlogin.Text + "', '" + TableINN.Rows[i].Cells[0].Value + "', '" + TableINN.Rows[i].Cells[1].Value.ToString() + "')",
                         Program.ConnectForm.conn);
                     //MessageBox.Show(com.ExecuteNonQuery() + "");
                     /*if(com.ExecuteNonQuery() != 0)
