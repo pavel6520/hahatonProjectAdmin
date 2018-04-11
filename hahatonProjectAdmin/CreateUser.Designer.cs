@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Llogin = new System.Windows.Forms.Label();
             this.Lpass = new System.Windows.Forms.Label();
             this.TBlogin = new System.Windows.Forms.TextBox();
@@ -116,8 +116,8 @@
             this.TableIINN.AllowUserToDeleteRows = false;
             this.TableIINN.AllowUserToResizeColumns = false;
             this.TableIINN.AllowUserToResizeRows = false;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.TableIINN.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.TableIINN.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.TableIINN.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.TableIINN.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.INN,

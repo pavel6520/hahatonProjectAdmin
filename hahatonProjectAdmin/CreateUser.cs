@@ -81,6 +81,7 @@ namespace hahatonProjectAdmin
             MySqlDataReader readed;
             try
             {
+                //Проверка существования логина
                 com = new MySqlCommand("select distinct User from mysql.user", Program.ConnectForm.conn);
                 readed = com.ExecuteReader();
                 while (readed.Read())
@@ -96,6 +97,7 @@ namespace hahatonProjectAdmin
                 readed.Close();
                 LerrLoginExist.Hide();
 
+                //Проверка существования таблицы ИНН
                 com = new MySqlCommand("show tables from project", Program.ConnectForm.conn);
                 readed = com.ExecuteReader();
                 while (readed.Read())
@@ -112,18 +114,25 @@ namespace hahatonProjectAdmin
                     }
                 }
                 readed.Close();
-            /*}
-            catch (MySqlException)
-            {
-                Program.ConnectForm.conn.Close();
-                MessageBox.Show("У вас недостаточно прав. Обратитесь к администратору.", "Ошибка доступа", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+                /*}
+                catch (MySqlException)
+                {
+                    Program.ConnectForm.conn.Close();
+                    MessageBox.Show("У вас недостаточно прав. Обратитесь к администратору.", "Ошибка доступа", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                try
+                {*/
 
-            try
-            {*/
+                //Создание пользователя и выдача права на чтение project.login_inn
+                com = new MySqlCommand("create user `" + TBlogin.Text + "`@'%' identified by '" + TBpass.Text + "';" +
+                    "grant select on project.login_inn to `" + TBlogin.Text + "`@`%`;"
+                    , Program.ConnectForm.conn);
+                com.ExecuteNonQuery();
+                
                 for (int i = 0; i < TableIINN.RowCount; i++)
                 {
+                    //создание таблицы с именем ИНН для отчетов и выдача прав на чтение и дополнение
                     com = new MySqlCommand(
                         "CREATE TABLE project.`" + TableIINN.Rows[i].Cells[0].Value + "` (" +
                         "Date date DEFAULT NULL, " + 
@@ -131,7 +140,9 @@ namespace hahatonProjectAdmin
                         "GF1 int(11) DEFAULT NULL, GF2 int(11) DEFAULT NULL, GF3 decimal(10, 0) DEFAULT NULL, " +
                         "CKR1 int(11) DEFAULT NULL, CKR2 int(11) DEFAULT NULL, CKR3 decimal(10, 0) DEFAULT NULL, " +
                         "CPP1 int(11) DEFAULT NULL, CPP2 int(11) DEFAULT NULL, CPP3 decimal(10, 0) DEFAULT NULL, " +
-                        "CE1 int(11) DEFAULT NULL, CE2 int(11) DEFAULT NULL, CE3 decimal(10, 0) DEFAULT NULL);",
+                        "CE1 int(11) DEFAULT NULL, CE2 int(11) DEFAULT NULL, CE3 decimal(10, 0) DEFAULT NULL);" +
+                        "grant select, insert on project.`" + TableIINN.Rows[i].Cells[0].Value + "` to `" + TBlogin.Text + "`@'%';" +
+                        "insert into project.login_inn values('" + TBlogin.Text + "', '" + TableIINN.Rows[i].Cells[0].Value + "', '" + TableIINN.Rows[i].Cells[1].Value + "')",
                         Program.ConnectForm.conn);
                     //MessageBox.Show(com.ExecuteNonQuery() + "");
                     /*if(com.ExecuteNonQuery() != 0)
