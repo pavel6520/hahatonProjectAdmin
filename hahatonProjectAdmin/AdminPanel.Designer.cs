@@ -33,11 +33,8 @@
             this.TSMIuserCreate = new System.Windows.Forms.ToolStripMenuItem();
             this.TCinst = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.DGVinst = new System.Windows.Forms.DataGridView();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.inst1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.DGVinst = new System.Windows.Forms.DataGridView();
             this.compName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.inn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.inst = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -46,6 +43,11 @@
             this.pvmr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pvPercents = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Plan = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.inst1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.базаДанныхToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMIbdShow = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.TCinst.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -57,6 +59,7 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.базаДанныхToolStripMenuItem,
             this.пользователиToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -75,7 +78,7 @@
             // TSMIuserCreate
             // 
             this.TSMIuserCreate.Name = "TSMIuserCreate";
-            this.TSMIuserCreate.Size = new System.Drawing.Size(117, 22);
+            this.TSMIuserCreate.Size = new System.Drawing.Size(180, 22);
             this.TSMIuserCreate.Text = "&Создать";
             this.TSMIuserCreate.Click += new System.EventHandler(this.TSMIuserCreate_Click);
             // 
@@ -103,6 +106,14 @@
             this.tabPage2.Text = "Институты поддержки";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(0, 0);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(344, 21);
+            this.comboBox1.TabIndex = 1;
+            // 
             // DGVinst
             // 
             this.DGVinst.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -123,41 +134,6 @@
             this.DGVinst.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.DGVinst.Size = new System.Drawing.Size(982, 440);
             this.DGVinst.TabIndex = 0;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.dataGridView1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1075, 484);
-            this.tabPage1.TabIndex = 2;
-            this.tabPage1.Text = "Компании";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.inst1});
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1069, 478);
-            this.dataGridView1.TabIndex = 0;
-            // 
-            // inst1
-            // 
-            this.inst1.HeaderText = "Институт поддержки";
-            this.inst1.Name = "inst1";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(0, 0);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(344, 21);
-            this.comboBox1.TabIndex = 1;
             // 
             // compName
             // 
@@ -213,6 +189,48 @@
             this.Plan.ReadOnly = true;
             this.Plan.Width = 45;
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.dataGridView1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(982, 461);
+            this.tabPage1.TabIndex = 2;
+            this.tabPage1.Text = "Компании";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.inst1});
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(976, 455);
+            this.dataGridView1.TabIndex = 0;
+            // 
+            // inst1
+            // 
+            this.inst1.HeaderText = "Институт поддержки";
+            this.inst1.Name = "inst1";
+            // 
+            // базаДанныхToolStripMenuItem
+            // 
+            this.базаДанныхToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TSMIbdShow});
+            this.базаДанныхToolStripMenuItem.Name = "базаДанныхToolStripMenuItem";
+            this.базаДанныхToolStripMenuItem.Size = new System.Drawing.Size(86, 20);
+            this.базаДанныхToolStripMenuItem.Text = "База данных";
+            // 
+            // TSMIbdShow
+            // 
+            this.TSMIbdShow.Name = "TSMIbdShow";
+            this.TSMIbdShow.Size = new System.Drawing.Size(180, 22);
+            this.TSMIbdShow.Text = "&Просмотр";
+            this.TSMIbdShow.Click += new System.EventHandler(this.TSMIbdShow_Click);
+            // 
             // AdminPanelForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -258,5 +276,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn pvmr;
         private System.Windows.Forms.DataGridViewTextBoxColumn pvPercents;
         private System.Windows.Forms.DataGridViewTextBoxColumn Plan;
+        private System.Windows.Forms.ToolStripMenuItem базаДанныхToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem TSMIbdShow;
     }
 }
