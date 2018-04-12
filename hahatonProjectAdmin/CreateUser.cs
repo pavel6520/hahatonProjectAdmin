@@ -72,9 +72,9 @@ namespace hahatonProjectAdmin
                 //Program.ConnectForm.conn = new MySqlConnection(ConnectStr);
                 Program.ConnectForm.conn.Open();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Не удалось подключится к базе данных.", "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Не удалось подключится к базе данных.\n" + ex, "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             MySqlCommand com;
@@ -114,15 +114,6 @@ namespace hahatonProjectAdmin
                     }
                 }
                 readed.Close();
-                /*}
-                catch (MySqlException)
-                {
-                    Program.ConnectForm.conn.Close();
-                    MessageBox.Show("У вас недостаточно прав. Обратитесь к администратору.", "Ошибка доступа", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                try
-                {*/
 
                 //Создание пользователя и выдача права на чтение project.login_inn
                 com = new MySqlCommand("create user `" + TBlogin.Text + "`@'%' identified by '" + TBpass.Text + "';" +
@@ -144,24 +135,17 @@ namespace hahatonProjectAdmin
                         "grant select, insert on project.`" + TableINN.Rows[i].Cells[0].Value + "` to `" + TBlogin.Text + "`@'%';" +
                         "insert into project.login_inn values('" + TBlogin.Text + "', '" + TableINN.Rows[i].Cells[0].Value + "', '" + TableINN.Rows[i].Cells[1].Value.ToString() + "')",
                         Program.ConnectForm.conn);
-                    //MessageBox.Show(com.ExecuteNonQuery() + "");
-                    /*if(com.ExecuteNonQuery() != 0)
-                    {
-                        Program.ConnectForm.conn.Close();
-                        MessageBox.Show("У вас недостаточно прав. Обратитесь к администратору.\n\n\n" + (ConnectStr.Contains("pavel6520") ? ex + "" : ""), "Ошибка доступа", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }*/
                     com.ExecuteNonQuery();
                 }
+                Program.ConnectForm.conn.Close();
             }
             catch (MySqlException ex)
             {
                 Program.ConnectForm.conn.Close();
-                MessageBox.Show("У вас недостаточно прав. Обратитесь к администратору.\n\n\n" + (ConnectStr.Contains("pavel6520") ? ex + "" : ""), "Ошибка доступа", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Ошибка выполнения запроса. Обратитесь к администратору.\n" + ex, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            Program.ConnectForm.conn.Close();
-            MessageBox.Show("Успешно добавлено.", "Добавление", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Успешно добавлено.", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

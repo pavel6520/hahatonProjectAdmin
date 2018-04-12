@@ -18,22 +18,9 @@ namespace hahatonProjectAdmin
         private struct Reports
         {
             public string inn, comp_name;
-            public DateTime[]date;
-            public int[]TBFM1;
-            public int[]TBFM2;
-            public double[]TBFM3;
-            public int[]TBGF1;
-            public int[]TBGF2;
-            public double[]TBGF3;
-            public int[]TBCKR1;
-            public int[]TBCKR2;
-            public double[]TBCKR3;
-            public int[]TBCPP1;
-            public int[]TBCPP2;
-            public double[]TBCPP3;
-            public int[]TBCE1;
-            public int[]TBCE2;
-            public double[]TBCE3;
+            public DateTime date;
+            public int TBFM1, TBFM2, TBGF1, TBGF2, TBCKR1, TBCKR2, TBCPP1, TBCPP2, TBCE1, TBCE2;
+            public double TBFM3, TBGF3, TBCKR3, TBCPP3, TBCE3;
         }
         private Reports []MasReports;
         public const bool plan = true;
@@ -56,7 +43,6 @@ namespace hahatonProjectAdmin
                 TSMIuserCreate.Enabled = true;
             };
             CreateUser.Location = this.Location;
-            DGVinst.Rows[0].Cells[0].Style.BackColor = Color.Green;
         }
 
         private void AdminPanelForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -80,7 +66,7 @@ namespace hahatonProjectAdmin
                 MessageBox.Show("Не удалось подключится к базе данных.\n" + ex, "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            int count = 1;
+            int count = 0;
             MasReports = new Reports[1];
             MySqlCommand com;
             MySqlDataReader readed;
@@ -91,69 +77,153 @@ namespace hahatonProjectAdmin
                 readed = com.ExecuteReader();
                 while (readed.Read())
                 {
+                    count++;
                     Array.Resize(ref MasReports, count);
                     MasReports[count - 1].inn = readed[0].ToString();
                     MasReports[count - 1].comp_name = readed[1].ToString();
-                    MasReports[count - 1].date = new DateTime[2];
-                    MasReports[count - 1].TBCE1 = new int[2];
-                    MasReports[count - 1].TBCE2 = new int[2];
-                    MasReports[count - 1].TBCE3 = new double[2];
-                    MasReports[count - 1].TBCKR1 = new int[2];
-                    MasReports[count - 1].TBCKR2 = new int[2];
-                    MasReports[count - 1].TBCKR3 = new double[2];
-                    MasReports[count - 1].TBCPP1 = new int[2];
-                    MasReports[count - 1].TBCPP2 = new int[2];
-                    MasReports[count - 1].TBCPP3 = new double[2];
-                    MasReports[count - 1].TBFM1 = new int[2];
-                    MasReports[count - 1].TBFM2 = new int[2];
-                    MasReports[count - 1].TBFM3 = new double[2];
-                    MasReports[count - 1].TBGF1 = new int[2];
-                    MasReports[count - 1].TBGF2 = new int[2];
-                    MasReports[count - 1].TBGF3 = new double[2];
-                    count++;
                 }
                 readed.Close();
-
+                if (count == 0)
+                {
+                    Program.ConnectForm.conn.Close();
+                    MessageBox.Show("Компании не найдены", "Данные отсутствуют", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                bool ReportSearch = false;
                 //Загрузка 2 последних отчетов для каждой компании
                 for(int i = 0; i < count; i++)
                 {
-                    com = new MySqlCommand("select * from project.`" + MasReports[i].inn + "`", Program.ConnectForm.conn);
+                    com = new MySqlCommand("select * from project.`" + MasReports[i].inn + "`  order by date desc limit 2", Program.ConnectForm.conn);
                     readed = com.ExecuteReader();
-                    int countRep = 0;
-                    while (readed.Read())
+
+                    if (readed.Read())//Если есть отчеты, получаем самый актуальный
                     {
-                        MasReports[count - 1].date[countRep] = Convert.ToDateTime(readed[0].ToString());
-                        MasReports[count - 1].TBCE1[countRep] = Convert.ToInt32(readed[1].ToString());
-                        MasReports[count - 1].TBCE2[countRep] = Convert.ToInt32(readed[2].ToString());
-                        MasReports[count - 1].TBCE3[countRep] = Convert.ToDouble(readed[3].ToString());
-                        MasReports[count - 1].TBCKR1[countRep] = Convert.ToInt32(readed[4].ToString());
-                        MasReports[count - 1].TBCKR2[countRep] = Convert.ToInt32(readed[5].ToString());
-                        MasReports[count - 1].TBCKR3[countRep] = Convert.ToDouble(readed[6].ToString());
-                        MasReports[count - 1].TBCPP1[countRep] = Convert.ToInt32(readed[7].ToString());
-                        MasReports[count - 1].TBCPP2[countRep] = Convert.ToInt32(readed[8].ToString());
-                        MasReports[count - 1].TBCPP3[countRep] = Convert.ToDouble(readed[9].ToString());
-                        MasReports[count - 1].TBFM1[countRep] = Convert.ToInt32(readed[10].ToString());
-                        MasReports[count - 1].TBFM2[countRep] = Convert.ToInt32(readed[11].ToString());
-                        MasReports[count - 1].TBFM3[countRep] = Convert.ToDouble(readed[12].ToString());
-                        MasReports[count - 1].TBGF1[countRep] = Convert.ToInt32(readed[13].ToString());
-                        MasReports[count - 1].TBGF2[countRep] = Convert.ToInt32(readed[14].ToString());
-                        MasReports[count - 1].TBGF3[countRep] = Convert.ToDouble(readed[15].ToString());
-                        countRep++;
+                        ReportSearch = true;
+                        MasReports[i].date = Convert.ToDateTime(readed[0].ToString());
+                        MasReports[i].TBCE1 = Convert.ToInt32(readed[1].ToString());
+                        MasReports[i].TBCE2 = Convert.ToInt32(readed[2].ToString());
+                        MasReports[i].TBCE3 = Convert.ToDouble(readed[3].ToString());
+                        MasReports[i].TBCKR1 = Convert.ToInt32(readed[4].ToString());
+                        MasReports[i].TBCKR2 = Convert.ToInt32(readed[5].ToString());
+                        MasReports[i].TBCKR3 = Convert.ToDouble(readed[6].ToString());
+                        MasReports[i].TBCPP1 = Convert.ToInt32(readed[7].ToString());
+                        MasReports[i].TBCPP2 = Convert.ToInt32(readed[8].ToString());
+                        MasReports[i].TBCPP3 = Convert.ToDouble(readed[9].ToString());
+                        MasReports[i].TBFM1 = Convert.ToInt32(readed[10].ToString());
+                        MasReports[i].TBFM2 = Convert.ToInt32(readed[11].ToString());
+                        MasReports[i].TBFM3 = Convert.ToDouble(readed[12].ToString());
+                        MasReports[i].TBGF1 = Convert.ToInt32(readed[13].ToString());
+                        MasReports[i].TBGF2 = Convert.ToInt32(readed[14].ToString());
+                        MasReports[i].TBGF3 = Convert.ToDouble(readed[15].ToString());
+
+                        if (readed.Read())//Если есть предпоследний отчет записываем его (здесь применить формулы)
+                        {
+                            DateTime date = Convert.ToDateTime(readed[0].ToString());
+                            int TBCE1 = Convert.ToInt32(readed[1].ToString());
+                            int TBCE2 = Convert.ToInt32(readed[2].ToString());
+                            double TBCE3 = Convert.ToDouble(readed[3].ToString());
+                            int TBCKR1 = Convert.ToInt32(readed[4].ToString());
+                            int TBCKR2 = Convert.ToInt32(readed[5].ToString());
+                            double TBCKR3 = Convert.ToDouble(readed[6].ToString());
+                            int TBCPP1 = Convert.ToInt32(readed[7].ToString());
+                            int TBCPP2 = Convert.ToInt32(readed[8].ToString());
+                            double TBCPP3 = Convert.ToDouble(readed[9].ToString());
+                            int TBFM1 = Convert.ToInt32(readed[10].ToString());
+                            int TBFM2 = Convert.ToInt32(readed[11].ToString());
+                            double TBFM3 = Convert.ToDouble(readed[12].ToString());
+                            int TBGF1 = Convert.ToInt32(readed[13].ToString());
+                            int TBGF2 = Convert.ToInt32(readed[14].ToString());
+                            double TBGF3 = Convert.ToDouble(readed[15].ToString());
+
+                            //У нас есть последний отчет в структуре и предпоследний отчет здесь, применить формулы
+                        }
+                    }
+                    else
+                    {
+                        MasReports[i].date = DateTime.MinValue;
+                        MasReports[i].TBCE1 = 0;
+                        MasReports[i].TBCE2 = 0;
+                        MasReports[i].TBCE3 = 0.0;
+                        MasReports[i].TBCKR1 = 0;
+                        MasReports[i].TBCKR2 = 0;
+                        MasReports[i].TBCKR3 = 0.0;
+                        MasReports[i].TBCPP1 = 0;
+                        MasReports[i].TBCPP2 = 0;
+                        MasReports[i].TBCPP3 = 0.0;
+                        MasReports[i].TBFM1 = 0;
+                        MasReports[i].TBFM2 = 0;
+                        MasReports[i].TBFM3 = 0.0;
+                        MasReports[i].TBGF1 = 0;
+                        MasReports[i].TBGF2 = 0;
+                        MasReports[i].TBGF3 = 0.0;
                     }
                     readed.Close();
                 }
-
-                /*com = new MySqlCommand(""
-                    , Program.ConnectForm.conn);
-                com.ExecuteNonQuery();*/
+                if (!ReportSearch)
+                {
+                    Program.ConnectForm.conn.Close();
+                    MessageBox.Show("Отчеты не найдены", "Ошибка загрузки", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                Program.ConnectForm.conn.Close();
             }
             catch (MySqlException ex)
             {
                 Program.ConnectForm.conn.Close();
-                MessageBox.Show("У вас недостаточно прав. Обратитесь к администратору.\n\n\n" + (ConnectStr.Contains("pavel6520") ? ex + "" : ""), "Ошибка доступа", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Ошибка выполнения запроса. Обратитесь к администратору.\n" + ex, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            Program.ConnectForm.conn.Close();
+            CBinstSelect1.SelectedIndex = 1;
+            CBinstSelect1.SelectedIndex = 0;
+        }
+
+        private void CBinstSelect1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DGVinst.Rows.Clear();
+            for (int i = 0; i < MasReports.Length; i++)
+            {
+                int param1 = 0, param2 = 0;
+                double param3 = 0;
+                switch (CBinstSelect1.SelectedIndex)
+                {
+                    case 0:
+                        {
+                            param1 = MasReports[i].TBCE1;
+                            param2 = MasReports[i].TBCE2;
+                            param3 = MasReports[i].TBCE3;
+                            break;
+                        }
+                    case 1:
+                        {
+                            param1 = MasReports[i].TBCKR1;
+                            param2 = MasReports[i].TBCKR2;
+                            param3 = MasReports[i].TBCKR3;
+                            break;
+                        }
+                    case 2:
+                        {
+                            param1 = MasReports[i].TBCPP1;
+                            param2 = MasReports[i].TBCPP2;
+                            param3 = MasReports[i].TBCPP3;
+                            break;
+                        }
+                    case 3:
+                        {
+                            param1 = MasReports[i].TBFM1;
+                            param2 = MasReports[i].TBFM2;
+                            param3 = MasReports[i].TBFM3;
+                            break;
+                        }
+                    case 4:
+                        {
+                            param1 = MasReports[i].TBGF1;
+                            param2 = MasReports[i].TBGF2;
+                            param3 = MasReports[i].TBGF3;
+                            break;
+                        }
+                }
+                DGVinst.Rows.Add(MasReports[i].comp_name, MasReports[i].inn, param1, param2, param3, i + "test", i + "test");
+            }
         }
     }
 }
