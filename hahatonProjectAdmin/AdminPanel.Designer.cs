@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.TSMIdb = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMIdbShow = new System.Windows.Forms.ToolStripMenuItem();
@@ -168,7 +170,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(982, 461);
+            this.tabPage1.Size = new System.Drawing.Size(756, 452);
             this.tabPage1.TabIndex = 2;
             this.tabPage1.Text = "Компании";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -181,7 +183,7 @@
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(3, 3);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(976, 455);
+            this.dataGridView1.Size = new System.Drawing.Size(750, 446);
             this.dataGridView1.TabIndex = 0;
             // 
             // inst1
@@ -210,6 +212,9 @@
             // 
             // pschr
             // 
+            dataGridViewCellStyle1.Format = "N2";
+            dataGridViewCellStyle1.NullValue = null;
+            this.pschr.DefaultCellStyle = dataGridViewCellStyle1;
             this.pschr.HeaderText = "Прирост среднесписочной численности работников, %";
             this.pschr.Name = "pschr";
             this.pschr.ReadOnly = true;
@@ -223,6 +228,9 @@
             // 
             // pvPercents
             // 
+            dataGridViewCellStyle2.Format = "N2";
+            dataGridViewCellStyle2.NullValue = null;
+            this.pvPercents.DefaultCellStyle = dataGridViewCellStyle2;
             this.pvPercents.HeaderText = "Прирост выручки, %";
             this.pvPercents.Name = "pvPercents";
             this.pvPercents.ReadOnly = true;

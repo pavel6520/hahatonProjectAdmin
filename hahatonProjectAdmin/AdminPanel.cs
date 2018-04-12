@@ -18,9 +18,12 @@ namespace hahatonProjectAdmin
         private struct Reports
         {
             public string inn, comp_name;
-            public DateTime date;
-            public int TBFM1, TBFM2, TBGF1, TBGF2, TBCKR1, TBCKR2, TBCPP1, TBCPP2, TBCE1, TBCE2;
-            public double TBFM3, TBGF3, TBCKR3, TBCPP3, TBCE3;
+            //public DateTime date;
+            public int FM1, FM2, GF1, GF2, CKR1, CKR2, CPP1, CPP2, CE1, CE2;
+            public double FM3, GF3, CKR3, CPP3, CE3;
+
+            public int FM11, FM21, GF11, GF21, CKR11, CKR21, CPP11, CPP21, CE11, CE21;
+            public double FM31, GF31, CKR31, CPP31, CE31;
         }
         private Reports []MasReports;
         public const bool plan = true;
@@ -99,63 +102,86 @@ namespace hahatonProjectAdmin
                     if (readed.Read())//Если есть отчеты, получаем самый актуальный
                     {
                         ReportSearch = true;
-                        MasReports[i].date = Convert.ToDateTime(readed[0].ToString());
-                        MasReports[i].TBCE1 = Convert.ToInt32(readed[1].ToString());
-                        MasReports[i].TBCE2 = Convert.ToInt32(readed[2].ToString());
-                        MasReports[i].TBCE3 = Convert.ToDouble(readed[3].ToString());
-                        MasReports[i].TBCKR1 = Convert.ToInt32(readed[4].ToString());
-                        MasReports[i].TBCKR2 = Convert.ToInt32(readed[5].ToString());
-                        MasReports[i].TBCKR3 = Convert.ToDouble(readed[6].ToString());
-                        MasReports[i].TBCPP1 = Convert.ToInt32(readed[7].ToString());
-                        MasReports[i].TBCPP2 = Convert.ToInt32(readed[8].ToString());
-                        MasReports[i].TBCPP3 = Convert.ToDouble(readed[9].ToString());
-                        MasReports[i].TBFM1 = Convert.ToInt32(readed[10].ToString());
-                        MasReports[i].TBFM2 = Convert.ToInt32(readed[11].ToString());
-                        MasReports[i].TBFM3 = Convert.ToDouble(readed[12].ToString());
-                        MasReports[i].TBGF1 = Convert.ToInt32(readed[13].ToString());
-                        MasReports[i].TBGF2 = Convert.ToInt32(readed[14].ToString());
-                        MasReports[i].TBGF3 = Convert.ToDouble(readed[15].ToString());
+                        //MasReports[i].date = Convert.ToDateTime(readed[0].ToString());
+                        MasReports[i].FM1 = Convert.ToInt32(readed[1].ToString());
+                        MasReports[i].FM2 = Convert.ToInt32(readed[2].ToString());
+                        MasReports[i].FM3 = Convert.ToDouble(readed[3].ToString());
 
+                        MasReports[i].GF1 = Convert.ToInt32(readed[4].ToString());
+                        MasReports[i].GF2 = Convert.ToInt32(readed[5].ToString());
+                        MasReports[i].GF3 = Convert.ToDouble(readed[6].ToString());
+
+                        MasReports[i].CKR1 = Convert.ToInt32(readed[7].ToString());
+                        MasReports[i].CKR2 = Convert.ToInt32(readed[8].ToString());
+                        MasReports[i].CKR3 = Convert.ToDouble(readed[9].ToString());
+
+                        MasReports[i].CPP1 = Convert.ToInt32(readed[10].ToString());
+                        MasReports[i].CPP2 = Convert.ToInt32(readed[11].ToString());
+                        MasReports[i].CPP3 = Convert.ToDouble(readed[12].ToString());
+
+                        MasReports[i].CE1 = Convert.ToInt32(readed[13].ToString());
+                        MasReports[i].CE2 = Convert.ToInt32(readed[14].ToString());
+                        MasReports[i].CE3 = Convert.ToDouble(readed[15].ToString());
                         if (readed.Read())//Если есть предпоследний отчет записываем его (здесь применить формулы)
                         {
-                            DateTime date = Convert.ToDateTime(readed[0].ToString());
-                            int TBCE1 = Convert.ToInt32(readed[1].ToString());
-                            int TBCE2 = Convert.ToInt32(readed[2].ToString());
-                            double TBCE3 = Convert.ToDouble(readed[3].ToString());
-                            int TBCKR1 = Convert.ToInt32(readed[4].ToString());
-                            int TBCKR2 = Convert.ToInt32(readed[5].ToString());
-                            double TBCKR3 = Convert.ToDouble(readed[6].ToString());
-                            int TBCPP1 = Convert.ToInt32(readed[7].ToString());
-                            int TBCPP2 = Convert.ToInt32(readed[8].ToString());
-                            double TBCPP3 = Convert.ToDouble(readed[9].ToString());
-                            int TBFM1 = Convert.ToInt32(readed[10].ToString());
-                            int TBFM2 = Convert.ToInt32(readed[11].ToString());
-                            double TBFM3 = Convert.ToDouble(readed[12].ToString());
-                            int TBGF1 = Convert.ToInt32(readed[13].ToString());
-                            int TBGF2 = Convert.ToInt32(readed[14].ToString());
-                            double TBGF3 = Convert.ToDouble(readed[15].ToString());
+                            //DateTime date = Convert.ToDateTime(readed[0].ToString());
+                            MasReports[i].FM11 = Convert.ToInt32(readed[1].ToString());
+                            MasReports[i].FM21 = Convert.ToInt32(readed[2].ToString());
+                            MasReports[i].FM31 = Convert.ToDouble(readed[3].ToString());
 
+                            MasReports[i].GF11 = Convert.ToInt32(readed[4].ToString());
+                            MasReports[i].GF21 = Convert.ToInt32(readed[5].ToString());
+                            MasReports[i].GF31 = Convert.ToDouble(readed[6].ToString());
+
+                            MasReports[i].CKR11 = Convert.ToInt32(readed[7].ToString());
+                            MasReports[i].CKR21 = Convert.ToInt32(readed[8].ToString());
+                            MasReports[i].CKR31 = Convert.ToDouble(readed[9].ToString());
+
+                            MasReports[i].CPP11 = Convert.ToInt32(readed[10].ToString());
+                            MasReports[i].CPP21 = Convert.ToInt32(readed[11].ToString());
+                            MasReports[i].CPP31 = Convert.ToDouble(readed[12].ToString());
+
+                            MasReports[i].CE11 = Convert.ToInt32(readed[13].ToString());
+                            MasReports[i].CE21 = Convert.ToInt32(readed[14].ToString());
+                            MasReports[i].CE31 = Convert.ToDouble(readed[15].ToString());
                             //У нас есть последний отчет в структуре и предпоследний отчет здесь, применить формулы
+                        }
+                        else
+                        {
+                            MasReports[i].CE11 = 0;
+                            MasReports[i].CE21 = 0;
+                            MasReports[i].CE31 = 0.0;
+                            MasReports[i].CKR11 = 0;
+                            MasReports[i].CKR21 = 0;
+                            MasReports[i].CKR31 = 0.0;
+                            MasReports[i].CPP11 = 0;
+                            MasReports[i].CPP21 = 0;
+                            MasReports[i].CPP31 = 0.0;
+                            MasReports[i].FM11 = 0;
+                            MasReports[i].FM21 = 0;
+                            MasReports[i].FM31 = 0.0;
+                            MasReports[i].GF11 = 0;
+                            MasReports[i].GF21 = 0;
+                            MasReports[i].GF31 = 0.0;
                         }
                     }
                     else
                     {
-                        MasReports[i].date = DateTime.MinValue;
-                        MasReports[i].TBCE1 = 0;
-                        MasReports[i].TBCE2 = 0;
-                        MasReports[i].TBCE3 = 0.0;
-                        MasReports[i].TBCKR1 = 0;
-                        MasReports[i].TBCKR2 = 0;
-                        MasReports[i].TBCKR3 = 0.0;
-                        MasReports[i].TBCPP1 = 0;
-                        MasReports[i].TBCPP2 = 0;
-                        MasReports[i].TBCPP3 = 0.0;
-                        MasReports[i].TBFM1 = 0;
-                        MasReports[i].TBFM2 = 0;
-                        MasReports[i].TBFM3 = 0.0;
-                        MasReports[i].TBGF1 = 0;
-                        MasReports[i].TBGF2 = 0;
-                        MasReports[i].TBGF3 = 0.0;
+                        MasReports[i].CE1 = 0;
+                        MasReports[i].CE2 = 0;
+                        MasReports[i].CE3 = 0.0;
+                        MasReports[i].CKR1 = 0;
+                        MasReports[i].CKR2 = 0;
+                        MasReports[i].CKR3 = 0.0;
+                        MasReports[i].CPP1 = 0;
+                        MasReports[i].CPP2 = 0;
+                        MasReports[i].CPP3 = 0.0;
+                        MasReports[i].FM1 = 0;
+                        MasReports[i].FM2 = 0;
+                        MasReports[i].FM3 = 0.0;
+                        MasReports[i].GF1 = 0;
+                        MasReports[i].GF2 = 0;
+                        MasReports[i].GF3 = 0.0;
                     }
                     readed.Close();
                 }
@@ -182,47 +208,52 @@ namespace hahatonProjectAdmin
             DGVinst.Rows.Clear();
             for (int i = 0; i < MasReports.Length; i++)
             {
-                int param1 = 0, param2 = 0;
-                double param3 = 0;
+                int param1 = 0;
+                double param2 = 0, param3 = 0, param4 = 0;
                 switch (CBinstSelect1.SelectedIndex)
                 {
                     case 0:
                         {
-                            param1 = MasReports[i].TBCE1;
-                            param2 = MasReports[i].TBCE2;
-                            param3 = MasReports[i].TBCE3;
+                            param1 = MasReports[i].FM1 - MasReports[i].FM11;
+                            param2 = MasReports[i].FM2 * 1.0 / (MasReports[i].FM21 == 0 ? 1 : MasReports[i].FM21);
+                            param3 = MasReports[i].FM3 - MasReports[i].FM31;
+                            param4 = MasReports[i].FM3 * 1.0 / (MasReports[i].FM31 == 0 ? 1 : MasReports[i].FM31);
                             break;
                         }
                     case 1:
                         {
-                            param1 = MasReports[i].TBCKR1;
-                            param2 = MasReports[i].TBCKR2;
-                            param3 = MasReports[i].TBCKR3;
+                            param1 = MasReports[i].GF1 - MasReports[i].GF11;
+                            param2 = MasReports[i].GF2 * 1.0 / (MasReports[i].GF21 == 0 ? 1 : MasReports[i].GF21);
+                            param3 = MasReports[i].GF3 - MasReports[i].GF31;
+                            param4 = MasReports[i].GF3 * 1.0 / (MasReports[i].GF31 == 0 ? 1 : MasReports[i].GF31);
                             break;
                         }
                     case 2:
                         {
-                            param1 = MasReports[i].TBCPP1;
-                            param2 = MasReports[i].TBCPP2;
-                            param3 = MasReports[i].TBCPP3;
+                            param1 = MasReports[i].CKR1 - MasReports[i].CKR11;
+                            param2 = MasReports[i].CKR2 * 1.0 / (MasReports[i].CE21 == 0 ? 1 : MasReports[i].CE21);
+                            param3 = MasReports[i].CKR3 - MasReports[i].CKR31;
+                            param4 = MasReports[i].CKR3 * 1.0 / (MasReports[i].CE31 == 0 ? 1 : MasReports[i].CE31);
                             break;
                         }
                     case 3:
                         {
-                            param1 = MasReports[i].TBFM1;
-                            param2 = MasReports[i].TBFM2;
-                            param3 = MasReports[i].TBFM3;
+                            param1 = MasReports[i].CPP1 - MasReports[i].CPP11;
+                            param2 = MasReports[i].CPP2 * 1.0 / (MasReports[i].CPP21 == 0 ? 1 : MasReports[i].CPP21);
+                            param3 = MasReports[i].CPP3 - MasReports[i].CPP31;
+                            param4 = MasReports[i].CPP3 * 1.0 / (MasReports[i].CPP31 == 0 ? 1 : MasReports[i].CPP31);
                             break;
                         }
                     case 4:
                         {
-                            param1 = MasReports[i].TBGF1;
-                            param2 = MasReports[i].TBGF2;
-                            param3 = MasReports[i].TBGF3;
+                            param1 = MasReports[i].CE1 - MasReports[i].CE11;
+                            param2 = MasReports[i].CE2 * 1.0 / (MasReports[i].CE21 == 0 ? 1 : MasReports[i].CE21);
+                            param3 = MasReports[i].CE3 - MasReports[i].CE31;
+                            param4 = MasReports[i].CE3 * 1.0 / (MasReports[i].CE31 == 0 ? 1 : MasReports[i].CE21);
                             break;
                         }
                 }
-                DGVinst.Rows.Add(MasReports[i].comp_name, MasReports[i].inn, param1, param2, param3, i + "test", i + "test");
+                DGVinst.Rows.Add(MasReports[i].comp_name, MasReports[i].inn, param1, param2, param3, param4, i + "test");
             }
         }
     }
