@@ -28,8 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.TSMIdb = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMIdbShow = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,7 +66,7 @@
             this.TSMIuser});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(764, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(932, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -80,7 +81,9 @@
             // TSMIdbShow
             // 
             this.TSMIdbShow.Name = "TSMIdbShow";
-            this.TSMIdbShow.Size = new System.Drawing.Size(131, 22);
+            this.TSMIdbShow.ShortcutKeyDisplayString = "F1";
+            this.TSMIdbShow.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.TSMIdbShow.Size = new System.Drawing.Size(180, 22);
             this.TSMIdbShow.Text = "&Просмотр";
             this.TSMIdbShow.Click += new System.EventHandler(this.TSMIbdShow_Click);
             // 
@@ -95,7 +98,9 @@
             // TSMIuserCreate
             // 
             this.TSMIuserCreate.Name = "TSMIuserCreate";
-            this.TSMIuserCreate.Size = new System.Drawing.Size(117, 22);
+            this.TSMIuserCreate.ShortcutKeyDisplayString = "";
+            this.TSMIuserCreate.ShortcutKeys = System.Windows.Forms.Keys.F2;
+            this.TSMIuserCreate.Size = new System.Drawing.Size(180, 22);
             this.TSMIuserCreate.Text = "&Создать";
             this.TSMIuserCreate.Click += new System.EventHandler(this.TSMIuserCreate_Click);
             // 
@@ -108,7 +113,7 @@
             this.TCinst.Multiline = true;
             this.TCinst.Name = "TCinst";
             this.TCinst.SelectedIndex = 0;
-            this.TCinst.Size = new System.Drawing.Size(764, 478);
+            this.TCinst.Size = new System.Drawing.Size(932, 466);
             this.TCinst.TabIndex = 2;
             // 
             // tabPage2
@@ -118,7 +123,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(756, 452);
+            this.tabPage2.Size = new System.Drawing.Size(924, 440);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Институты поддержки";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -135,7 +140,7 @@
             "Центр экспорта"});
             this.CBinstSelect1.Location = new System.Drawing.Point(0, 0);
             this.CBinstSelect1.Name = "CBinstSelect1";
-            this.CBinstSelect1.Size = new System.Drawing.Size(344, 21);
+            this.CBinstSelect1.Size = new System.Drawing.Size(240, 21);
             this.CBinstSelect1.TabIndex = 1;
             this.CBinstSelect1.SelectedIndexChanged += new System.EventHandler(this.CBinstSelect1_SelectedIndexChanged);
             // 
@@ -161,7 +166,7 @@
             this.DGVinst.Location = new System.Drawing.Point(0, 21);
             this.DGVinst.Name = "DGVinst";
             this.DGVinst.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.DGVinst.Size = new System.Drawing.Size(756, 431);
+            this.DGVinst.Size = new System.Drawing.Size(924, 419);
             this.DGVinst.TabIndex = 0;
             // 
             // tabPage1
@@ -193,6 +198,8 @@
             // 
             // compName
             // 
+            dataGridViewCellStyle28.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.compName.DefaultCellStyle = dataGridViewCellStyle28;
             this.compName.HeaderText = "Компания";
             this.compName.Name = "compName";
             this.compName.ReadOnly = true;
@@ -206,31 +213,34 @@
             // 
             // vsm
             // 
+            this.vsm.FillWeight = 120F;
             this.vsm.HeaderText = "Вновь созданые места, чел";
             this.vsm.Name = "vsm";
             this.vsm.ReadOnly = true;
+            this.vsm.Width = 120;
             // 
             // pschr
             // 
-            dataGridViewCellStyle1.Format = "N2";
-            dataGridViewCellStyle1.NullValue = null;
-            this.pschr.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle29.Format = "N2";
+            dataGridViewCellStyle29.NullValue = null;
+            this.pschr.DefaultCellStyle = dataGridViewCellStyle29;
             this.pschr.HeaderText = "Прирост среднесписочной численности работников, %";
             this.pschr.Name = "pschr";
             this.pschr.ReadOnly = true;
+            this.pschr.Width = 200;
             // 
             // pvmr
             // 
             this.pvmr.HeaderText = "Прирост выручки, млн. руб";
             this.pvmr.Name = "pvmr";
             this.pvmr.ReadOnly = true;
-            this.pvmr.Width = 70;
+            this.pvmr.Width = 130;
             // 
             // pvPercents
             // 
-            dataGridViewCellStyle2.Format = "N2";
-            dataGridViewCellStyle2.NullValue = null;
-            this.pvPercents.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle30.Format = "N2";
+            dataGridViewCellStyle30.NullValue = null;
+            this.pvPercents.DefaultCellStyle = dataGridViewCellStyle30;
             this.pvPercents.HeaderText = "Прирост выручки, %";
             this.pvPercents.Name = "pvPercents";
             this.pvPercents.ReadOnly = true;
@@ -257,15 +267,17 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(764, 502);
+            this.ClientSize = new System.Drawing.Size(932, 490);
             this.Controls.Add(this.TCinst);
             this.Controls.Add(this.menuStrip1);
+            this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "AdminPanelForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Панель администратора";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AdminPanelForm_FormClosed);
+            this.Load += new System.EventHandler(this.AdminPanelForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.TCinst.ResumeLayout(false);

@@ -28,7 +28,19 @@ namespace hahatonProjectAdmin
 
         private void Bgenerate_Click(object sender, EventArgs e)
         {
-            TBpass.Text = "1234";
+            //TBpass.Text = "1234";
+            const string tmp = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+                "abcdefghijklmnopqrstuvwxyz" + "{#$<^(&*@}?%>";
+            string pas = "";
+
+
+            Random r = new Random();
+            for(int i = 1; i < 10; i++)
+            {
+                pas += tmp[r.Next(0,tmp.Length - 1)];
+            }
+
+            TBpass.Text = pas;
         }
 
         private void AddTableLine_Click(object sender, EventArgs e)
@@ -147,5 +159,14 @@ namespace hahatonProjectAdmin
             }
             MessageBox.Show("Успешно добавлено.", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+        private void TBlogin_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char n = e.KeyChar;
+
+            if ( (e.KeyChar <= 64 || e.KeyChar >= 91) && (e.KeyChar <= 96 || e.KeyChar >= 123) 
+                && (e.KeyChar <= 47 || e.KeyChar >= 58) && n != 8 )
+                e.Handled = true;
+        }        
     }
 }

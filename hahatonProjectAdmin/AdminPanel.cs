@@ -25,7 +25,7 @@ namespace hahatonProjectAdmin
             public int FM11, FM21, GF11, GF21, CKR11, CKR21, CPP11, CPP21, CE11, CE21;
             public double FM31, GF31, CKR31, CPP31, CE31;
         }
-        private Reports []MasReports;
+        private Reports[] MasReports;
         public const bool plan = true;
 
         public AdminPanelForm(string str)
@@ -94,7 +94,7 @@ namespace hahatonProjectAdmin
                 }
                 bool ReportSearch = false;
                 //Загрузка 2 последних отчетов для каждой компании
-                for(int i = 0; i < count; i++)
+                for (int i = 0; i < count; i++)
                 {
                     com = new MySqlCommand("select * from project.`" + MasReports[i].inn + "`  order by date desc limit 2", Program.ConnectForm.conn);
                     readed = com.ExecuteReader();
@@ -206,6 +206,7 @@ namespace hahatonProjectAdmin
         private void CBinstSelect1_SelectedIndexChanged(object sender, EventArgs e)
         {
             DGVinst.Rows.Clear();
+
             for (int i = 0; i < MasReports.Length; i++)
             {
                 int param1 = 0;
@@ -255,6 +256,11 @@ namespace hahatonProjectAdmin
                 }
                 DGVinst.Rows.Add(MasReports[i].comp_name, MasReports[i].inn, param1, param2, param3, param4, i + "test");
             }
+        }
+
+        private void AdminPanelForm_Load(object sender, EventArgs e)
+        {
+            DGVinst.RowCount = 20;
         }
     }
 }

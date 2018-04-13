@@ -70,11 +70,13 @@
             this.TBlogin.Name = "TBlogin";
             this.TBlogin.Size = new System.Drawing.Size(133, 20);
             this.TBlogin.TabIndex = 2;
+            this.TBlogin.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBlogin_KeyPress);
             // 
             // TBpass
             // 
             this.TBpass.Location = new System.Drawing.Point(121, 32);
             this.TBpass.Name = "TBpass";
+            this.TBpass.ReadOnly = true;
             this.TBpass.Size = new System.Drawing.Size(133, 20);
             this.TBpass.TabIndex = 3;
             // 
@@ -191,7 +193,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(467, 256);
+            this.ClientSize = new System.Drawing.Size(467, 259);
             this.Controls.Add(this.LErrTable);
             this.Controls.Add(this.BSave);
             this.Controls.Add(this.DeleteTableLine);
