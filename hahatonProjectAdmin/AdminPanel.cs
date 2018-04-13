@@ -19,6 +19,7 @@ namespace hahatonProjectAdmin
         {
             public string inn, comp_name;
             //public DateTime date;
+            public int CountReports;
             public int FM1, FM2, GF1, GF2, CKR1, CKR2, CPP1, CPP2, CE1, CE2;
             public double FM3, GF3, CKR3, CPP3, CE3;
 
@@ -99,10 +100,13 @@ namespace hahatonProjectAdmin
                     com = new MySqlCommand("select * from project.`" + MasReports[i].inn + "`  order by date desc limit 2", Program.ConnectForm.conn);
                     readed = com.ExecuteReader();
 
+                    MasReports[i].CountReports = 0;
+
                     if (readed.Read())//Если есть отчеты, получаем самый актуальный
                     {
                         ReportSearch = true;
                         //MasReports[i].date = Convert.ToDateTime(readed[0].ToString());
+                        MasReports[i].CountReports = 1;
                         MasReports[i].FM1 = Convert.ToInt32(readed[1].ToString());
                         MasReports[i].FM2 = Convert.ToInt32(readed[2].ToString());
                         MasReports[i].FM3 = Convert.ToDouble(readed[3].ToString());
@@ -124,6 +128,7 @@ namespace hahatonProjectAdmin
                         MasReports[i].CE3 = Convert.ToDouble(readed[15].ToString());
                         if (readed.Read())//Если есть предпоследний отчет записываем его (здесь применить формулы)
                         {
+                            MasReports[i].CountReports = 2;
                             //DateTime date = Convert.ToDateTime(readed[0].ToString());
                             MasReports[i].FM11 = Convert.ToInt32(readed[1].ToString());
                             MasReports[i].FM21 = Convert.ToInt32(readed[2].ToString());
@@ -206,68 +211,144 @@ namespace hahatonProjectAdmin
         private void CBinstSelect1_SelectedIndexChanged(object sender, EventArgs e)
         {
             DGVinst.Rows.Clear();
-
-            if (MasReports.Length > 0)
+            
             for (int i = 0; i < MasReports.Length; i++)
             {
-                int param1 = 0;
-                double param2 = 0, param3 = 0, param4 = 0;
-                switch (CBinstSelect1.SelectedIndex)
+                switch (MasReports[i].CountReports)
                 {
                     case 0:
                         {
-                            param1 = MasReports[i].FM1 - MasReports[i].FM11;
-                            param2 = MasReports[i].FM2 * 1.0 / (MasReports[i].FM21 == 0 ? 1 : MasReports[i].FM21);
-                            param3 = MasReports[i].FM3 - MasReports[i].FM31;
-                            param4 = MasReports[i].FM3 * 1.0 / (MasReports[i].FM31 == 0 ? 1 : MasReports[i].FM31);
+                            DGVinst.Rows.Add(MasReports[i].comp_name, MasReports[i].inn, 0, 0.0, 0.0, 0.0, 3);
+                            DGVinst.Rows[i].Cells[0].Style.BackColor = Color.LightGray;
+                            DGVinst.Rows[i].Cells[1].Style.BackColor = Color.LightGray;
+                            for (int j = 2; j <= 6; j++)
+                            {
+                                DGVinst.Rows[i].Cells[j].Style.BackColor = Color.Gray;
+                            }
+                            DGVinst.Rows[i].Cells[6].Style.ForeColor = Color.Gray;
                             break;
                         }
                     case 1:
                         {
-                            param1 = MasReports[i].GF1 - MasReports[i].GF11;
-                            param2 = MasReports[i].GF2 * 1.0 / (MasReports[i].GF21 == 0 ? 1 : MasReports[i].GF21);
-                            param3 = MasReports[i].GF3 - MasReports[i].GF31;
-                            param4 = MasReports[i].GF3 * 1.0 / (MasReports[i].GF31 == 0 ? 1 : MasReports[i].GF31);
+                            int param1 = 0;
+                            double param2 = 0, param3 = 0, param4 = 0;
+                            switch (CBinstSelect1.SelectedIndex)
+                            {
+                                case 0:
+                                    {
+                                        param1 = MasReports[i].FM1;
+                                        param2 = MasReports[i].FM2;
+                                        param3 = MasReports[i].FM3;
+                                        param4 = MasReports[i].FM3;
+                                        break;
+                                    }
+                                case 1:
+                                    {
+                                        param1 = MasReports[i].GF1;
+                                        param2 = MasReports[i].GF2;
+                                        param3 = MasReports[i].GF3;
+                                        param4 = MasReports[i].GF3;
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        param1 = MasReports[i].CKR1;
+                                        param2 = MasReports[i].CKR2;
+                                        param3 = MasReports[i].CKR3;
+                                        param4 = MasReports[i].CKR3;
+                                        break;
+                                    }
+                                case 3:
+                                    {
+                                        param1 = MasReports[i].CPP1;
+                                        param2 = MasReports[i].CPP2;
+                                        param3 = MasReports[i].CPP3;
+                                        param4 = MasReports[i].CPP3;
+                                        break;
+                                    }
+                                case 4:
+                                    {
+                                        param1 = MasReports[i].CE1;
+                                        param2 = MasReports[i].CE2;
+                                        param3 = MasReports[i].CE3;
+                                        param4 = MasReports[i].CE3;
+                                        break;
+                                    }
+                            }
+                            
+                            DGVinst.Rows.Add(MasReports[i].comp_name, MasReports[i].inn, param1, param2, param3, param4, 2);
+                            
+                            for(int j = 0; j <= 6; j++)
+                            {
+                                DGVinst.Rows[i].Cells[j].Style.BackColor = Color.LightGray;
+                            }
+                            DGVinst.Rows[i].Cells[6].Style.ForeColor = Color.LightGray;
                             break;
                         }
                     case 2:
                         {
-                            param1 = MasReports[i].CKR1 - MasReports[i].CKR11;
-                            param2 = MasReports[i].CKR2 * 1.0 / (MasReports[i].CE21 == 0 ? 1 : MasReports[i].CE21);
-                            param3 = MasReports[i].CKR3 - MasReports[i].CKR31;
-                            param4 = MasReports[i].CKR3 * 1.0 / (MasReports[i].CE31 == 0 ? 1 : MasReports[i].CE31);
-                            break;
-                        }
-                    case 3:
-                        {
-                            param1 = MasReports[i].CPP1 - MasReports[i].CPP11;
-                            param2 = MasReports[i].CPP2 * 1.0 / (MasReports[i].CPP21 == 0 ? 1 : MasReports[i].CPP21);
-                            param3 = MasReports[i].CPP3 - MasReports[i].CPP31;
-                            param4 = MasReports[i].CPP3 * 1.0 / (MasReports[i].CPP31 == 0 ? 1 : MasReports[i].CPP31);
-                            break;
-                        }
-                    case 4:
-                        {
-                            param1 = MasReports[i].CE1 - MasReports[i].CE11;
-                            param2 = MasReports[i].CE2 * 1.0 / (MasReports[i].CE21 == 0 ? 1 : MasReports[i].CE21);
-                            param3 = MasReports[i].CE3 - MasReports[i].CE31;
-                            param4 = MasReports[i].CE3 * 1.0 / (MasReports[i].CE31 == 0 ? 1 : MasReports[i].CE21);
+                            int param1 = 0;
+                            double param2 = 0, param3 = 0, param4 = 0;
+                            switch (CBinstSelect1.SelectedIndex)
+                            {
+                                case 0:
+                                    {
+                                        param1 = MasReports[i].FM1 - MasReports[i].FM11;
+                                        param2 = MasReports[i].FM2 * 100.0 / (MasReports[i].FM21 == 0 ? 1 : MasReports[i].FM21);
+                                        param3 = MasReports[i].FM3 - MasReports[i].FM31;
+                                        param4 = MasReports[i].FM3 * 100.0 / (MasReports[i].FM31 == 0 ? 1 : MasReports[i].FM31);
+                                        break;
+                                    }
+                                case 1:
+                                    {
+                                        param1 = MasReports[i].GF1 - MasReports[i].GF11;
+                                        param2 = MasReports[i].GF2 * 100.0 / (MasReports[i].GF21 == 0 ? 1 : MasReports[i].GF21);
+                                        param3 = MasReports[i].GF3 - MasReports[i].GF31;
+                                        param4 = MasReports[i].GF3 * 100.0 / (MasReports[i].GF31 == 0 ? 1 : MasReports[i].GF31);
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        param1 = MasReports[i].CKR1 - MasReports[i].CKR11;
+                                        param2 = MasReports[i].CKR2 * 100.0 / (MasReports[i].CE21 == 0 ? 1 : MasReports[i].CE21);
+                                        param3 = MasReports[i].CKR3 - MasReports[i].CKR31;
+                                        param4 = MasReports[i].CKR3 * 100.0 / (MasReports[i].CE31 == 0 ? 1 : MasReports[i].CE31);
+                                        break;
+                                    }
+                                case 3:
+                                    {
+                                        param1 = MasReports[i].CPP1 - MasReports[i].CPP11;
+                                        param2 = MasReports[i].CPP2 * 100.0 / (MasReports[i].CPP21 == 0 ? 1 : MasReports[i].CPP21);
+                                        param3 = MasReports[i].CPP3 - MasReports[i].CPP31;
+                                        param4 = MasReports[i].CPP3 * 100.0 / (MasReports[i].CPP31 == 0 ? 1 : MasReports[i].CPP31);
+                                        break;
+                                    }
+                                case 4:
+                                    {
+                                        param1 = MasReports[i].CE1 - MasReports[i].CE11;
+                                        param2 = MasReports[i].CE2 * 100.0 / (MasReports[i].CE21 == 0 ? 1 : MasReports[i].CE21);
+                                        param3 = MasReports[i].CE3 - MasReports[i].CE31;
+                                        param4 = MasReports[i].CE3 * 100.0 / (MasReports[i].CE31 == 0 ? 1 : MasReports[i].CE21);
+                                        break;
+                                    }
+                            }
+                            int random = r.Next(0, 2);
+                            DGVinst.Rows.Add(MasReports[i].comp_name, MasReports[i].inn, param1, param2, param3, param4, random);
+                            if (random == 0)
+                            {
+                                DGVinst.Rows[i].Cells[6].Style.BackColor = Color.Red;
+                                DGVinst.Rows[i].Cells[6].Style.ForeColor = Color.Red;
+                            }
+                            else
+                            {
+                                DGVinst.Rows[i].Cells[6].Style.BackColor = Color.Green;
+                                DGVinst.Rows[i].Cells[6].Style.ForeColor = Color.Green;
+                            }
                             break;
                         }
                 }
+
                 
-                int random = r.Next(0, 2);
-                DGVinst.Rows.Add(MasReports[i].comp_name, MasReports[i].inn, param1, param2, param3, param4, random);
-                if (random == 0)
-                {
-                    DGVinst.Rows[i].Cells[6].Style.BackColor = Color.Red;
-                    DGVinst.Rows[i].Cells[6].Style.ForeColor = Color.Red;
-                }
-                else
-                {
-                    DGVinst.Rows[i].Cells[6].Style.BackColor = Color.Green;
-                    DGVinst.Rows[i].Cells[6].Style.ForeColor = Color.Green;
-                }
             }
         }
 

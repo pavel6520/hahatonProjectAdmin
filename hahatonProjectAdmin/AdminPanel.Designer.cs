@@ -40,9 +40,6 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.CBinstSelect1 = new System.Windows.Forms.ComboBox();
             this.DGVinst = new System.Windows.Forms.DataGridView();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.inst1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.compName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.inn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.vsm = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -51,6 +48,12 @@
             this.pvPercents = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.plan1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.inst = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.inst1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NONW = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SN = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Money = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
             this.TCinst.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -100,7 +103,7 @@
             this.TSMIuserCreate.Name = "TSMIuserCreate";
             this.TSMIuserCreate.ShortcutKeyDisplayString = "";
             this.TSMIuserCreate.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.TSMIuserCreate.Size = new System.Drawing.Size(136, 22);
+            this.TSMIuserCreate.Size = new System.Drawing.Size(180, 22);
             this.TSMIuserCreate.Text = "&Создать";
             this.TSMIuserCreate.Click += new System.EventHandler(this.TSMIuserCreate_Click);
             // 
@@ -170,33 +173,6 @@
             this.DGVinst.Size = new System.Drawing.Size(929, 422);
             this.DGVinst.TabIndex = 0;
             // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.dataGridView1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(924, 440);
-            this.tabPage1.TabIndex = 2;
-            this.tabPage1.Text = "Компании";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.inst1});
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(918, 434);
-            this.dataGridView1.TabIndex = 0;
-            // 
-            // inst1
-            // 
-            this.inst1.HeaderText = "Институт поддержки";
-            this.inst1.Name = "inst1";
-            // 
             // compName
             // 
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -263,6 +239,56 @@
             this.inst.Visible = false;
             this.inst.Width = 215;
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.dataGridView1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(929, 443);
+            this.tabPage1.TabIndex = 2;
+            this.tabPage1.Text = "Компании";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.inst1,
+            this.NONW,
+            this.SN,
+            this.Money});
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(923, 437);
+            this.dataGridView1.TabIndex = 0;
+            // 
+            // inst1
+            // 
+            this.inst1.HeaderText = "Институт поддержки";
+            this.inst1.Name = "inst1";
+            this.inst1.Width = 200;
+            // 
+            // NONW
+            // 
+            this.NONW.HeaderText = "Кол-во созданных мест";
+            this.NONW.Name = "NONW";
+            this.NONW.ReadOnly = true;
+            // 
+            // SN
+            // 
+            this.SN.HeaderText = "Кол-во сотрудников";
+            this.SN.Name = "SN";
+            this.SN.ReadOnly = true;
+            // 
+            // Money
+            // 
+            this.Money.HeaderText = "Выручка";
+            this.Money.Name = "Money";
+            this.Money.ReadOnly = true;
+            this.Money.Width = 120;
+            // 
             // AdminPanelForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -300,7 +326,6 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.DataGridView DGVinst;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn inst1;
         private System.Windows.Forms.ComboBox CBinstSelect1;
         private System.Windows.Forms.ToolStripMenuItem TSMIdb;
         private System.Windows.Forms.ToolStripMenuItem TSMIdbShow;
@@ -312,5 +337,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn pvPercents;
         private System.Windows.Forms.DataGridViewTextBoxColumn plan1;
         private System.Windows.Forms.DataGridViewTextBoxColumn inst;
+        private System.Windows.Forms.DataGridViewTextBoxColumn inst1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NONW;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SN;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Money;
     }
 }

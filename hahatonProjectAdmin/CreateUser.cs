@@ -161,7 +161,13 @@ namespace hahatonProjectAdmin
 
         private void CreateUserForm_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (TableINN.CurrentCell.ColumnIndex == 0)
+            if (TBlogin.Focused)
+            {
+                if ((e.KeyChar <= 64 || e.KeyChar >= 91) && (e.KeyChar <= 96 || e.KeyChar >= 123)
+                && (e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8 && e.KeyChar != 45 && e.KeyChar != 95)
+                    e.Handled = true;
+            }
+            else if (TableINN.CurrentCell.ColumnIndex == 0)
             {
                 if (!Program.Is_dig(e.KeyChar) && e.KeyChar != 8)
                     e.Handled = true;
@@ -171,13 +177,7 @@ namespace hahatonProjectAdmin
                 if ((e.KeyChar <= 64 || e.KeyChar >= 91) && (e.KeyChar <= 96 || e.KeyChar >= 123)
                 && (e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8
                 && (e.KeyChar <= 1039 || e.KeyChar >= 1104) && e.KeyChar != 1025 && e.KeyChar != 1105
-                && e.KeyChar != 34 && e.KeyChar != 32 && e.KeyChar != 8)
-                    e.Handled = true;
-            }
-            else if (TBlogin.Focused)
-            {
-                if ((e.KeyChar <= 64 || e.KeyChar >= 91) && (e.KeyChar <= 96 || e.KeyChar >= 123)
-                && (e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
+                && e.KeyChar != 34 && e.KeyChar != 32 && e.KeyChar != 8 && e.KeyChar != 45 && e.KeyChar != 95)
                     e.Handled = true;
             }
         }
