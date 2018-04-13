@@ -28,9 +28,8 @@ namespace hahatonProjectAdmin
 
         private void Bgenerate_Click(object sender, EventArgs e)
         {
-            //TBpass.Text = "1234";
             const string tmp = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-                "abcdefghijklmnopqrstuvwxyz" + "{#$<^(&*@}?%>";
+                "abcdefghijklmnopqrstuvwxyz" + "#$&@?%"; //"{#$<^(&*@}?%>"
             string pas = "";
 
 
@@ -68,7 +67,7 @@ namespace hahatonProjectAdmin
                 return;
             }
             LerrLoginIncorrect.Hide();
-            //Добавить проверку корректности логина
+            //Добавить проверку корректности логина -_
 
             for (int i = 0; i < TableINN.RowCount; i++)
             {
@@ -160,13 +159,27 @@ namespace hahatonProjectAdmin
             MessageBox.Show("Успешно добавлено.", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void TBlogin_KeyPress(object sender, KeyPressEventArgs e)
+        private void CreateUserForm_KeyPress(object sender, KeyPressEventArgs e)
         {
-            char n = e.KeyChar;
-
-            if ( (e.KeyChar <= 64 || e.KeyChar >= 91) && (e.KeyChar <= 96 || e.KeyChar >= 123) 
-                && (e.KeyChar <= 47 || e.KeyChar >= 58) && n != 8 )
-                e.Handled = true;
-        }        
+            if (TableINN.CurrentCell.ColumnIndex == 0)
+            {
+                if (!Program.Is_dig(e.KeyChar) && e.KeyChar != 8)
+                    e.Handled = true;
+            }
+            else if (TableINN.CurrentCell.ColumnIndex == 1)
+            {
+                if ((e.KeyChar <= 64 || e.KeyChar >= 91) && (e.KeyChar <= 96 || e.KeyChar >= 123)
+                && (e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8
+                && (e.KeyChar <= 1039 || e.KeyChar >= 1104) && e.KeyChar != 1025 && e.KeyChar != 1105
+                && e.KeyChar != 34 && e.KeyChar != 32 && e.KeyChar != 8)
+                    e.Handled = true;
+            }
+            else if (TBlogin.Focused)
+            {
+                if ((e.KeyChar <= 64 || e.KeyChar >= 91) && (e.KeyChar <= 96 || e.KeyChar >= 123)
+                && (e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
+                    e.Handled = true;
+            }
+        }
     }
 }

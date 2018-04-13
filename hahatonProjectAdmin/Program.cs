@@ -26,6 +26,13 @@ namespace hahatonProjectAdmin
             IF = new IniFile("Settings.ini");
             Application.Run(ConnectForm);
         }
+
+        public static bool Is_dig(char x)
+        {
+            if (Char.IsDigit(x))
+                return true;
+            else return false;
+        }
     }
 
     class IniFile

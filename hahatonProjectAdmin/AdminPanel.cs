@@ -27,6 +27,7 @@ namespace hahatonProjectAdmin
         }
         private Reports[] MasReports;
         public const bool plan = true;
+        private Random r = new Random();
 
         public AdminPanelForm(string str)
         {
@@ -70,7 +71,6 @@ namespace hahatonProjectAdmin
                 return;
             }
             int count = 0;
-            MasReports = new Reports[1];
             MySqlCommand com;
             MySqlDataReader readed;
             try
@@ -207,6 +207,7 @@ namespace hahatonProjectAdmin
         {
             DGVinst.Rows.Clear();
 
+            if (MasReports.Length > 0)
             for (int i = 0; i < MasReports.Length; i++)
             {
                 int param1 = 0;
@@ -254,13 +255,25 @@ namespace hahatonProjectAdmin
                             break;
                         }
                 }
-                DGVinst.Rows.Add(MasReports[i].comp_name, MasReports[i].inn, param1, param2, param3, param4, i + "test");
+                
+                int random = r.Next(0, 2);
+                DGVinst.Rows.Add(MasReports[i].comp_name, MasReports[i].inn, param1, param2, param3, param4, random);
+                if (random == 0)
+                {
+                    DGVinst.Rows[i].Cells[6].Style.BackColor = Color.Red;
+                    DGVinst.Rows[i].Cells[6].Style.ForeColor = Color.Red;
+                }
+                else
+                {
+                    DGVinst.Rows[i].Cells[6].Style.BackColor = Color.Green;
+                    DGVinst.Rows[i].Cells[6].Style.ForeColor = Color.Green;
+                }
             }
         }
 
         private void AdminPanelForm_Load(object sender, EventArgs e)
         {
-            DGVinst.RowCount = 20;
+            MasReports = new Reports[1];
         }
     }
 }

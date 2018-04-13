@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Llogin = new System.Windows.Forms.Label();
             this.Lpass = new System.Windows.Forms.Label();
             this.TBlogin = new System.Windows.Forms.TextBox();
@@ -70,7 +71,6 @@
             this.TBlogin.Name = "TBlogin";
             this.TBlogin.Size = new System.Drawing.Size(133, 20);
             this.TBlogin.TabIndex = 2;
-            this.TBlogin.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBlogin_KeyPress);
             // 
             // TBpass
             // 
@@ -131,6 +131,9 @@
             // 
             // INN
             // 
+            dataGridViewCellStyle2.Format = "N0";
+            dataGridViewCellStyle2.NullValue = null;
+            this.INN.DefaultCellStyle = dataGridViewCellStyle2;
             this.INN.Frozen = true;
             this.INN.HeaderText = "ИНН";
             this.INN.Name = "INN";
@@ -206,10 +209,12 @@
             this.Controls.Add(this.TBlogin);
             this.Controls.Add(this.Lpass);
             this.Controls.Add(this.Llogin);
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.Name = "CreateUserForm";
             this.Text = "CreateUser";
             this.Load += new System.EventHandler(this.CreateUserForm_Load);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CreateUserForm_KeyPress);
             ((System.ComponentModel.ISupportInitialize)(this.TableINN)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -226,11 +231,11 @@
         private System.Windows.Forms.Label LerrLoginExist;
         private System.Windows.Forms.Label LerrLoginIncorrect;
         private System.Windows.Forms.DataGridView TableINN;
-        private System.Windows.Forms.DataGridViewTextBoxColumn INN;
-        private System.Windows.Forms.DataGridViewTextBoxColumn COmpName;
         private System.Windows.Forms.Button AddTableLine;
         private System.Windows.Forms.Button DeleteTableLine;
         private System.Windows.Forms.Button BSave;
         private System.Windows.Forms.Label LErrTable;
+        private System.Windows.Forms.DataGridViewTextBoxColumn INN;
+        private System.Windows.Forms.DataGridViewTextBoxColumn COmpName;
     }
 }
