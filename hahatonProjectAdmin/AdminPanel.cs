@@ -13,6 +13,7 @@ namespace hahatonProjectAdmin
 {
     public partial class AdminPanelForm : Form
     {
+
         public CreateUserForm CreateUser;
         private string ConnectStr;
         private struct Reports
