@@ -34,7 +34,7 @@ namespace hahatonProjectAdmin
 
 
             Random r = new Random();
-            for(int i = 1; i < 10; i++)
+            for(int i = 1; i < 15; i++)
             {
                 pas += tmp[r.Next(0,tmp.Length - 1)];
             }

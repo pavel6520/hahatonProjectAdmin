@@ -29,6 +29,8 @@ namespace hahatonProjectAdmin
         private Reports[] MasReports;
         public const bool plan = true;
         private Random r = new Random();
+        public DateTime date1, date2;
+        public int count_d = 0;
 
         public AdminPanelForm(string str)
         {
@@ -355,6 +357,39 @@ namespace hahatonProjectAdmin
         private void AdminPanelForm_Load(object sender, EventArgs e)
         {
             MasReports = new Reports[1];
+        }
+
+        private void Bselect_date_Click(object sender, EventArgs e)
+        {
+            MC1.Show();
+        }
+
+        private void Bdia_set_Click(object sender, EventArgs e)
+        {
+            Random r = new Random();
+
+            int h = r.Next(50, 300);
+            panel2.Size = new Size(33, h);
+            panel2.Location = new Point(17, 96 + h);
+
+
+        }
+
+        private void MC1_DateSelected(object sender, DateRangeEventArgs e)
+        {
+            count_d++;
+
+            switch (count_d)
+            {
+                case 1: date1 = MC1.SelectionStart;
+                    break;
+                case 2: date2 = MC1.SelectionStart;
+                    MC1.Hide();
+                    //MessageBox.Show(date1.ToString("yyyy.MM.dd") + " - " + date2.ToString("yyyy.MM.dd"));
+                    //Выбранный период находится в date1 и date2
+                    count_d = 0;
+                    return;
+            }
         }
     }
 }

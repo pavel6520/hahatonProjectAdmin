@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.TSMIdb = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMIdbShow = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,6 +38,8 @@
             this.TSMIuserCreate = new System.Windows.Forms.ToolStripMenuItem();
             this.TCinst = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.MC1 = new System.Windows.Forms.MonthCalendar();
+            this.Bselect_date = new System.Windows.Forms.Button();
             this.CBinstSelect1 = new System.Windows.Forms.ComboBox();
             this.DGVinst = new System.Windows.Forms.DataGridView();
             this.compName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,12 +56,22 @@
             this.NONW = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SN = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Money = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.Bdia_set = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.TCinst.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVinst)).BeginInit();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.tabPage3.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -103,7 +115,7 @@
             this.TSMIuserCreate.Name = "TSMIuserCreate";
             this.TSMIuserCreate.ShortcutKeyDisplayString = "";
             this.TSMIuserCreate.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.TSMIuserCreate.Size = new System.Drawing.Size(180, 22);
+            this.TSMIuserCreate.Size = new System.Drawing.Size(136, 22);
             this.TSMIuserCreate.Text = "&Создать";
             this.TSMIuserCreate.Click += new System.EventHandler(this.TSMIuserCreate_Click);
             // 
@@ -111,6 +123,7 @@
             // 
             this.TCinst.Controls.Add(this.tabPage2);
             this.TCinst.Controls.Add(this.tabPage1);
+            this.TCinst.Controls.Add(this.tabPage3);
             this.TCinst.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TCinst.Location = new System.Drawing.Point(0, 24);
             this.TCinst.Multiline = true;
@@ -121,6 +134,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.MC1);
+            this.tabPage2.Controls.Add(this.Bselect_date);
             this.tabPage2.Controls.Add(this.CBinstSelect1);
             this.tabPage2.Controls.Add(this.DGVinst);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
@@ -130,6 +145,24 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Институты поддержки";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // MC1
+            // 
+            this.MC1.Location = new System.Drawing.Point(765, 21);
+            this.MC1.Name = "MC1";
+            this.MC1.TabIndex = 3;
+            this.MC1.Visible = false;
+            this.MC1.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.MC1_DateSelected);
+            // 
+            // Bselect_date
+            // 
+            this.Bselect_date.Location = new System.Drawing.Point(824, -1);
+            this.Bselect_date.Name = "Bselect_date";
+            this.Bselect_date.Size = new System.Drawing.Size(105, 22);
+            this.Bselect_date.TabIndex = 2;
+            this.Bselect_date.Text = "Выбрать период";
+            this.Bselect_date.UseVisualStyleBackColor = true;
+            this.Bselect_date.Click += new System.EventHandler(this.Bselect_date_Click);
             // 
             // CBinstSelect1
             // 
@@ -175,8 +208,8 @@
             // 
             // compName
             // 
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.compName.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.compName.DefaultCellStyle = dataGridViewCellStyle22;
             this.compName.HeaderText = "Компания";
             this.compName.Name = "compName";
             this.compName.ReadOnly = true;
@@ -198,9 +231,9 @@
             // 
             // pschr
             // 
-            dataGridViewCellStyle2.Format = "N2";
-            dataGridViewCellStyle2.NullValue = null;
-            this.pschr.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle23.Format = "N2";
+            dataGridViewCellStyle23.NullValue = null;
+            this.pschr.DefaultCellStyle = dataGridViewCellStyle23;
             this.pschr.HeaderText = "Прирост среднесписочной численности работников, %";
             this.pschr.Name = "pschr";
             this.pschr.ReadOnly = true;
@@ -215,9 +248,9 @@
             // 
             // pvPercents
             // 
-            dataGridViewCellStyle3.Format = "N2";
-            dataGridViewCellStyle3.NullValue = null;
-            this.pvPercents.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle24.Format = "N2";
+            dataGridViewCellStyle24.NullValue = null;
+            this.pvPercents.DefaultCellStyle = dataGridViewCellStyle24;
             this.pvPercents.HeaderText = "Прирост выручки, %";
             this.pvPercents.Name = "pvPercents";
             this.pvPercents.ReadOnly = true;
@@ -289,6 +322,87 @@
             this.Money.ReadOnly = true;
             this.Money.Width = 120;
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.Bdia_set);
+            this.tabPage3.Controls.Add(this.panel1);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(929, 443);
+            this.tabPage3.TabIndex = 3;
+            this.tabPage3.Text = "Диаграмма";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // panel1
+            // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.panel6);
+            this.panel1.Controls.Add(this.panel5);
+            this.panel1.Controls.Add(this.panel4);
+            this.panel1.Controls.Add(this.panel3);
+            this.panel1.Controls.Add(this.panel2);
+            this.panel1.Location = new System.Drawing.Point(120, 29);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(229, 283);
+            this.panel1.TabIndex = 0;
+            // 
+            // panel2
+            // 
+            this.panel2.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.panel2.BackColor = System.Drawing.Color.Red;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.ForeColor = System.Drawing.Color.Black;
+            this.panel2.Location = new System.Drawing.Point(17, 96);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(33, 185);
+            this.panel2.TabIndex = 0;
+            // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.Color.Gray;
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel3.Location = new System.Drawing.Point(56, 96);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(33, 185);
+            this.panel3.TabIndex = 1;
+            // 
+            // panel4
+            // 
+            this.panel4.BackColor = System.Drawing.Color.Yellow;
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel4.Location = new System.Drawing.Point(95, 96);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(33, 185);
+            this.panel4.TabIndex = 2;
+            // 
+            // panel5
+            // 
+            this.panel5.BackColor = System.Drawing.Color.Olive;
+            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel5.Location = new System.Drawing.Point(134, 96);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(33, 185);
+            this.panel5.TabIndex = 3;
+            // 
+            // panel6
+            // 
+            this.panel6.BackColor = System.Drawing.Color.LawnGreen;
+            this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel6.Location = new System.Drawing.Point(173, 96);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(33, 185);
+            this.panel6.TabIndex = 3;
+            // 
+            // Bdia_set
+            // 
+            this.Bdia_set.Location = new System.Drawing.Point(492, 169);
+            this.Bdia_set.Name = "Bdia_set";
+            this.Bdia_set.Size = new System.Drawing.Size(95, 28);
+            this.Bdia_set.TabIndex = 1;
+            this.Bdia_set.Text = "Составить";
+            this.Bdia_set.UseVisualStyleBackColor = true;
+            this.Bdia_set.Click += new System.EventHandler(this.Bdia_set_Click);
+            // 
             // AdminPanelForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -312,6 +426,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.DGVinst)).EndInit();
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.tabPage3.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -341,5 +457,15 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn NONW;
         private System.Windows.Forms.DataGridViewTextBoxColumn SN;
         private System.Windows.Forms.DataGridViewTextBoxColumn Money;
+        private System.Windows.Forms.Button Bselect_date;
+        private System.Windows.Forms.MonthCalendar MC1;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button Bdia_set;
     }
 }
