@@ -38,12 +38,12 @@
             this.LerrLoginExist = new System.Windows.Forms.Label();
             this.LerrLoginIncorrect = new System.Windows.Forms.Label();
             this.TableINN = new System.Windows.Forms.DataGridView();
-            this.INN = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.COmpName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AddTableLine = new System.Windows.Forms.Button();
             this.DeleteTableLine = new System.Windows.Forms.Button();
             this.BSave = new System.Windows.Forms.Button();
             this.LErrTable = new System.Windows.Forms.Label();
+            this.INN = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.COmpName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.TableINN)).BeginInit();
             this.SuspendLayout();
             // 
@@ -129,27 +129,6 @@
             this.TableINN.Size = new System.Drawing.Size(443, 163);
             this.TableINN.TabIndex = 7;
             // 
-            // INN
-            // 
-            dataGridViewCellStyle2.Format = "N0";
-            dataGridViewCellStyle2.NullValue = null;
-            this.INN.DefaultCellStyle = dataGridViewCellStyle2;
-            this.INN.Frozen = true;
-            this.INN.HeaderText = "ИНН";
-            this.INN.Name = "INN";
-            this.INN.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.INN.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.INN.Width = 150;
-            // 
-            // COmpName
-            // 
-            this.COmpName.Frozen = true;
-            this.COmpName.HeaderText = "Имя компании";
-            this.COmpName.Name = "COmpName";
-            this.COmpName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.COmpName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.COmpName.Width = 250;
-            // 
             // AddTableLine
             // 
             this.AddTableLine.Location = new System.Drawing.Point(12, 228);
@@ -190,6 +169,28 @@
             this.LErrTable.TabIndex = 11;
             this.LErrTable.Text = "Не все поля заполнены";
             this.LErrTable.Visible = false;
+            // 
+            // INN
+            // 
+            dataGridViewCellStyle2.Format = "N0";
+            dataGridViewCellStyle2.NullValue = null;
+            this.INN.DefaultCellStyle = dataGridViewCellStyle2;
+            this.INN.Frozen = true;
+            this.INN.HeaderText = "ИНН";
+            this.INN.MaxInputLength = 12;
+            this.INN.Name = "INN";
+            this.INN.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.INN.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.INN.Width = 150;
+            // 
+            // COmpName
+            // 
+            this.COmpName.Frozen = true;
+            this.COmpName.HeaderText = "Имя компании";
+            this.COmpName.Name = "COmpName";
+            this.COmpName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.COmpName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.COmpName.Width = 250;
             // 
             // CreateUserForm
             // 
