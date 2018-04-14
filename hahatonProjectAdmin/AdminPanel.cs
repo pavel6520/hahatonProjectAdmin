@@ -30,6 +30,8 @@ namespace hahatonProjectAdmin
         private Reports[] MasReports;
         public const bool plan = true;
         private Random r = new Random();
+        public DateTime date1, date2;
+        public int count_d = 0;
 
         public AdminPanelForm(string str)
         {
@@ -64,7 +66,6 @@ namespace hahatonProjectAdmin
             DGVinst.Rows.Add("2", "2", "2", "2", "2", "2", "2", ""); DGVinst.Rows[3].Cells[7].Style.BackColor = Color.Red;*/
             try
             {
-                //Program.ConnectForm.conn = new MySqlConnection(ConnectStr);
                 Program.ConnectForm.conn.Open();
             }
             catch (Exception ex)
@@ -205,8 +206,8 @@ namespace hahatonProjectAdmin
                 MessageBox.Show("Ошибка выполнения запроса. Обратитесь к администратору.\n" + ex, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            CBinstSelect1.SelectedIndex = 1;
-            CBinstSelect1.SelectedIndex = 0;
+            CBinstSelect2.SelectedIndex = 1;
+            CBinstSelect2.SelectedIndex = 0;
         }
 
         private void CBinstSelect1_SelectedIndexChanged(object sender, EventArgs e)
@@ -233,7 +234,7 @@ namespace hahatonProjectAdmin
                         {
                             int param1 = 0;
                             double param2 = 0, param3 = 0, param4 = 0;
-                            switch (CBinstSelect1.SelectedIndex)
+                            switch (CBinstSelect2.SelectedIndex)
                             {
                                 case 0:
                                     {
@@ -290,7 +291,7 @@ namespace hahatonProjectAdmin
                         {
                             int param1 = 0;
                             double param2 = 0, param3 = 0, param4 = 0;
-                            switch (CBinstSelect1.SelectedIndex)
+                            switch (CBinstSelect2.SelectedIndex)
                             {
                                 case 0:
                                     {
@@ -355,7 +356,112 @@ namespace hahatonProjectAdmin
 
         private void AdminPanelForm_Load(object sender, EventArgs e)
         {
+            this.Size = new Size(587, 531);
+
             MasReports = new Reports[1];
+
+            TabControl.SelectedIndex = 0;
+            CBinstSelect1.SelectedIndex = 0;
+            CBinstSelect2.SelectedIndex = 0;
+            CBinstSelect3.SelectedIndex = 0;
+
+            Dia1.Series[0].Points.DataBindY(
+                new int[] { 15, 20 });
+            Dia1.Series[1].Points.DataBindY(
+                new int[] { 25, 35 });
+            Dia1.Series[2].Points.DataBindY(
+                new int[] { 35, 45 });
+            Dia1.Series[3].Points.DataBindY(
+                new int[] { 45, 55 });
+            Dia1.Series[4].Points.DataBindY(
+                new int[] { 55, 65 });
         }
+
+        private void Bselect_date_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void Bset_Click(object sender, EventArgs e)
+        {
+            Dia1.Series[0].Points.DataBindY(
+                new int[] {15, 20} );
+            Dia1.Series[1].Points.DataBindY(
+                new int[] {25, 35});
+            Dia1.Series[2].Points.DataBindY(
+                new int[] {35, 45});
+            Dia1.Series[3].Points.DataBindY(
+                new int[] {45, 55});
+            Dia1.Series[4].Points.DataBindY(
+                new int[] {55, 65});
+        }
+
+        private void Bselect_date1_Click(object sender, EventArgs e)
+        {
+            MC1.Show();
+        }
+
+        private void Bselect_date2_Click(object sender, EventArgs e)
+        {
+            MC2.Show();
+        }
+
+        private void MC2_DateSelected(object sender, DateRangeEventArgs e)
+        {
+            count_d++;
+
+            switch (count_d)
+            {
+                case 1:
+                    date1 = MC2.SelectionStart;
+                    break;
+                case 2:
+                    date2 = MC2.SelectionStart;
+                    MC2.Hide();
+                    //MessageBox.Show(date1.ToString("yyyy.MM.dd") + " - " + date2.ToString("yyyy.MM.dd"));
+                    //Выбранный период находится в date1 и date2
+                    count_d = 0;
+                    return;
+            }
+        }
+
+        private void TabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (TabControl.SelectedIndex)
+            {
+                case 0:
+                    this.Size = new Size(587, 531);
+                    break;
+                case 1:
+                    this.Size = new Size(952, 531);
+                    break;
+                case 2:
+                    this.Size = new Size(818, 531);
+                    break;
+                case 3:
+                    this.Size = new Size(926, 531);
+                    break;
+            }
+        }
+
+        private void MC1_DateSelected_1(object sender, DateRangeEventArgs e)
+        {
+            count_d++;
+
+            switch (count_d)
+            {
+                case 1:
+                    date1 = MC1.SelectionStart;
+                    break;
+                case 2:
+                    date2 = MC1.SelectionStart;
+                    MC1.Hide();
+                    //MessageBox.Show(date1.ToString("yyyy.MM.dd") + " - " + date2.ToString("yyyy.MM.dd"));
+                    //Выбранный период находится в date1 и date2
+                    count_d = 0;
+                    return;
+            }
+        }
+        
     }
 }
