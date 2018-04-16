@@ -391,7 +391,7 @@
             this.Dia1.Series.Add(series3);
             this.Dia1.Series.Add(series4);
             this.Dia1.Series.Add(series5);
-            this.Dia1.Size = new System.Drawing.Size(926, 214);
+            this.Dia1.Size = new System.Drawing.Size(926, 443);
             this.Dia1.TabIndex = 0;
             this.Dia1.Text = "Hello";
             title1.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
