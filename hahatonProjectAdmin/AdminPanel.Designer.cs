@@ -175,7 +175,7 @@
             this.CBinstSelect2.Name = "CBinstSelect2";
             this.CBinstSelect2.Size = new System.Drawing.Size(240, 21);
             this.CBinstSelect2.TabIndex = 1;
-            this.CBinstSelect2.SelectedIndexChanged += new System.EventHandler(this.CBinstSelect1_SelectedIndexChanged);
+            this.CBinstSelect2.SelectedIndexChanged += new System.EventHandler(this.CBinstSelect2_SelectedIndexChanged);
             // 
             // DGVcompReport
             // 
