@@ -28,18 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series16 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series17 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series18 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series19 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series20 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title4 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.TSMIdb = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMIdbShow = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,7 +58,6 @@
             this.plan1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.inst = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.MC1 = new System.Windows.Forms.MonthCalendar();
             this.Bselect_date1 = new System.Windows.Forms.Button();
             this.CBinstSelect1 = new System.Windows.Forms.ComboBox();
             this.DGVinstStat = new System.Windows.Forms.DataGridView();
@@ -78,6 +77,7 @@
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MC1 = new System.Windows.Forms.MonthCalendar();
             this.menuStrip1.SuspendLayout();
             this.TabControl.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -156,7 +156,6 @@
             this.tabPage2.Controls.Add(this.DGVcompReport);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(929, 443);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Институты поддержки";
@@ -172,7 +171,7 @@
             "Центр кластерного развития",
             "Центр поддержки предпринимательства",
             "Центр экспорта"});
-            this.CBinstSelect2.Location = new System.Drawing.Point(3, 0);
+            this.CBinstSelect2.Location = new System.Drawing.Point(0, 0);
             this.CBinstSelect2.Name = "CBinstSelect2";
             this.CBinstSelect2.Size = new System.Drawing.Size(240, 21);
             this.CBinstSelect2.TabIndex = 1;
@@ -196,16 +195,16 @@
             this.plan1,
             this.inst});
             this.DGVcompReport.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.DGVcompReport.Location = new System.Drawing.Point(3, 21);
+            this.DGVcompReport.Location = new System.Drawing.Point(0, 22);
             this.DGVcompReport.Name = "DGVcompReport";
             this.DGVcompReport.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.DGVcompReport.Size = new System.Drawing.Size(923, 419);
+            this.DGVcompReport.Size = new System.Drawing.Size(929, 421);
             this.DGVcompReport.TabIndex = 0;
             // 
             // compName
             // 
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.compName.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.compName.DefaultCellStyle = dataGridViewCellStyle1;
             this.compName.HeaderText = "Компания";
             this.compName.Name = "compName";
             this.compName.ReadOnly = true;
@@ -227,9 +226,9 @@
             // 
             // pschr
             // 
-            dataGridViewCellStyle14.Format = "N2";
-            dataGridViewCellStyle14.NullValue = null;
-            this.pschr.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle2.Format = "N2";
+            dataGridViewCellStyle2.NullValue = null;
+            this.pschr.DefaultCellStyle = dataGridViewCellStyle2;
             this.pschr.HeaderText = "Прирост среднесписочной численности работников, %";
             this.pschr.Name = "pschr";
             this.pschr.ReadOnly = true;
@@ -244,9 +243,9 @@
             // 
             // pvPercents
             // 
-            dataGridViewCellStyle15.Format = "N2";
-            dataGridViewCellStyle15.NullValue = null;
-            this.pvPercents.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle3.Format = "N2";
+            dataGridViewCellStyle3.NullValue = null;
+            this.pvPercents.DefaultCellStyle = dataGridViewCellStyle3;
             this.pvPercents.HeaderText = "Прирост выручки, %";
             this.pvPercents.Name = "pvPercents";
             this.pvPercents.ReadOnly = true;
@@ -275,25 +274,16 @@
             this.tabPage1.Controls.Add(this.DGVinstStat);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(929, 443);
             this.tabPage1.TabIndex = 2;
             this.tabPage1.Text = "Компании";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // MC1
-            // 
-            this.MC1.Location = new System.Drawing.Point(406, 68);
-            this.MC1.Name = "MC1";
-            this.MC1.TabIndex = 4;
-            this.MC1.Visible = false;
-            this.MC1.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.MC1_DateSelected_1);
-            // 
             // Bselect_date1
             // 
-            this.Bselect_date1.Location = new System.Drawing.Point(461, 1);
+            this.Bselect_date1.Location = new System.Drawing.Point(461, 0);
             this.Bselect_date1.Name = "Bselect_date1";
-            this.Bselect_date1.Size = new System.Drawing.Size(105, 22);
+            this.Bselect_date1.Size = new System.Drawing.Size(105, 21);
             this.Bselect_date1.TabIndex = 3;
             this.Bselect_date1.Text = "Выбрать период";
             this.Bselect_date1.UseVisualStyleBackColor = true;
@@ -309,7 +299,7 @@
             "Центр кластерного развития",
             "Центр поддержки предпринимательства",
             "Центр экспорта"});
-            this.CBinstSelect1.Location = new System.Drawing.Point(3, 1);
+            this.CBinstSelect1.Location = new System.Drawing.Point(0, 0);
             this.CBinstSelect1.Name = "CBinstSelect1";
             this.CBinstSelect1.Size = new System.Drawing.Size(240, 21);
             this.CBinstSelect1.TabIndex = 2;
@@ -324,9 +314,9 @@
             this.SN,
             this.Money});
             this.DGVinstStat.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.DGVinstStat.Location = new System.Drawing.Point(3, 24);
+            this.DGVinstStat.Location = new System.Drawing.Point(0, 22);
             this.DGVinstStat.Name = "DGVinstStat";
-            this.DGVinstStat.Size = new System.Drawing.Size(923, 416);
+            this.DGVinstStat.Size = new System.Drawing.Size(929, 421);
             this.DGVinstStat.TabIndex = 0;
             // 
             // inst1
@@ -368,44 +358,46 @@
             // 
             this.Dia1.BackSecondaryColor = System.Drawing.Color.White;
             this.Dia1.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea4.BackColor = System.Drawing.Color.Wheat;
-            chartArea4.BorderWidth = 3;
-            chartArea4.Name = "ChartArea1";
-            this.Dia1.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.Dia1.Legends.Add(legend4);
+            chartArea1.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
+            chartArea1.AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Years;
+            chartArea1.BackColor = System.Drawing.Color.Wheat;
+            chartArea1.BorderWidth = 3;
+            chartArea1.Name = "ChartArea1";
+            this.Dia1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.Dia1.Legends.Add(legend1);
             this.Dia1.Location = new System.Drawing.Point(0, 0);
             this.Dia1.Name = "Dia1";
-            series16.ChartArea = "ChartArea1";
-            series16.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            series16.Legend = "Legend1";
-            series16.MarkerStep = 4;
-            series16.Name = "Фонд Микрофинансирования";
-            series16.YValuesPerPoint = 4;
-            series17.ChartArea = "ChartArea1";
-            series17.Legend = "Legend1";
-            series17.Name = "Гарантийный фонд";
-            series18.ChartArea = "ChartArea1";
-            series18.Legend = "Legend1";
-            series18.Name = "Центр кластерного развития";
-            series19.ChartArea = "ChartArea1";
-            series19.Legend = "Legend1";
-            series19.Name = "Центр поддержки предпринимательства";
-            series20.ChartArea = "ChartArea1";
-            series20.Legend = "Legend1";
-            series20.Name = "Центр экспорта";
-            this.Dia1.Series.Add(series16);
-            this.Dia1.Series.Add(series17);
-            this.Dia1.Series.Add(series18);
-            this.Dia1.Series.Add(series19);
-            this.Dia1.Series.Add(series20);
+            series1.ChartArea = "ChartArea1";
+            series1.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            series1.Legend = "Legend1";
+            series1.MarkerStep = 4;
+            series1.Name = "Фонд Микрофинансирования";
+            series1.YValuesPerPoint = 4;
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Гарантийный фонд";
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Центр кластерного развития";
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Центр поддержки предпринимательства";
+            series5.ChartArea = "ChartArea1";
+            series5.Legend = "Legend1";
+            series5.Name = "Центр экспорта";
+            this.Dia1.Series.Add(series1);
+            this.Dia1.Series.Add(series2);
+            this.Dia1.Series.Add(series3);
+            this.Dia1.Series.Add(series4);
+            this.Dia1.Series.Add(series5);
             this.Dia1.Size = new System.Drawing.Size(926, 214);
             this.Dia1.TabIndex = 0;
             this.Dia1.Text = "Hello";
-            title4.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            title4.Name = "Title1";
-            title4.Text = "Созданные рабочие места";
-            this.Dia1.Titles.Add(title4);
+            title1.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            title1.Name = "Title1";
+            title1.Text = "Созданные рабочие места";
+            this.Dia1.Titles.Add(title1);
             // 
             // tabPage4
             // 
@@ -421,9 +413,9 @@
             // 
             // Bselect_date2
             // 
-            this.Bselect_date2.Location = new System.Drawing.Point(690, -1);
+            this.Bselect_date2.Location = new System.Drawing.Point(687, 0);
             this.Bselect_date2.Name = "Bselect_date2";
-            this.Bselect_date2.Size = new System.Drawing.Size(105, 22);
+            this.Bselect_date2.Size = new System.Drawing.Size(105, 21);
             this.Bselect_date2.TabIndex = 4;
             this.Bselect_date2.Text = "Выбрать период";
             this.Bselect_date2.UseVisualStyleBackColor = true;
@@ -460,16 +452,16 @@
             this.Column3,
             this.Column4});
             this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dataGridView2.Location = new System.Drawing.Point(0, 21);
+            this.dataGridView2.Location = new System.Drawing.Point(0, 22);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridView2.Size = new System.Drawing.Size(929, 422);
+            this.dataGridView2.Size = new System.Drawing.Size(929, 421);
             this.dataGridView2.TabIndex = 1;
             // 
             // dataGridViewTextBoxColumn1
             // 
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridViewTextBoxColumn1.HeaderText = "Компания";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
@@ -507,6 +499,14 @@
             this.Column4.HeaderText = "Дата";
             this.Column4.Name = "Column4";
             this.Column4.ReadOnly = true;
+            // 
+            // MC1
+            // 
+            this.MC1.Location = new System.Drawing.Point(406, 68);
+            this.MC1.Name = "MC1";
+            this.MC1.TabIndex = 4;
+            this.MC1.Visible = false;
+            this.MC1.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.MC1_DateSelected_1);
             // 
             // AdminPanelForm
             // 
