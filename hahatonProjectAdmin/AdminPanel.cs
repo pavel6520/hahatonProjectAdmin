@@ -95,38 +95,68 @@ namespace hahatonProjectAdmin
                 bool ReportSearch = false;
                 for (int i = 0; i < MasReports.Length; i++)
                 {
-                    com = new MySqlCommand("select * from project.`" + MasReports[i].inn + "`  order by date desc limit 2", Program.ConnectForm.conn);
+                    DateTime[] MasReportQuarter = null;
+                    int countReports = 0;
+                    
+                    com = new MySqlCommand("select distinct date from project.`" + MasReports[i].inn + "` order by date desc limit 2", Program.ConnectForm.conn);
                     readed = com.ExecuteReader();
-                    Report[] reports = null;
-                    while (readed.Read())//Если есть отчеты, получаем самый актуальный
+                    while (readed.Read())
                     {
                         if (!ReportSearch)
                         {
                             ReportSearch = true;
                             DGVcompReport.Rows.Clear();
                         }
-                        Array.Resize(ref reports, (reports == null ? 1 : reports.Length + 1));
-                        reports[reports.Length - 1].date = Convert.ToDateTime(readed[0].ToString());
-                        reports[reports.Length - 1].param1 = new int[5];
-                        reports[reports.Length - 1].param2 = new int[5];
-                        reports[reports.Length - 1].param3 = new double[5];
-                        reports[reports.Length - 1].param1[0] = Convert.ToInt32(readed[1].ToString());
-                        reports[reports.Length - 1].param2[0] = Convert.ToInt32(readed[2].ToString());
-                        reports[reports.Length - 1].param3[0] = Convert.ToDouble(readed[3].ToString());
-                        reports[reports.Length - 1].param1[1] = Convert.ToInt32(readed[4].ToString());
-                        reports[reports.Length - 1].param2[1] = Convert.ToInt32(readed[5].ToString());
-                        reports[reports.Length - 1].param3[1] = Convert.ToDouble(readed[6].ToString());
-                        reports[reports.Length - 1].param1[2] = Convert.ToInt32(readed[7].ToString());
-                        reports[reports.Length - 1].param2[2] = Convert.ToInt32(readed[8].ToString());
-                        reports[reports.Length - 1].param3[2] = Convert.ToDouble(readed[9].ToString());
-                        reports[reports.Length - 1].param1[3] = Convert.ToInt32(readed[10].ToString());
-                        reports[reports.Length - 1].param2[3] = Convert.ToInt32(readed[11].ToString());
-                        reports[reports.Length - 1].param3[3] = Convert.ToDouble(readed[12].ToString());
-                        reports[reports.Length - 1].param1[4] = Convert.ToInt32(readed[13].ToString());
-                        reports[reports.Length - 1].param2[4] = Convert.ToInt32(readed[14].ToString());
-                        reports[reports.Length - 1].param3[4] = Convert.ToDouble(readed[15].ToString());
+                        countReports++;
+                        Array.Resize(ref MasReportQuarter, countReports);
+                        MasReportQuarter[countReports - 1] = Convert.ToDateTime(readed[0].ToString());
+                        MessageBox.Show("1. " + MasReportQuarter[countReports - 1].ToString("yyyy.MM.dd"));
                     }
                     readed.Close();
+                    
+                    DateTime[] MasReportTimeSended = null;
+                    for (int j = 0; j < countReports; j++)
+                    {
+                        Array.Resize(ref MasReportTimeSended, j + 1);
+                        com = new MySqlCommand("select datereport from project.`" + MasReports[i].inn + "` where Date = '" + MasReportQuarter[j].ToString("yyyy.MM.dd") + "' order by datereport desc limit 1", Program.ConnectForm.conn);
+                        readed = com.ExecuteReader();
+                        readed.Read();
+                        MasReportTimeSended[j] = Convert.ToDateTime(readed[0].ToString());
+                        readed.Close();
+                        MessageBox.Show("2. " + MasReportQuarter[j].ToString("yyyy.MM.dd") + " " + MasReportTimeSended[j].ToString("yyyy.MM.dd HH:mm:ss"));
+                    }
+                    
+                    Report[] reports = null;
+                    for (int j = 0; j < countReports; j++)//Если есть отчеты, получаем самый актуальный
+                    {
+                        MessageBox.Show("3. " + MasReportTimeSended[j].ToString("yyyy.MM.dd HH:mm:ss"));
+                        com = new MySqlCommand("select * from project.`" + MasReports[i].inn + "` where datereport = '" + 
+                            MasReportTimeSended[j].ToString("yyyy.MM.dd HH:mm:ss") + 
+                            "' order by DateReport desc limit 1", Program.ConnectForm.conn);
+                        readed = com.ExecuteReader();
+                        readed.Read();
+                        Array.Resize(ref reports, j + 1);
+                        //reports[reports.Length - 1].date = Convert.ToDateTime(readed[0].ToString());
+                        reports[j].param1 = new int[5];
+                        reports[j].param2 = new int[5];
+                        reports[j].param3 = new double[5];
+                        reports[j].param1[0] = Convert.ToInt32(readed[2].ToString());
+                        reports[j].param2[0] = Convert.ToInt32(readed[3].ToString());
+                        reports[j].param3[0] = Convert.ToDouble(readed[4].ToString());
+                        reports[j].param1[1] = Convert.ToInt32(readed[5].ToString());
+                        reports[j].param2[1] = Convert.ToInt32(readed[6].ToString());
+                        reports[j].param3[1] = Convert.ToDouble(readed[7].ToString());
+                        reports[j].param1[2] = Convert.ToInt32(readed[8].ToString());
+                        reports[j].param2[2] = Convert.ToInt32(readed[9].ToString());
+                        reports[j].param3[2] = Convert.ToDouble(readed[10].ToString());
+                        reports[j].param1[3] = Convert.ToInt32(readed[11].ToString());
+                        reports[j].param2[3] = Convert.ToInt32(readed[12].ToString());
+                        reports[j].param3[3] = Convert.ToDouble(readed[13].ToString());
+                        reports[j].param1[4] = Convert.ToInt32(readed[14].ToString());
+                        reports[j].param2[4] = Convert.ToInt32(readed[15].ToString());
+                        reports[j].param3[4] = Convert.ToDouble(readed[16].ToString());
+                        readed.Close();
+                    }
                     for (int j = 0; j <= 4; j++)
                     {
                         if (reports == null)
@@ -169,16 +199,8 @@ namespace hahatonProjectAdmin
                                         double param4 = (reports[1].param3[j] == 0 ? reports[0].param2[j] : reports[0].param3[j] * 100.0 / reports[1].param3[j] - 100);
                                         int random = r.Next(0, 2);
                                         DGVcompReport.Rows.Add(MasReports[i].comp_name, MasReports[i].inn, param1, param2, param3, param4, random);
-                                        if (random == 0)
-                                        {
-                                            DGVcompReport.Rows[i * 5 + j].Cells[6].Style.BackColor = Color.Red;
-                                            DGVcompReport.Rows[i * 5 + j].Cells[6].Style.ForeColor = Color.Red;
-                                        }
-                                        else
-                                        {
-                                            DGVcompReport.Rows[i * 5 + j].Cells[6].Style.BackColor = Color.Green;
-                                            DGVcompReport.Rows[i * 5 + j].Cells[6].Style.ForeColor = Color.Green;
-                                        }
+                                        DGVcompReport.Rows[i * 5 + j].Cells[6].Style.BackColor = (random == 0 ? Color.Red : Color.Green);
+                                        DGVcompReport.Rows[i * 5 + j].Cells[6].Style.ForeColor = (random == 0 ? Color.Red : Color.Green);
                                         break;
                                     }
                             }
@@ -187,9 +209,9 @@ namespace hahatonProjectAdmin
                 }
                 if (!ReportSearch)
                 {
-                    Program.ConnectForm.conn.Close();
+                    //Program.ConnectForm.conn.Close();
                     MessageBox.Show("Отчеты не найдены", "Ошибка загрузки", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    //return;
                 }
                 Program.ConnectForm.conn.Close();
             }
@@ -219,7 +241,7 @@ namespace hahatonProjectAdmin
                 }
             }
         }
-
+        
         private void AdminPanelForm_Load(object sender, EventArgs e)
         {
             TabControl.SelectedIndex = 0;
