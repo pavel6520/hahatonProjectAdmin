@@ -25,12 +25,9 @@ namespace hahatonProjectAdmin
         private struct Reports
         {
             public string inn, comp_name;
-            public Report[] reports;
-            public bool ReportFound;
+            //public bool ReportFound;
         }
-        private Reports[] MasReportsForPeriod;
-        private Reports[] MasReports;
-        private bool ReportSearch = false;
+        //private Reports[] MasReportsForPeriod;
 
         private Random r = new Random();
         public DateTime SelectedPeriodStart = DateTime.MinValue, SelectedPeriodEnd = DateTime.MinValue;
@@ -64,7 +61,6 @@ namespace hahatonProjectAdmin
 
         private void TSMIbdShow_Click(object sender, EventArgs e)
         {
-            MasReports = null;
             try
             {
                 Program.ConnectForm.conn.Open();
@@ -81,6 +77,7 @@ namespace hahatonProjectAdmin
                 //Загрузка ИНН, имен компаний
                 com = new MySqlCommand("select inn, comp_name from project.login_inn", Program.ConnectForm.conn);
                 readed = com.ExecuteReader();
+                Reports[] MasReports = null;
                 while (readed.Read())
                 {
                     Array.Resize(ref MasReports, (MasReports == null ? 1 : MasReports.Length + 1));
@@ -95,51 +92,98 @@ namespace hahatonProjectAdmin
                     return;
                 }
                 //Загрузка 2 последних отчетов для каждой компании
-                int i;
-                for (i = 0; i < MasReports.Length; i++)
+                bool ReportSearch = false;
+                for (int i = 0; i < MasReports.Length; i++)
                 {
                     com = new MySqlCommand("select * from project.`" + MasReports[i].inn + "`  order by date desc limit 2", Program.ConnectForm.conn);
                     readed = com.ExecuteReader();
-
-                    //MasReports[i1].reports = new Report[1];
-                    //MasReports[i1].ReportFound = false;
-
+                    Report[] reports = null;
                     while (readed.Read())//Если есть отчеты, получаем самый актуальный
                     {
-                        ReportSearch = true;
-
-                        Array.Resize(ref MasReports[i].reports, (MasReports[i].reports == null ? 1 : MasReports[i].reports.Length + 1));
-                        MasReports[i].reports[MasReports[i].reports.Length - 1].date = Convert.ToDateTime(readed[0].ToString());
-
-                        MasReports[i].reports[MasReports[i].reports.Length - 1].param1 = new int[5];
-                        MasReports[i].reports[MasReports[i].reports.Length - 1].param2 = new int[5];
-                        MasReports[i].reports[MasReports[i].reports.Length - 1].param3 = new double[5];
-
-                        MasReports[i].reports[MasReports[i].reports.Length - 1].param1[0] = Convert.ToInt32(readed[1].ToString());
-                        MasReports[i].reports[MasReports[i].reports.Length - 1].param2[0] = Convert.ToInt32(readed[2].ToString());
-                        MasReports[i].reports[MasReports[i].reports.Length - 1].param3[0] = Convert.ToDouble(readed[3].ToString());
-
-                        MasReports[i].reports[MasReports[i].reports.Length - 1].param1[1] = Convert.ToInt32(readed[4].ToString());
-                        MasReports[i].reports[MasReports[i].reports.Length - 1].param2[1] = Convert.ToInt32(readed[5].ToString());
-                        MasReports[i].reports[MasReports[i].reports.Length - 1].param3[1] = Convert.ToDouble(readed[6].ToString());
-
-                        MasReports[i].reports[MasReports[i].reports.Length - 1].param1[2] = Convert.ToInt32(readed[7].ToString());
-                        MasReports[i].reports[MasReports[i].reports.Length - 1].param2[2] = Convert.ToInt32(readed[8].ToString());
-                        MasReports[i].reports[MasReports[i].reports.Length - 1].param3[2] = Convert.ToDouble(readed[9].ToString());
-
-                        MasReports[i].reports[MasReports[i].reports.Length - 1].param1[3] = Convert.ToInt32(readed[10].ToString());
-                        MasReports[i].reports[MasReports[i].reports.Length - 1].param2[3] = Convert.ToInt32(readed[11].ToString());
-                        MasReports[i].reports[MasReports[i].reports.Length - 1].param3[3] = Convert.ToDouble(readed[12].ToString());
-
-                        MasReports[i].reports[MasReports[i].reports.Length - 1].param1[4] = Convert.ToInt32(readed[13].ToString());
-                        MasReports[i].reports[MasReports[i].reports.Length - 1].param2[4] = Convert.ToInt32(readed[14].ToString());
-                        MasReports[i].reports[MasReports[i].reports.Length - 1].param3[4] = Convert.ToDouble(readed[15].ToString());
-                    }
-                    if (MasReports[i].reports != null)
-                    {
-                        MasReports[i].ReportFound = true;
+                        if (!ReportSearch)
+                        {
+                            ReportSearch = true;
+                            DGVcompReport.Rows.Clear();
+                        }
+                        Array.Resize(ref reports, (reports == null ? 1 : reports.Length + 1));
+                        reports[reports.Length - 1].date = Convert.ToDateTime(readed[0].ToString());
+                        reports[reports.Length - 1].param1 = new int[5];
+                        reports[reports.Length - 1].param2 = new int[5];
+                        reports[reports.Length - 1].param3 = new double[5];
+                        reports[reports.Length - 1].param1[0] = Convert.ToInt32(readed[1].ToString());
+                        reports[reports.Length - 1].param2[0] = Convert.ToInt32(readed[2].ToString());
+                        reports[reports.Length - 1].param3[0] = Convert.ToDouble(readed[3].ToString());
+                        reports[reports.Length - 1].param1[1] = Convert.ToInt32(readed[4].ToString());
+                        reports[reports.Length - 1].param2[1] = Convert.ToInt32(readed[5].ToString());
+                        reports[reports.Length - 1].param3[1] = Convert.ToDouble(readed[6].ToString());
+                        reports[reports.Length - 1].param1[2] = Convert.ToInt32(readed[7].ToString());
+                        reports[reports.Length - 1].param2[2] = Convert.ToInt32(readed[8].ToString());
+                        reports[reports.Length - 1].param3[2] = Convert.ToDouble(readed[9].ToString());
+                        reports[reports.Length - 1].param1[3] = Convert.ToInt32(readed[10].ToString());
+                        reports[reports.Length - 1].param2[3] = Convert.ToInt32(readed[11].ToString());
+                        reports[reports.Length - 1].param3[3] = Convert.ToDouble(readed[12].ToString());
+                        reports[reports.Length - 1].param1[4] = Convert.ToInt32(readed[13].ToString());
+                        reports[reports.Length - 1].param2[4] = Convert.ToInt32(readed[14].ToString());
+                        reports[reports.Length - 1].param3[4] = Convert.ToDouble(readed[15].ToString());
                     }
                     readed.Close();
+                    for (int j = 0; j <= 4; j++)
+                    {
+                        if (reports == null)
+                        {
+                            DGVcompReport.Rows.Add(MasReports[i].comp_name, MasReports[i].inn, 0, 0.0, 0.0, 0.0, 3);
+                            DGVcompReport.Rows[i * 5 + j].Cells[0].Style.BackColor = Color.LightGray;
+                            DGVcompReport.Rows[i * 5 + j].Cells[1].Style.BackColor = Color.LightGray;
+                            DGVcompReport.Rows[i * 5 + j].Cells[2].Style.BackColor = Color.Gray;
+                            DGVcompReport.Rows[i * 5 + j].Cells[3].Style.BackColor = Color.Gray;
+                            DGVcompReport.Rows[i * 5 + j].Cells[4].Style.BackColor = Color.Gray;
+                            DGVcompReport.Rows[i * 5 + j].Cells[5].Style.BackColor = Color.Gray;
+                            DGVcompReport.Rows[i * 5 + j].Cells[6].Style.BackColor = Color.Gray;
+                            DGVcompReport.Rows[i * 5 + j].Cells[6].Style.ForeColor = Color.Gray;
+                        }
+                        else
+                        {
+                            switch (reports.Length)
+                            {
+                                case 1:
+                                    {
+                                        int param1 = reports[0].param1[j];
+                                        double param2 = reports[0].param2[j];
+                                        double param3 = reports[0].param3[j];
+                                        DGVcompReport.Rows.Add(MasReports[i].comp_name, MasReports[i].inn, param1, param2, param3, 0.0, 2);
+                                        DGVcompReport.Rows[i * 5 + j].Cells[0].Style.BackColor = Color.LightGray;
+                                        DGVcompReport.Rows[i * 5 + j].Cells[1].Style.BackColor = Color.LightGray;
+                                        DGVcompReport.Rows[i * 5 + j].Cells[2].Style.BackColor = Color.LightGray;
+                                        DGVcompReport.Rows[i * 5 + j].Cells[3].Style.BackColor = Color.LightGray;
+                                        DGVcompReport.Rows[i * 5 + j].Cells[4].Style.BackColor = Color.LightGray;
+                                        DGVcompReport.Rows[i * 5 + j].Cells[5].Style.BackColor = Color.LightGray;
+                                        DGVcompReport.Rows[i * 5 + j].Cells[6].Style.BackColor = Color.LightGray;
+                                        DGVcompReport.Rows[i * 5 + j].Cells[6].Style.ForeColor = Color.LightGray;
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        int param1 = reports[0].param1[j] - reports[1].param1[j];
+                                        double param2 = (reports[1].param2[j] == 0 ? reports[0].param2[j] : reports[0].param2[j] * 100.0 / reports[1].param2[j] - 100);
+                                        double param3 = reports[0].param3[j] - reports[1].param3[j];
+                                        double param4 = (reports[1].param3[j] == 0 ? reports[0].param2[j] : reports[0].param3[j] * 100.0 / reports[1].param3[j] - 100);
+                                        int random = r.Next(0, 2);
+                                        DGVcompReport.Rows.Add(MasReports[i].comp_name, MasReports[i].inn, param1, param2, param3, param4, random);
+                                        if (random == 0)
+                                        {
+                                            DGVcompReport.Rows[i * 5 + j].Cells[6].Style.BackColor = Color.Red;
+                                            DGVcompReport.Rows[i * 5 + j].Cells[6].Style.ForeColor = Color.Red;
+                                        }
+                                        else
+                                        {
+                                            DGVcompReport.Rows[i * 5 + j].Cells[6].Style.BackColor = Color.Green;
+                                            DGVcompReport.Rows[i * 5 + j].Cells[6].Style.ForeColor = Color.Green;
+                                        }
+                                        break;
+                                    }
+                            }
+                        }
+                    }
                 }
                 if (!ReportSearch)
                 {
@@ -155,75 +199,29 @@ namespace hahatonProjectAdmin
                 MessageBox.Show("Ошибка выполнения запроса. Обратитесь к администратору.\n" + ex, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            if (CBinstSelect1.SelectedIndex == 0)
+            {
+                CBinstSelect2_SelectedIndexChanged(sender, e);
+            }
+            else
+            {
+                CBinstSelect1.SelectedIndex = 0;
+            }
         }
 
-        private void CBinstSelect1_SelectedIndexChanged(object sender, EventArgs e)
+        private void CBinstSelect2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            DGVcompReport.Rows.Clear();
-            if (MasReports != null)
+            if (DGVcompReport.RowCount > 0)
             {
-                for (int i = 0; i < MasReports.Length; i++)
+                for (int i = 0; i < DGVcompReport.RowCount; i++)
                 {
-                    if (!MasReports[i].ReportFound)
-                    {
-                        DGVcompReport.Rows.Add(MasReports[i].comp_name, MasReports[i].inn, 0, 0.0, 0.0, 0.0, 3);
-                        DGVcompReport.Rows[i].Cells[0].Style.BackColor = Color.LightGray;
-                        DGVcompReport.Rows[i].Cells[1].Style.BackColor = Color.LightGray;
-                        for (int j = 2; j <= 6; j++)
-                        {
-                            DGVcompReport.Rows[i].Cells[j].Style.BackColor = Color.Gray;
-                        }
-                        DGVcompReport.Rows[i].Cells[6].Style.ForeColor = Color.Gray;
-                        break;
-                    }
-                    else
-                    {
-                        switch (MasReports[i].reports.Length)
-                        {
-                            case 1:
-                                {
-                                    int param1 = MasReports[i].reports[0].param1[CBinstSelect2.SelectedIndex];
-                                    double param2 = MasReports[i].reports[0].param2[CBinstSelect2.SelectedIndex];
-                                    double param3 = MasReports[i].reports[0].param3[CBinstSelect2.SelectedIndex];
-                                    DGVcompReport.Rows.Add(MasReports[i].comp_name, MasReports[i].inn, param1, param2, param3, 0.0, 2);
-                                    for (int j = 0; j <= 6; j++)
-                                    {
-                                        DGVcompReport.Rows[i].Cells[j].Style.BackColor = Color.LightGray;
-                                    }
-                                    DGVcompReport.Rows[i].Cells[6].Style.ForeColor = Color.LightGray;
-                                    break;
-                                }
-                            case 2:
-                                {
-                                    int param1 = MasReports[i].reports[0].param1[CBinstSelect2.SelectedIndex] - MasReports[i].reports[1].param1[CBinstSelect2.SelectedIndex];
-                                    double param2 = (MasReports[i].reports[1].param2[CBinstSelect2.SelectedIndex] == 0 ? MasReports[i].reports[0].param2[CBinstSelect2.SelectedIndex] : MasReports[i].reports[0].param2[CBinstSelect2.SelectedIndex] * 100.0 / MasReports[i].reports[1].param2[CBinstSelect2.SelectedIndex] - 100);
-                                    double param3 = MasReports[i].reports[0].param3[CBinstSelect2.SelectedIndex] - MasReports[i].reports[1].param3[CBinstSelect2.SelectedIndex];
-                                    double param4 = (MasReports[i].reports[1].param3[CBinstSelect2.SelectedIndex] == 0 ? MasReports[i].reports[0].param2[CBinstSelect2.SelectedIndex] : MasReports[i].reports[0].param3[CBinstSelect2.SelectedIndex] * 100.0 / MasReports[i].reports[1].param3[CBinstSelect2.SelectedIndex] - 100);
-
-                                    int random = r.Next(0, 2);
-                                    DGVcompReport.Rows.Add(MasReports[i].comp_name, MasReports[i].inn, param1, param2, param3, param4, random);
-                                    if (random == 0)
-                                    {
-                                        DGVcompReport.Rows[i].Cells[6].Style.BackColor = Color.Red;
-                                        DGVcompReport.Rows[i].Cells[6].Style.ForeColor = Color.Red;
-                                    }
-                                    else
-                                    {
-                                        DGVcompReport.Rows[i].Cells[6].Style.BackColor = Color.Green;
-                                        DGVcompReport.Rows[i].Cells[6].Style.ForeColor = Color.Green;
-                                    }
-                                    break;
-                                }
-                        }
-                    }
+                    DGVcompReport.Rows[i].Visible = (i % 5 == CBinstSelect2.SelectedIndex ? true : false);
                 }
             }
         }
 
         private void AdminPanelForm_Load(object sender, EventArgs e)
         {
-            //this.Size = new Size(953, 531);
-
             TabControl.SelectedIndex = 0;
             CBinstSelect1.SelectedIndex = 0;
             CBinstSelect2.SelectedIndex = 0;
@@ -240,20 +238,6 @@ namespace hahatonProjectAdmin
             Dia1.Series[4].Points.DataBindY(
                 new int[] { 55, 65 });
         }
-
-        /*private void Bset_Click(object sender, EventArgs e)
-        {
-            Dia1.Series[0].Points.DataBindY(
-                new int[] {15, 20} );
-            Dia1.Series[1].Points.DataBindY(
-                new int[] {25, 35});
-            Dia1.Series[2].Points.DataBindY(
-                new int[] {35, 45});
-            Dia1.Series[3].Points.DataBindY(
-                new int[] {45, 55});
-            Dia1.Series[4].Points.DataBindY(
-                new int[] {55, 65});
-        }*/
 
         private void Bselect_date1_Click(object sender, EventArgs e)
         {
