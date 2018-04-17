@@ -61,7 +61,7 @@
             this.GBPlanParam.Controls.Add(this.LabelWorkplaces);
             this.GBPlanParam.Location = new System.Drawing.Point(12, 12);
             this.GBPlanParam.Name = "GBPlanParam";
-            this.GBPlanParam.Size = new System.Drawing.Size(370, 136);
+            this.GBPlanParam.Size = new System.Drawing.Size(322, 136);
             this.GBPlanParam.TabIndex = 0;
             this.GBPlanParam.TabStop = false;
             this.GBPlanParam.Text = "План параметров KPI";
@@ -148,6 +148,7 @@
             this.LabelWorkplacesErr.Size = new System.Drawing.Size(78, 13);
             this.LabelWorkplacesErr.TabIndex = 8;
             this.LabelWorkplacesErr.Text = "Не заполнено";
+            this.LabelWorkplacesErr.Visible = false;
             // 
             // LabelNumberErr
             // 
@@ -157,6 +158,7 @@
             this.LabelNumberErr.Size = new System.Drawing.Size(78, 13);
             this.LabelNumberErr.TabIndex = 9;
             this.LabelNumberErr.Text = "Не заполнено";
+            this.LabelNumberErr.Visible = false;
             // 
             // LabelProceedsErr
             // 
@@ -166,6 +168,7 @@
             this.LabelProceedsErr.Size = new System.Drawing.Size(78, 13);
             this.LabelProceedsErr.TabIndex = 10;
             this.LabelProceedsErr.Text = "Не заполнено";
+            this.LabelProceedsErr.Visible = false;
             // 
             // LabelProceeds1Err
             // 
@@ -175,12 +178,13 @@
             this.LabelProceeds1Err.Size = new System.Drawing.Size(78, 13);
             this.LabelProceeds1Err.TabIndex = 11;
             this.LabelProceeds1Err.Text = "Не заполнено";
+            this.LabelProceeds1Err.Visible = false;
             // 
             // SettingsAdminClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(388, 186);
+            this.ClientSize = new System.Drawing.Size(344, 186);
             this.Controls.Add(this.ButtonSave);
             this.Controls.Add(this.GBPlanParam);
             this.Name = "SettingsAdminClient";

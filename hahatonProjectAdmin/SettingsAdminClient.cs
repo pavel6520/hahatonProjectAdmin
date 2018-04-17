@@ -39,25 +39,52 @@ namespace hahatonProjectAdmin
 
         private void ButtonSave_Click(object sender, EventArgs e)
         {
-
-
-
-            if (Program.IF.KeyExists("PlanSettings", "Number"))
+            bool Error = false;
+            if (TBNumber.Text.Length == 0)
             {
-                TBNumber.Text = Program.IF.ReadINI("PlanSettings", "Number");
+                Error = true;
+                LabelNumberErr.Show();
             }
-            if (Program.IF.KeyExists("PlanSettings", "Workplaces"))
+            else
             {
-                TBWorkplaces.Text = Program.IF.ReadINI("PlanSettings", "Workplaces");
+                LabelNumberErr.Hide();
             }
-            if (Program.IF.KeyExists("PlanSettings", "Proceeds"))
+            if (TBProceeds.Text.Length == 0)
             {
-                TBProceeds.Text = Program.IF.ReadINI("PlanSettings", "Proceeds");
+                Error = true;
+                LabelProceedsErr.Show();
             }
-            if (Program.IF.KeyExists("PlanSettings", "Proceeds1"))
+            else
             {
-                TBProceeds1.Text = Program.IF.ReadINI("PlanSettings", "Proceeds1");
+                LabelProceedsErr.Hide();
             }
+            if (TBProceeds1.Text.Length == 0)
+            {
+                Error = true;
+                LabelProceeds1Err.Show();
+            }
+            else
+            {
+                LabelProceeds1Err.Hide();
+            }
+            if (TBWorkplaces.Text.Length == 0)
+            {
+                Error = true;
+                LabelWorkplacesErr.Show();
+            }
+            else
+            {
+                LabelWorkplacesErr.Hide();
+            }
+            if (Error)
+            {
+                return;
+            }
+            Program.IF.WriteINI("PlanSettings", "Number", TBNumber.Text);
+            Program.IF.WriteINI("PlanSettings", "Workplaces", TBWorkplaces.Text);
+            Program.IF.WriteINI("PlanSettings", "Proceeds", TBProceeds.Text);
+            Program.IF.WriteINI("PlanSettings", "Proceeds1", TBProceeds1.Text);
+            Close();
         }
     }
 }
