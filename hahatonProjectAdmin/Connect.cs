@@ -16,7 +16,7 @@ namespace hahatonProjectAdmin
     {
         public MySqlConnection conn;
         private AdminPanelForm AdminPanel;
-        private SettingsForm SetForm;
+        private SettingsConnectForm SetForm;
         public string login;
         private string ConnectStr;
 
@@ -56,7 +56,7 @@ namespace hahatonProjectAdmin
             }
             if (!Program.IF.KeyExists("ConnSett", "Adress") || !Program.IF.KeyExists("ConnSett", "DBname") || !Program.IF.KeyExists("ConnSett", "Port"))//Проверка файла настроек
             {
-                SetForm = new SettingsForm();
+                SetForm = new SettingsConnectForm();
                 this.Hide();
                 MessageBox.Show("Первый запуск. Введите настройки.", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 SetForm.FormClosing += (obj, arg) =>
@@ -106,7 +106,7 @@ namespace hahatonProjectAdmin
 
         private void ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SetForm = new SettingsForm();
+            SetForm = new SettingsConnectForm();
 
             SetForm.FormClosing += (obj, arg) =>
             {

@@ -10,13 +10,13 @@ using System.Windows.Forms;
 
 namespace hahatonProjectAdmin
 {
-    public partial class SettingsForm : Form
+    public partial class SettingsConnectForm : Form
     {
         /*private bool TBipB;
         private bool TBportB;
         private bool TBdatabaseB;*/
 
-        public SettingsForm()
+        public SettingsConnectForm()
         {
             InitializeComponent();
         }
@@ -76,28 +76,6 @@ namespace hahatonProjectAdmin
             {
                 TBport.Text = Program.IF.ReadINI("ConnSett", "Port");
             }
-            /*TBipB = TBip.Text.Length != 0;
-            TBportB = TBport.Text.Length != 0;
-            TBdatabaseB = TBdatabase.Text.Length != 0;
-            //BSave.Enabled = TBipB && TBportB && TBdatabaseB;*/
-        }
-
-        private void TBip_TextChanged(object sender, EventArgs e)
-        {
-            //TBipB = TBip.Text.Length != 0;
-            //BSave.Enabled = TBipB && TBportB && TBdatabaseB;
-        }
-
-        private void TBport_TextChanged(object sender, EventArgs e)
-        {
-            //TBportB = TBport.Text.Length != 0;
-            //BSave.Enabled = TBipB && TBportB && TBdatabaseB;
-        }
-
-        private void TBdatabase_TextChanged(object sender, EventArgs e)
-        {
-            //TBdatabaseB = TBdatabase.Text.Length != 0;
-            //BSave.Enabled = TBipB && TBportB && TBdatabaseB;
         }
     }
 }

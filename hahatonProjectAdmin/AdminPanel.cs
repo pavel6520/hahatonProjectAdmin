@@ -294,6 +294,15 @@ namespace hahatonProjectAdmin
             }
         }
 
+        private void TSMIOptionsSettings_Click(object sender, EventArgs e)
+        {
+            SettingsAdminClient SACForm = new SettingsAdminClient();
+            /*SACForm.FormClosing += (obj, arg) =>
+            {
+            };*/
+            SACForm.ShowDialog();
+        }
+
         private void MC1_DateSelected_1(object sender, DateRangeEventArgs e)
         {
             if (SelectedPeriodStartBuf == DateTime.MinValue)
