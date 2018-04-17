@@ -80,8 +80,20 @@ namespace hahatonProjectAdmin
             {
                 return;
             }
-            Program.IF.WriteINI("PlanSettings", "Number", TBNumber.Text);
+            try
+            {
+                Program.ConnectForm.AdminPanel.PlanSettingsParam1 = Convert.ToInt32(TBWorkplaces.Text);
+                Program.ConnectForm.AdminPanel.PlanSettingsParam2 = Convert.ToDouble(TBNumber.Text);
+                Program.ConnectForm.AdminPanel.PlanSettingsParam3 = Convert.ToDouble(TBProceeds.Text);
+                Program.ConnectForm.AdminPanel.PlanSettingsParam4 = Convert.ToDouble(TBProceeds1.Text);
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show("Неверный формат\n" + ex);
+                return;
+            }
             Program.IF.WriteINI("PlanSettings", "Workplaces", TBWorkplaces.Text);
+            Program.IF.WriteINI("PlanSettings", "Number", TBNumber.Text);
             Program.IF.WriteINI("PlanSettings", "Proceeds", TBProceeds.Text);
             Program.IF.WriteINI("PlanSettings", "Proceeds1", TBProceeds1.Text);
             Close();

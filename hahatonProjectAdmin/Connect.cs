@@ -15,7 +15,7 @@ namespace hahatonProjectAdmin
     public partial class ConnectForm : Form
     {
         public MySqlConnection conn;
-        private AdminPanelForm AdminPanel;
+        public AdminPanelForm AdminPanel;
         private SettingsConnectForm SetForm;
         public string login;
         private string ConnectStr;

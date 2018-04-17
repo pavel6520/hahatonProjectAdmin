@@ -16,23 +16,23 @@ namespace hahatonProjectAdmin
 
         public CreateUserForm CreateUser;
         private string ConnectStr;
-        protected struct Report
+        private struct Report
         {
-            public DateTime date;
+            //public DateTime date;
             public int[] param1, param2;
             public double[] param3;
         }
-        private struct Reports
+        private struct Company
         {
             public string inn, comp_name;
             //public bool ReportFound;
         }
-        //private Reports[] MasReportsForPeriod;
-
+        //private Company[] MasReportsForPeriod;
         private Random r = new Random();
-        public DateTime SelectedPeriodStart = DateTime.MinValue, SelectedPeriodEnd = DateTime.MinValue;
-        public DateTime SelectedPeriodStartBuf = DateTime.MinValue;
-        //public int count_d = 0;
+        private DateTime SelectedPeriodStart = DateTime.MinValue, SelectedPeriodEnd = DateTime.MinValue;
+        private DateTime SelectedPeriodStartBuf = DateTime.MinValue;
+        public int PlanSettingsParam1;
+        public double PlanSettingsParam2, PlanSettingsParam3, PlanSettingsParam4;
 
         public AdminPanelForm(string str)
         {
@@ -77,7 +77,7 @@ namespace hahatonProjectAdmin
                 //Загрузка ИНН, имен компаний
                 com = new MySqlCommand("select inn, comp_name from project.login_inn", Program.ConnectForm.conn);
                 readed = com.ExecuteReader();
-                Reports[] MasReports = null;
+                Company[] MasReports = null;
                 while (readed.Read())
                 {
                     Array.Resize(ref MasReports, (MasReports == null ? 1 : MasReports.Length + 1));
@@ -110,7 +110,7 @@ namespace hahatonProjectAdmin
                         countReports++;
                         Array.Resize(ref MasReportQuarter, countReports);
                         MasReportQuarter[countReports - 1] = Convert.ToDateTime(readed[0].ToString());
-                        MessageBox.Show("1. " + MasReportQuarter[countReports - 1].ToString("yyyy.MM.dd"));
+                        //MessageBox.Show("1. " + MasReportQuarter[countReports - 1].ToString("yyyy.MM.dd"));
                     }
                     readed.Close();
                     
@@ -123,13 +123,13 @@ namespace hahatonProjectAdmin
                         readed.Read();
                         MasReportTimeSended[j] = Convert.ToDateTime(readed[0].ToString());
                         readed.Close();
-                        MessageBox.Show("2. " + MasReportQuarter[j].ToString("yyyy.MM.dd") + " " + MasReportTimeSended[j].ToString("yyyy.MM.dd HH:mm:ss"));
+                        //MessageBox.Show("2. " + MasReportQuarter[j].ToString("yyyy.MM.dd") + " " + MasReportTimeSended[j].ToString("yyyy.MM.dd HH:mm:ss"));
                     }
                     
                     Report[] reports = null;
                     for (int j = 0; j < countReports; j++)//Если есть отчеты, получаем самый актуальный
                     {
-                        MessageBox.Show("3. " + MasReportTimeSended[j].ToString("yyyy.MM.dd HH:mm:ss"));
+                        //MessageBox.Show("3. " + MasReportTimeSended[j].ToString("yyyy.MM.dd HH:mm:ss"));
                         com = new MySqlCommand("select * from project.`" + MasReports[i].inn + "` where datereport = '" + 
                             MasReportTimeSended[j].ToString("yyyy.MM.dd HH:mm:ss") + 
                             "' order by DateReport desc limit 1", Program.ConnectForm.conn);
@@ -198,9 +198,15 @@ namespace hahatonProjectAdmin
                                         double param3 = reports[0].param3[j] - reports[1].param3[j];
                                         double param4 = (reports[1].param3[j] == 0 ? reports[0].param2[j] : reports[0].param3[j] * 100.0 / reports[1].param3[j] - 100);
                                         int random = r.Next(0, 2);
-                                        DGVcompReport.Rows.Add(MasReports[i].comp_name, MasReports[i].inn, param1, param2, param3, param4, random);
-                                        DGVcompReport.Rows[i * 5 + j].Cells[6].Style.BackColor = (random == 0 ? Color.Red : Color.Green);
-                                        DGVcompReport.Rows[i * 5 + j].Cells[6].Style.ForeColor = (random == 0 ? Color.Red : Color.Green);
+                                        DGVcompReport.Rows.Add(MasReports[i].comp_name, MasReports[i].inn, param1, param2, param3, param4);
+                                        DGVcompReport.Rows[i * 5 + j].Cells[2].Style.BackColor = (param1 >= PlanSettingsParam1 ? Color.Green : Color.Red);
+                                        DGVcompReport.Rows[i * 5 + j].Cells[3].Style.BackColor = (param2 >= PlanSettingsParam2 ? Color.Green : Color.Red);
+                                        DGVcompReport.Rows[i * 5 + j].Cells[4].Style.BackColor = (param3 >= PlanSettingsParam3 ? Color.Green : Color.Red);
+                                        DGVcompReport.Rows[i * 5 + j].Cells[5].Style.BackColor = (param4 >= PlanSettingsParam4 ? Color.Green : Color.Red);
+
+
+                                        //DGVcompReport.Rows[i * 5 + j].Cells[6].Style.BackColor = (random == 0 ? Color.Red : Color.Green);
+                                        //DGVcompReport.Rows[i * 5 + j].Cells[6].Style.ForeColor = (random == 0 ? Color.Red : Color.Green);
                                         break;
                                     }
                             }
@@ -248,7 +254,38 @@ namespace hahatonProjectAdmin
             CBinstSelect1.SelectedIndex = 0;
             CBinstSelect2.SelectedIndex = 0;
             CBinstSelect3.SelectedIndex = 0;
-
+            try
+            {
+                if (Program.IF.KeyExists("PlanSettings", "Number"))
+                {
+                    PlanSettingsParam1 = Convert.ToInt32(Program.IF.ReadINI("PlanSettings", "Number"));
+                }
+            }
+            catch (FormatException) { }
+            try
+            {
+                if (Program.IF.KeyExists("PlanSettings", "Workplaces"))
+                {
+                    PlanSettingsParam2 = Convert.ToDouble(Program.IF.ReadINI("PlanSettings", "Workplaces"));
+                }
+            }
+            catch (FormatException) { }
+            try
+            {
+                if (Program.IF.KeyExists("PlanSettings", "Proceeds"))
+                {
+                    PlanSettingsParam3 = Convert.ToDouble(Program.IF.ReadINI("PlanSettings", "Proceeds"));
+                }
+            }
+            catch (FormatException) { }
+            try
+            {
+                if (Program.IF.KeyExists("PlanSettings", "Proceeds1"))
+                {
+                    PlanSettingsParam4 = Convert.ToDouble(Program.IF.ReadINI("PlanSettings", "Proceeds1"));
+                }
+            }
+            catch (FormatException) { }
             Dia1.Series[0].Points.DataBindY(
                 new int[] { 15, 20 });
             Dia1.Series[1].Points.DataBindY(
@@ -297,9 +334,6 @@ namespace hahatonProjectAdmin
         private void TSMIOptionsSettings_Click(object sender, EventArgs e)
         {
             SettingsAdminClient SACForm = new SettingsAdminClient();
-            /*SACForm.FormClosing += (obj, arg) =>
-            {
-            };*/
             SACForm.ShowDialog();
         }
 
