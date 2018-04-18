@@ -45,6 +45,8 @@
             this.TSMIdbShow = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMIuser = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMIuserCreate = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMIOptions = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMIOptionsSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.TabControl = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.CBinstSelect2 = new System.Windows.Forms.ComboBox();
@@ -59,7 +61,6 @@
             this.inst = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.Bselect_date1 = new System.Windows.Forms.Button();
-            this.CBinstSelect1 = new System.Windows.Forms.ComboBox();
             this.DGVinstStat = new System.Windows.Forms.DataGridView();
             this.inst1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NONW = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -78,8 +79,6 @@
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MC1 = new System.Windows.Forms.MonthCalendar();
-            this.TSMIOptions = new System.Windows.Forms.ToolStripMenuItem();
-            this.TSMIOptionsSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.TabControl.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -137,6 +136,21 @@
             this.TSMIuserCreate.Size = new System.Drawing.Size(136, 22);
             this.TSMIuserCreate.Text = "&Создать";
             this.TSMIuserCreate.Click += new System.EventHandler(this.TSMIuserCreate_Click);
+            // 
+            // TSMIOptions
+            // 
+            this.TSMIOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TSMIOptionsSettings});
+            this.TSMIOptions.Name = "TSMIOptions";
+            this.TSMIOptions.Size = new System.Drawing.Size(56, 20);
+            this.TSMIOptions.Text = "Опции";
+            // 
+            // TSMIOptionsSettings
+            // 
+            this.TSMIOptionsSettings.Name = "TSMIOptionsSettings";
+            this.TSMIOptionsSettings.Size = new System.Drawing.Size(134, 22);
+            this.TSMIOptionsSettings.Text = "Настройки";
+            this.TSMIOptionsSettings.Click += new System.EventHandler(this.TSMIOptionsSettings_Click);
             // 
             // TabControl
             // 
@@ -273,7 +287,6 @@
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.Bselect_date1);
-            this.tabPage1.Controls.Add(this.CBinstSelect1);
             this.tabPage1.Controls.Add(this.DGVinstStat);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
@@ -284,7 +297,7 @@
             // 
             // Bselect_date1
             // 
-            this.Bselect_date1.Location = new System.Drawing.Point(461, 0);
+            this.Bselect_date1.Location = new System.Drawing.Point(457, 0);
             this.Bselect_date1.Name = "Bselect_date1";
             this.Bselect_date1.Size = new System.Drawing.Size(105, 21);
             this.Bselect_date1.TabIndex = 3;
@@ -292,23 +305,12 @@
             this.Bselect_date1.UseVisualStyleBackColor = true;
             this.Bselect_date1.Click += new System.EventHandler(this.Bselect_date1_Click);
             // 
-            // CBinstSelect1
-            // 
-            this.CBinstSelect1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CBinstSelect1.FormattingEnabled = true;
-            this.CBinstSelect1.Items.AddRange(new object[] {
-            "Фонд Микрофинансирования",
-            "Гарантийный фонд",
-            "Центр кластерного развития",
-            "Центр поддержки предпринимательства",
-            "Центр экспорта"});
-            this.CBinstSelect1.Location = new System.Drawing.Point(0, 0);
-            this.CBinstSelect1.Name = "CBinstSelect1";
-            this.CBinstSelect1.Size = new System.Drawing.Size(240, 21);
-            this.CBinstSelect1.TabIndex = 2;
-            // 
             // DGVinstStat
             // 
+            this.DGVinstStat.AllowUserToAddRows = false;
+            this.DGVinstStat.AllowUserToDeleteRows = false;
+            this.DGVinstStat.AllowUserToResizeColumns = false;
+            this.DGVinstStat.AllowUserToResizeRows = false;
             this.DGVinstStat.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.DGVinstStat.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVinstStat.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -511,21 +513,6 @@
             this.MC1.Visible = false;
             this.MC1.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.MC1_DateSelected_1);
             // 
-            // TSMIOptions
-            // 
-            this.TSMIOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TSMIOptionsSettings});
-            this.TSMIOptions.Name = "TSMIOptions";
-            this.TSMIOptions.Size = new System.Drawing.Size(56, 20);
-            this.TSMIOptions.Text = "Опции";
-            // 
-            // TSMIOptionsSettings
-            // 
-            this.TSMIOptionsSettings.Name = "TSMIOptionsSettings";
-            this.TSMIOptionsSettings.Size = new System.Drawing.Size(180, 22);
-            this.TSMIOptionsSettings.Text = "Настройки";
-            this.TSMIOptionsSettings.Click += new System.EventHandler(this.TSMIOptionsSettings_Click);
-            // 
             // AdminPanelForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -581,7 +568,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn inst;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.ComboBox CBinstSelect1;
         private System.Windows.Forms.Button Bselect_date1;
         private System.Windows.Forms.MonthCalendar MC1;
         private System.Windows.Forms.DataGridView dataGridView2;

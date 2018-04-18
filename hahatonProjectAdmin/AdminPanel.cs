@@ -13,26 +13,144 @@ namespace hahatonProjectAdmin
 {
     public partial class AdminPanelForm : Form
     {
-
         public CreateUserForm CreateUser;
         private string ConnectStr;
-        private struct Report
+        public struct Report
         {
-            //public DateTime date;
             public int[] param1, param2;
             public double[] param3;
         }
-        private struct Company
+        public struct Company
         {
             public string inn, comp_name;
-            //public bool ReportFound;
         }
-        //private Company[] MasReportsForPeriod;
+        public struct User
+        {
+            public string login;
+            public Company[] MasCompany;
+        }
         private Random r = new Random();
         private DateTime SelectedPeriodStart = DateTime.MinValue, SelectedPeriodEnd = DateTime.MinValue;
         private DateTime SelectedPeriodStartBuf = DateTime.MinValue;
         public int PlanSettingsParam1;
         public double PlanSettingsParam2, PlanSettingsParam3, PlanSettingsParam4;
+
+        /// <summary>
+        /// Возвращает массива структур, содержащий ИНН и имена компаний
+        /// </summary>
+        public Company[] GetCompany()
+        {
+            MySqlCommand com;
+            MySqlDataReader reader;
+            Company[] MasCompany = null;
+            try
+            {
+                com = new MySqlCommand("select inn, comp_name from project.login_inn", Program.ConnectForm.conn);
+                reader = com.ExecuteReader();
+                while (reader.Read())
+                {
+                    Array.Resize(ref MasCompany, (MasCompany == null ? 1 : MasCompany.Length + 1));
+                    MasCompany[MasCompany.Length - 1].inn = reader[0].ToString();
+                    MasCompany[MasCompany.Length - 1].comp_name = reader[1].ToString();
+                }
+                reader.Close();
+            }
+            catch (MySqlException ex)
+            {
+                throw new MySqlQueryException(ex.Message);
+                //MessageBox.Show("Ошибка получения данных компаний\n" + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return MasCompany;
+        }
+
+        /// <summary>
+        /// Возвращает массив структур, в каждом элементе которого содержатся логин пользователя и массива структур, содержащий ИНН и имена компаний пользователя
+        /// </summary>
+        public User[] GetUserCompanies()
+        {
+            MySqlCommand com;
+            MySqlDataReader reader;
+            User[] MasUsers = null;
+            try
+            {
+                com = new MySqlCommand("select distinct login from project.login_inn order by login", Program.ConnectForm.conn);
+                reader = com.ExecuteReader();
+                while (reader.Read())
+                {
+                    Array.Resize(ref MasUsers, (MasUsers == null ? 1 : MasUsers.Length + 1));
+                    MasUsers[MasUsers.Length - 1].login = reader[0].ToString();
+                }
+                reader.Close();
+            }
+            catch (MySqlException ex)
+            {
+                throw new MySqlQueryException(ex.Message);
+                //MessageBox.Show("Ошибка получения списка пользователей\n\n" + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            try
+            {
+                for(int i = 0; i < MasUsers.Length; i++)
+                {
+                    com = new MySqlCommand("select inn, comp_name from project.login_inn where login = '" + MasUsers[i].login + "' order by inn", Program.ConnectForm.conn);
+                    reader = com.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Array.Resize(ref MasUsers[i].MasCompany, (MasUsers[i].MasCompany == null ? 1 : MasUsers[i].MasCompany.Length + 1));
+                        MasUsers[i].MasCompany[MasUsers[i].MasCompany.Length - 1].inn = reader[0].ToString();
+                        MasUsers[i].MasCompany[MasUsers[i].MasCompany.Length - 1].comp_name = reader[1].ToString();
+                    }
+                    reader.Close();
+                }
+            }
+            catch (MySqlException ex)
+            {
+                throw new MySqlQueryException(ex.Message);
+                //MessageBox.Show("Ошибка получения списка пользователей\n" + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return MasUsers;
+        }
+
+        /// <summary>
+        /// Возвращает массив ключей (уникальные дата и время) самых актуальных отчетов за указанный период
+        /// </summary>
+        /// <param name="CompanyRef">Структура, содержащая ИНН компании, для которой необходимо загрузить ключи отчетов</param>
+        public DateTime[] GetLastReportDateTime(ref Company CompanyRef)
+        {
+            MySqlCommand com;
+            MySqlDataReader reader;
+            DateTime[] MasReportTime = null;
+            try
+            {
+                com = new MySqlCommand("select distinct date from project.`" + CompanyRef.inn + "` order by date desc limit 2", Program.ConnectForm.conn);
+                reader = com.ExecuteReader();
+                while (reader.Read())
+                {
+                    Array.Resize(ref MasReportTime, (MasReportTime == null ? 1 : MasReportTime.Length + 1));
+                    MasReportTime[MasReportTime.Length - 1] = Convert.ToDateTime(reader[0].ToString());
+                    //MessageBox.Show("1. " + MasReportQuarter[countReports - 1].ToString("yyyy.MM.dd"));
+                }
+                reader.Close();
+                if (MasReportTime == null)
+                {
+                    return null;
+                }
+                for (int j = 0; j < MasReportTime.Length; j++)
+                {
+                    com = new MySqlCommand("select datereport from project.`" + CompanyRef.inn + "` where Date = '" + MasReportTime[j].ToString("yyyy.MM.dd") + "' order by datereport desc limit 1", Program.ConnectForm.conn);
+                    reader = com.ExecuteReader();
+                    reader.Read();
+                    MasReportTime[j] = Convert.ToDateTime(reader[0].ToString());
+                    reader.Close();
+                    //MessageBox.Show("2. " + MasReportQuarter[j].ToString("yyyy.MM.dd") + " " + MasReportTimeSended[j].ToString("yyyy.MM.dd HH:mm:ss"));
+                }
+            }
+            catch (MySqlException ex)
+            {
+                throw new MySqlQueryException(ex.Message);
+                //MessageBox.Show("Ошибка получения кварталов отчетов\n" + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return MasReportTime;
+        }
 
         public AdminPanelForm(string str)
         {
@@ -61,107 +179,92 @@ namespace hahatonProjectAdmin
 
         private void TSMIbdShow_Click(object sender, EventArgs e)
         {
+            DGVcompReport.Rows.Clear();
             try
             {
                 Program.ConnectForm.conn.Open();
             }
-            catch (Exception ex)
+            catch (MySqlException ex)
             {
-                MessageBox.Show("Не удалось подключится к базе данных.\n" + ex, "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Не удалось подключится к базе данных.\n" + ex.Message, "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            MySqlCommand com;
-            MySqlDataReader readed;
             try
             {
+                Company[] MasCompany;
                 //Загрузка ИНН, имен компаний
-                com = new MySqlCommand("select inn, comp_name from project.login_inn", Program.ConnectForm.conn);
-                readed = com.ExecuteReader();
-                Company[] MasReports = null;
-                while (readed.Read())
+                try
                 {
-                    Array.Resize(ref MasReports, (MasReports == null ? 1 : MasReports.Length + 1));
-                    MasReports[MasReports.Length - 1].inn = readed[0].ToString();
-                    MasReports[MasReports.Length - 1].comp_name = readed[1].ToString();
+                    MasCompany = GetCompany();
                 }
-                readed.Close();
-                if (MasReports == null)
+                catch (MySqlQueryException ex)
                 {
                     Program.ConnectForm.conn.Close();
-                    MessageBox.Show("Компании не найдены", "Данные отсутствуют", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Ошибка получения списка компаний\n" + ex.Message);
                     return;
                 }
-                //Загрузка 2 последних отчетов для каждой компании
-                bool ReportSearch = false;
-                for (int i = 0; i < MasReports.Length; i++)
+                if (MasCompany == null)
                 {
-                    DateTime[] MasReportQuarter = null;
-                    int countReports = 0;
-                    
-                    com = new MySqlCommand("select distinct date from project.`" + MasReports[i].inn + "` order by date desc limit 2", Program.ConnectForm.conn);
-                    readed = com.ExecuteReader();
-                    while (readed.Read())
+                    Program.ConnectForm.conn.Close();
+                    MessageBox.Show("Компании не найдены", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                
+                MySqlCommand com;
+                MySqlDataReader readed;
+                bool ReportSearchError = true;
+                for (int i = 0; i < MasCompany.Length; i++)
+                {
+                    DateTime[] MasReportTimeSended;
+                    //Загрузка даты двух последних отчетов компании
+                    try
                     {
-                        if (!ReportSearch)
-                        {
-                            ReportSearch = true;
-                            DGVcompReport.Rows.Clear();
-                        }
-                        countReports++;
-                        Array.Resize(ref MasReportQuarter, countReports);
-                        MasReportQuarter[countReports - 1] = Convert.ToDateTime(readed[0].ToString());
-                        //MessageBox.Show("1. " + MasReportQuarter[countReports - 1].ToString("yyyy.MM.dd"));
+                        MasReportTimeSended = GetLastReportDateTime(ref MasCompany[i]);
                     }
-                    readed.Close();
-                    
-                    DateTime[] MasReportTimeSended = null;
-                    for (int j = 0; j < countReports; j++)
+                    catch (MySqlQueryException ex)
                     {
-                        Array.Resize(ref MasReportTimeSended, j + 1);
-                        com = new MySqlCommand("select datereport from project.`" + MasReports[i].inn + "` where Date = '" + MasReportQuarter[j].ToString("yyyy.MM.dd") + "' order by datereport desc limit 1", Program.ConnectForm.conn);
-                        readed = com.ExecuteReader();
-                        readed.Read();
-                        MasReportTimeSended[j] = Convert.ToDateTime(readed[0].ToString());
-                        readed.Close();
-                        //MessageBox.Show("2. " + MasReportQuarter[j].ToString("yyyy.MM.dd") + " " + MasReportTimeSended[j].ToString("yyyy.MM.dd HH:mm:ss"));
+                        Program.ConnectForm.conn.Close();
+                        MessageBox.Show("Ошибка получения кварталов отчетов\n" + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
                     }
+                    ReportSearchError = (MasReportTimeSended == null ? true : false);
+                    Report[] MasCompanyReports = null;
                     
-                    Report[] reports = null;
-                    for (int j = 0; j < countReports; j++)//Если есть отчеты, получаем самый актуальный
+                    //Получаем отчеты по ключу-дате
+                    for (int j = 0; j < MasReportTimeSended.Length; j++)
                     {
                         //MessageBox.Show("3. " + MasReportTimeSended[j].ToString("yyyy.MM.dd HH:mm:ss"));
-                        com = new MySqlCommand("select * from project.`" + MasReports[i].inn + "` where datereport = '" + 
+                        com = new MySqlCommand("select FM1, FM2, FM3, GF1, GF2, GF3, CKR1, CKR2, CKR3, CPP1, CPP2, CPP3, CE1, CE2, CE3 from project.`" + MasCompany[i].inn + "` where datereport = '" + 
                             MasReportTimeSended[j].ToString("yyyy.MM.dd HH:mm:ss") + 
                             "' order by DateReport desc limit 1", Program.ConnectForm.conn);
                         readed = com.ExecuteReader();
                         readed.Read();
-                        Array.Resize(ref reports, j + 1);
-                        //reports[reports.Length - 1].date = Convert.ToDateTime(readed[0].ToString());
-                        reports[j].param1 = new int[5];
-                        reports[j].param2 = new int[5];
-                        reports[j].param3 = new double[5];
-                        reports[j].param1[0] = Convert.ToInt32(readed[2].ToString());
-                        reports[j].param2[0] = Convert.ToInt32(readed[3].ToString());
-                        reports[j].param3[0] = Convert.ToDouble(readed[4].ToString());
-                        reports[j].param1[1] = Convert.ToInt32(readed[5].ToString());
-                        reports[j].param2[1] = Convert.ToInt32(readed[6].ToString());
-                        reports[j].param3[1] = Convert.ToDouble(readed[7].ToString());
-                        reports[j].param1[2] = Convert.ToInt32(readed[8].ToString());
-                        reports[j].param2[2] = Convert.ToInt32(readed[9].ToString());
-                        reports[j].param3[2] = Convert.ToDouble(readed[10].ToString());
-                        reports[j].param1[3] = Convert.ToInt32(readed[11].ToString());
-                        reports[j].param2[3] = Convert.ToInt32(readed[12].ToString());
-                        reports[j].param3[3] = Convert.ToDouble(readed[13].ToString());
-                        reports[j].param1[4] = Convert.ToInt32(readed[14].ToString());
-                        reports[j].param2[4] = Convert.ToInt32(readed[15].ToString());
-                        reports[j].param3[4] = Convert.ToDouble(readed[16].ToString());
+                        Array.Resize(ref MasCompanyReports, j + 1);
+                        MasCompanyReports[j].param1 = new int[5];
+                        MasCompanyReports[j].param1[0] = Convert.ToInt32(readed[0].ToString());
+                        MasCompanyReports[j].param1[1] = Convert.ToInt32(readed[3].ToString());
+                        MasCompanyReports[j].param1[2] = Convert.ToInt32(readed[6].ToString());
+                        MasCompanyReports[j].param1[3] = Convert.ToInt32(readed[9].ToString());
+                        MasCompanyReports[j].param1[4] = Convert.ToInt32(readed[12].ToString());
+                        MasCompanyReports[j].param2 = new int[5];
+                        MasCompanyReports[j].param2[0] = Convert.ToInt32(readed[1].ToString());
+                        MasCompanyReports[j].param2[1] = Convert.ToInt32(readed[4].ToString());
+                        MasCompanyReports[j].param2[2] = Convert.ToInt32(readed[7].ToString());
+                        MasCompanyReports[j].param2[3] = Convert.ToInt32(readed[10].ToString());
+                        MasCompanyReports[j].param2[4] = Convert.ToInt32(readed[13].ToString());
+                        MasCompanyReports[j].param3 = new double[5];
+                        MasCompanyReports[j].param3[0] = Convert.ToDouble(readed[2].ToString());
+                        MasCompanyReports[j].param3[1] = Convert.ToDouble(readed[5].ToString());
+                        MasCompanyReports[j].param3[2] = Convert.ToDouble(readed[8].ToString());
+                        MasCompanyReports[j].param3[3] = Convert.ToDouble(readed[11].ToString());
+                        MasCompanyReports[j].param3[4] = Convert.ToDouble(readed[14].ToString());
                         readed.Close();
                     }
                     for (int j = 0; j <= 4; j++)
                     {
-                        if (reports == null)
+                        if (MasCompanyReports == null)
                         {
-                            DGVcompReport.Rows.Add(MasReports[i].comp_name, MasReports[i].inn, 0, 0.0, 0.0, 0.0, 3);
+                            DGVcompReport.Rows.Add(MasCompany[i].comp_name, MasCompany[i].inn, 0, 0.0, 0.0, 0.0, 3);
                             DGVcompReport.Rows[i * 5 + j].Cells[0].Style.BackColor = Color.LightGray;
                             DGVcompReport.Rows[i * 5 + j].Cells[1].Style.BackColor = Color.LightGray;
                             DGVcompReport.Rows[i * 5 + j].Cells[2].Style.BackColor = Color.Gray;
@@ -173,14 +276,14 @@ namespace hahatonProjectAdmin
                         }
                         else
                         {
-                            switch (reports.Length)
+                            switch (MasCompanyReports.Length)
                             {
                                 case 1:
                                     {
-                                        int param1 = reports[0].param1[j];
-                                        double param2 = reports[0].param2[j];
-                                        double param3 = reports[0].param3[j];
-                                        DGVcompReport.Rows.Add(MasReports[i].comp_name, MasReports[i].inn, param1, param2, param3, 0.0, 2);
+                                        int param1 = MasCompanyReports[0].param1[j];
+                                        double param2 = MasCompanyReports[0].param2[j];
+                                        double param3 = MasCompanyReports[0].param3[j];
+                                        DGVcompReport.Rows.Add(MasCompany[i].comp_name, MasCompany[i].inn, param1, param2, param3, 0.0, 2);
                                         DGVcompReport.Rows[i * 5 + j].Cells[0].Style.BackColor = Color.LightGray;
                                         DGVcompReport.Rows[i * 5 + j].Cells[1].Style.BackColor = Color.LightGray;
                                         DGVcompReport.Rows[i * 5 + j].Cells[2].Style.BackColor = Color.LightGray;
@@ -193,47 +296,41 @@ namespace hahatonProjectAdmin
                                     }
                                 case 2:
                                     {
-                                        int param1 = reports[0].param1[j] - reports[1].param1[j];
-                                        double param2 = (reports[1].param2[j] == 0 ? reports[0].param2[j] : reports[0].param2[j] * 100.0 / reports[1].param2[j] - 100);
-                                        double param3 = reports[0].param3[j] - reports[1].param3[j];
-                                        double param4 = (reports[1].param3[j] == 0 ? reports[0].param2[j] : reports[0].param3[j] * 100.0 / reports[1].param3[j] - 100);
+                                        int param1 = MasCompanyReports[0].param1[j] - MasCompanyReports[1].param1[j];
+                                        double param2 = (MasCompanyReports[1].param2[j] == 0 ? MasCompanyReports[0].param2[j] : MasCompanyReports[0].param2[j] * 100.0 / MasCompanyReports[1].param2[j] - 100);
+                                        double param3 = MasCompanyReports[0].param3[j] - MasCompanyReports[1].param3[j];
+                                        double param4 = (MasCompanyReports[1].param3[j] == 0 ? MasCompanyReports[0].param2[j] : MasCompanyReports[0].param3[j] * 100.0 / MasCompanyReports[1].param3[j] - 100);
                                         int random = r.Next(0, 2);
-                                        DGVcompReport.Rows.Add(MasReports[i].comp_name, MasReports[i].inn, param1, param2, param3, param4);
-                                        DGVcompReport.Rows[i * 5 + j].Cells[2].Style.BackColor = (param1 >= PlanSettingsParam1 ? Color.Green : Color.Red);
-                                        DGVcompReport.Rows[i * 5 + j].Cells[3].Style.BackColor = (param2 >= PlanSettingsParam2 ? Color.Green : Color.Red);
-                                        DGVcompReport.Rows[i * 5 + j].Cells[4].Style.BackColor = (param3 >= PlanSettingsParam3 ? Color.Green : Color.Red);
-                                        DGVcompReport.Rows[i * 5 + j].Cells[5].Style.BackColor = (param4 >= PlanSettingsParam4 ? Color.Green : Color.Red);
-
-
-                                        //DGVcompReport.Rows[i * 5 + j].Cells[6].Style.BackColor = (random == 0 ? Color.Red : Color.Green);
-                                        //DGVcompReport.Rows[i * 5 + j].Cells[6].Style.ForeColor = (random == 0 ? Color.Red : Color.Green);
+                                        DGVcompReport.Rows.Add(MasCompany[i].comp_name, MasCompany[i].inn, param1, param2, param3, param4);
+                                        DGVcompReport.Rows[i * 5 + j].Cells[2].Style.BackColor = (param1 >= PlanSettingsParam1 ? Color.LightGreen : Color.PaleVioletRed);
+                                        DGVcompReport.Rows[i * 5 + j].Cells[3].Style.BackColor = (param2 >= PlanSettingsParam2 ? Color.LightGreen : Color.PaleVioletRed);
+                                        DGVcompReport.Rows[i * 5 + j].Cells[4].Style.BackColor = (param3 >= PlanSettingsParam3 ? Color.LightGreen : Color.PaleVioletRed);
+                                        DGVcompReport.Rows[i * 5 + j].Cells[5].Style.BackColor = (param4 >= PlanSettingsParam4 ? Color.LightGreen : Color.PaleVioletRed);
                                         break;
                                     }
                             }
                         }
                     }
                 }
-                if (!ReportSearch)
+                if (ReportSearchError)
                 {
-                    //Program.ConnectForm.conn.Close();
                     MessageBox.Show("Отчеты не найдены", "Ошибка загрузки", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //return;
                 }
                 Program.ConnectForm.conn.Close();
             }
             catch (MySqlException ex)
             {
                 Program.ConnectForm.conn.Close();
-                MessageBox.Show("Ошибка выполнения запроса. Обратитесь к администратору.\n" + ex, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Ошибка выполнения запроса. Обратитесь к системному администратору.\n" + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (CBinstSelect1.SelectedIndex == 0)
+            if (CBinstSelect2.SelectedIndex == 0)
             {
                 CBinstSelect2_SelectedIndexChanged(sender, e);
             }
             else
             {
-                CBinstSelect1.SelectedIndex = 0;
+                CBinstSelect2.SelectedIndex = 0;
             }
         }
 
@@ -251,9 +348,9 @@ namespace hahatonProjectAdmin
         private void AdminPanelForm_Load(object sender, EventArgs e)
         {
             TabControl.SelectedIndex = 0;
-            CBinstSelect1.SelectedIndex = 0;
             CBinstSelect2.SelectedIndex = 0;
             CBinstSelect3.SelectedIndex = 0;
+            //Загрузка параметров плана
             try
             {
                 if (Program.IF.KeyExists("PlanSettings", "Number"))
@@ -355,5 +452,16 @@ namespace hahatonProjectAdmin
                 return;
             }
         }
+    }
+    
+    [Serializable]
+    public class MySqlQueryException : ApplicationException
+    {
+        public MySqlQueryException() { }
+        public MySqlQueryException(string message) : base(message) { }
+        public MySqlQueryException(string message, Exception inner) : base(message, inner) { }
+        protected MySqlQueryException(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
 }
