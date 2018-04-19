@@ -73,34 +73,28 @@ namespace hahatonProjectAdmin
             {
                 if (TBLogin.Text != "" && TBPass.Text != "")
                 {
-                    ConnectStr = "server=" + Program.IF.ReadINI("ConnSett", "Adress") + ";user=" + TBLogin.Text +
-                        ";database=" + Program.IF.ReadINI("ConnSett", "DBname") + ";password=" + TBPass.Text +
-                        ";port=" + Program.IF.ReadINI("ConnSett", "Port") + ";";
+                    ConnectStr = 
+                        $"server={Program.IF.ReadINI("ConnSett", "Adress")};" +
+                        $"port={Program.IF.ReadINI("ConnSett", "Port")};" +
+                        $"user={TBLogin.Text};" +
+                        $"password={TBPass.Text};" +
+                        $"database={Program.IF.ReadINI("ConnSett", "DBname")};";
                     conn = new MySqlConnection(ConnectStr);
-
                     conn.Open();
-
-                    if (conn.State == ConnectionState.Open)
-                    {
-                        login = TBLogin.Text;
-                        AdminPanel = new AdminPanelForm(ConnectStr);
-                        this.Hide();
-                        conn.Close();
-                        AdminPanel.Show();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Не удалось подключится к базе данных. Проверьте настройки.", "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    conn.Close();
+                    login = TBLogin.Text;
+                    AdminPanel = new AdminPanelForm(ConnectStr);
+                    this.Hide();
+                    AdminPanel.Show();
                 }
                 else
                 {
                     MessageBox.Show("Введите логин и пароль");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Не удалось подключится к базе данных. Проверьте настройки.", "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Не удалось подключится к базе данных. Проверьте настройки.\n{ex.Message}", "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
