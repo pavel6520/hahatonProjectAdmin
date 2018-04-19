@@ -98,16 +98,26 @@ namespace hahatonProjectAdmin
         /// </summary>
         /// <param name="CompanyRef">Структура, содержащая ИНН компании, для которой необходимо загрузить ключи отчетов</param>
         /// <param name="StartSelect">Дата квартала, с которого начинать отбор отчетов</param>
-        /// <param name="EndSelected">Дата квартала, на котором заканчивается отбор отчетов</param>
         /// <param name="CountQuarter">Число кварталов, если не важна конечная дата отбора</param>
-        public static DateTime[] GetLastReportDateTime(ref Company CompanyRef, DateTime StartSelect, DateTime EndSelected, int CountQuarter = 0)
+        /// <param name="EndSelected">Дата квартала, на котором заканчивается отбор отчетов</param>
+        public static DateTime[] GetLastReportDateTime(ref Company CompanyRef, string StartSelect, int CountQuarter = 0, string EndSelected = "")
         {
             MySqlCommand com;
+            if (CountQuarter > 0)
+            {
+                com = new MySqlCommand(
+                    $"select distinct date from project.`{CompanyRef.inn}` where date <= '{StartSelect}' order by date desc limit {CountQuarter}",
+                    Program.ConnectForm.conn);
+            }
+            else
+            {
+                com = new MySqlCommand($"select distinct date from project.`{CompanyRef.inn}` where date <= '{StartSelect} and date >= '{EndSelected}' " +
+                    $"order by date desc", Program.ConnectForm.conn);
+            }
             MySqlDataReader reader;
             DateTime[] MasReportTime = null;
             try
             {
-                com = new MySqlCommand($"select distinct date from project.`{CompanyRef.inn}` where date <= '{StartSelect.ToString("yyyy.MM.dd")}' order by date desc limit 2", Program.ConnectForm.conn);
                 reader = com.ExecuteReader();
                 while (reader.Read())
                 {
@@ -195,7 +205,7 @@ namespace hahatonProjectAdmin
         private void AdminPanelForm_Load(object sender, EventArgs e)
         {
             TabControl.SelectedIndex = 0;
-            CBinstSelect2.SelectedIndex = 0;
+            CBinstSelect.SelectedIndex = 0;
             CBinstSelect3.SelectedIndex = 0;
             //Загрузка параметров плана
             try
@@ -204,32 +214,53 @@ namespace hahatonProjectAdmin
                 {
                     PlanSettingsParam1 = Convert.ToInt32(Program.IF.ReadINI("PlanSettings", "Number"));
                 }
-            }
-            catch (FormatException) { }
-            try
-            {
                 if (Program.IF.KeyExists("PlanSettings", "Workplaces"))
                 {
                     PlanSettingsParam2 = Convert.ToDouble(Program.IF.ReadINI("PlanSettings", "Workplaces"));
                 }
-            }
-            catch (FormatException) { }
-            try
-            {
                 if (Program.IF.KeyExists("PlanSettings", "Proceeds"))
                 {
                     PlanSettingsParam3 = Convert.ToDouble(Program.IF.ReadINI("PlanSettings", "Proceeds"));
                 }
-            }
-            catch (FormatException) { }
-            try
-            {
                 if (Program.IF.KeyExists("PlanSettings", "Proceeds1"))
                 {
                     PlanSettingsParam4 = Convert.ToDouble(Program.IF.ReadINI("PlanSettings", "Proceeds1"));
                 }
             }
-            catch (FormatException) { }
+            catch (FormatException)
+            {
+                MessageBox.Show("Неверные настройки параметров плана", "Ошибка чтения настроек", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                SettingsAdminClient SACForm = new SettingsAdminClient();
+                SACForm.ShowDialog();
+            }
+            int Year = DateTime.Now.Year;
+            DateTime Quarter = Convert.ToDateTime($"1001.{DateTime.Now.Month}.{DateTime.Now.Day}");
+            if (Quarter >= Convert.ToDateTime("1001.1.1") && Quarter < Convert.ToDateTime("1001.03.25"))
+            {
+                TBYearCompReport.Text = $"{Year - 1}";
+                CBQuarterCompReport.SelectedIndex = 3;
+            }
+            else if (Quarter >= Convert.ToDateTime("1001.03.25") && Quarter < Convert.ToDateTime("1001.06.25"))
+            {
+                TBYearCompReport.Text = $"{Year}";
+                CBQuarterCompReport.SelectedIndex = 0;
+            }
+            else if (Quarter >= Convert.ToDateTime("1001.06.25") && Quarter < Convert.ToDateTime("1001.09.25"))
+            {
+                TBYearCompReport.Text = $"{Year}";
+                CBQuarterCompReport.SelectedIndex = 1;
+            }
+            else if (Quarter >= Convert.ToDateTime("1001.09.25") && Quarter < Convert.ToDateTime("1001.12.25"))
+            {
+                TBYearCompReport.Text = $"{Year}";
+                CBQuarterCompReport.SelectedIndex = 2;
+            }
+            else
+            {
+                TBYearCompReport.Text = $"{Year}";
+                CBQuarterCompReport.SelectedIndex = 3;
+            }
+
             Dia1.Series[0].Points.DataBindY(
                 new int[] { 15, 20 });
             Dia1.Series[1].Points.DataBindY(
@@ -263,6 +294,35 @@ namespace hahatonProjectAdmin
 
         private void TSMIbdShow_Click(object sender, EventArgs e)
         {
+            try
+            {
+                if (Convert.ToInt32(TBYearCompReport.Text) < 1000)
+                {
+                    MessageBox.Show("Неверный формат года", "Неверный формат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show($"Неверный формат года", "Неверный формат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            string Quarter = "";
+            switch (CBQuarterCompReport.SelectedIndex)
+            {
+                case 0:
+                    Quarter = ".03.25";
+                    break;
+                case 1:
+                    Quarter = ".06.25";
+                    break;
+                case 2:
+                    Quarter = ".09.25";
+                    break;
+                case 3:
+                    Quarter = ".12.25";
+                    break;
+            }
             loadingMessege.Show();
             loadingMessege.Update();
             DGVcompReport.Rows.Clear();
@@ -299,12 +359,11 @@ namespace hahatonProjectAdmin
             bool ReportSearchError = true;
             for (int i = 0; i < MasCompany.Length; i++)
             {
-                //MC1_DateSelected_1 =
                 DateTime[] MasReportTimeSended;
                 //Загрузка даты двух последних отчетов компании
                 try
                 {
-                    if((MasReportTimeSended = GetLastReportDateTime(ref MasCompany[i], DateTime.MaxValue, DateTime.MinValue, 2)) == null)
+                    if((MasReportTimeSended = GetLastReportDateTime(ref MasCompany[i], TBYearCompReport.Text + Quarter, 2)) == null)
                     {
                         continue;
                     }
@@ -361,13 +420,13 @@ namespace hahatonProjectAdmin
                 MessageBox.Show("Отчеты не найдены", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             Program.ConnectForm.conn.Close();
-            if (CBinstSelect2.SelectedIndex == 0)
+            if (CBinstSelect.SelectedIndex == 0)
             {
                 CBinstSelect2_SelectedIndexChanged(sender, e);
             }
             else
             {
-                CBinstSelect2.SelectedIndex = 0;
+                CBinstSelect.SelectedIndex = 0;
             }
             loadingMessege.Hide();
         }
@@ -378,7 +437,7 @@ namespace hahatonProjectAdmin
             {
                 for (int i = 0; i < DGVcompReport.RowCount; i++)
                 {
-                    DGVcompReport.Rows[i].Visible = (Convert.ToInt32(DGVcompReport.Rows[i].Cells[6].Value) == CBinstSelect2.SelectedIndex ? true : false);
+                    DGVcompReport.Rows[i].Visible = (Convert.ToInt32(DGVcompReport.Rows[i].Cells[6].Value) == CBinstSelect.SelectedIndex ? true : false);
                 }
             }
         }
