@@ -137,7 +137,7 @@ namespace hahatonProjectAdmin
                     //создание таблицы с именем ИНН для отчетов и выдача прав на чтение и дополнение
                     com = new MySqlCommand(
                         "CREATE TABLE project.`" + TableINN.Rows[i].Cells[0].Value + "` (" +
-                        "Date date DEFAULT NULL, " + 
+                        "Date date DEFAULT NULL, DateReport DATETIME NOT NULL," + 
                         "FM1 int(11) DEFAULT NULL, FM2 int(11) DEFAULT NULL, FM3 decimal(10, 6) DEFAULT NULL, " +
                         "GF1 int(11) DEFAULT NULL, GF2 int(11) DEFAULT NULL, GF3 decimal(10, 6) DEFAULT NULL, " +
                         "CKR1 int(11) DEFAULT NULL, CKR2 int(11) DEFAULT NULL, CKR3 decimal(10, 6) DEFAULT NULL, " +
@@ -161,7 +161,12 @@ namespace hahatonProjectAdmin
 
         private void CreateUserForm_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (TBlogin.Focused)
+            if (TBpass.Focused)
+            {
+                if (e.KeyChar != 3)
+                    e.Handled = true;
+            }
+            else if (TBlogin.Focused)
             {
                 if ((e.KeyChar <= 64 || e.KeyChar >= 91) && (e.KeyChar <= 96 || e.KeyChar >= 123)
                 && (e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8 && e.KeyChar != 45 && e.KeyChar != 95)

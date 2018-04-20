@@ -1,6 +1,6 @@
 ﻿namespace hahatonProjectAdmin
 {
-    partial class SettingsForm
+    partial class SettingsConnectForm
     {
         /// <summary>
         /// Required designer variable.
@@ -46,7 +46,6 @@
             this.TBip.Name = "TBip";
             this.TBip.Size = new System.Drawing.Size(156, 20);
             this.TBip.TabIndex = 0;
-            this.TBip.TextChanged += new System.EventHandler(this.TBip_TextChanged);
             // 
             // TBdatabase
             // 
@@ -55,7 +54,6 @@
             this.TBdatabase.Name = "TBdatabase";
             this.TBdatabase.Size = new System.Drawing.Size(156, 20);
             this.TBdatabase.TabIndex = 2;
-            this.TBdatabase.TextChanged += new System.EventHandler(this.TBdatabase_TextChanged);
             // 
             // LabelIP
             // 
@@ -101,7 +99,6 @@
             this.TBport.Name = "TBport";
             this.TBport.Size = new System.Drawing.Size(39, 20);
             this.TBport.TabIndex = 1;
-            this.TBport.TextChanged += new System.EventHandler(this.TBport_TextChanged);
             // 
             // LipErr
             // 
@@ -136,7 +133,7 @@
             this.LdbErr.Text = "Обязательно для заполнения";
             this.LdbErr.Visible = false;
             // 
-            // SettingsForm
+            // SettingsConnectForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -152,7 +149,7 @@
             this.Controls.Add(this.TBdatabase);
             this.Controls.Add(this.TBip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Name = "SettingsForm";
+            this.Name = "SettingsConnectForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Настройки";
             this.Load += new System.EventHandler(this.SettingsForm_Load);
