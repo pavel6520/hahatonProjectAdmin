@@ -13,12 +13,9 @@ namespace hahatonProjectAdmin
 {
     public partial class CreateUserForm : Form
     {
-        private string ConnectStr;
-
-        public CreateUserForm(string str)
+        public CreateUserForm()
         {
             InitializeComponent();
-            ConnectStr = str;
         }
 
         private void CreateUserForm_Load(object sender, EventArgs e)

@@ -13,7 +13,6 @@ namespace hahatonProjectAdmin
 {
     public partial class AdminPanelForm : Form
     {
-        public CreateUserForm CreateUser;
         LoadingMessegeForm loadingMessege = new LoadingMessegeForm();
         private string ConnectStr;
         private DateTime SelectedPeriodStart = DateTime.MinValue, SelectedPeriodEnd = DateTime.MinValue;
@@ -278,20 +277,6 @@ namespace hahatonProjectAdmin
             Environment.Exit(0);
         }
 
-        private void TSMIuserCreate_Click(object sender, EventArgs e)
-        {
-            CreateUser = new CreateUserForm(ConnectStr);
-            CreateUser.Show();
-            TSMIuserCreate.Enabled = false;
-            CreateUser.FormClosing += (obj, arg) =>
-            {
-                CenterToScreen();
-                Activate();
-                TSMIuserCreate.Enabled = true;
-            };
-            CreateUser.Location = this.Location;
-        }
-
         private void TSMIbdShow_Click(object sender, EventArgs e)
         {
             try
@@ -363,7 +348,7 @@ namespace hahatonProjectAdmin
                 //Загрузка даты двух последних отчетов компании
                 try
                 {
-                    if((MasReportTimeSended = GetLastReportDateTime(ref MasCompany[i], TBYearCompReport.Text + Quarter, 2)) == null)
+                    if ((MasReportTimeSended = GetLastReportDateTime(ref MasCompany[i], TBYearCompReport.Text + Quarter, 2)) == null)
                     {
                         continue;
                     }
@@ -394,7 +379,7 @@ namespace hahatonProjectAdmin
                 }
                 for (int j = 0; j <= 4; j++)
                 {
-                    if(MasCompanyReports[0].param1[j] > 0)
+                    if (MasCompanyReports[0].param1[j] > 0)
                     {
                         if (MasCompanyReports.Length == 1)
                         {
@@ -429,6 +414,34 @@ namespace hahatonProjectAdmin
                 CBinstSelect.SelectedIndex = 0;
             }
             loadingMessege.Hide();
+        }
+
+        private void TSMIuserCreate_Click(object sender, EventArgs e)
+        {
+            CreateUserForm CreateUser = new CreateUserForm();
+            CreateUser.Show();
+            TSMIuserCreate.Enabled = false;
+            CreateUser.FormClosing += (obj, arg) =>
+            {
+                CenterToScreen();
+                Activate();
+                TSMIuserCreate.Enabled = true;
+            };
+            CreateUser.Location = Location;
+        }
+
+        private void TSMIuserDelete_Click(object sender, EventArgs e)
+        {
+            DeleteUserForm DeleteUser = new DeleteUserForm();
+            DeleteUser.Show();
+            TSMIuserDelete.Enabled = false;
+            DeleteUser.FormClosing += (obj, arg) =>
+            {
+                CenterToScreen();
+                Activate();
+                TSMIuserDelete.Enabled = true;
+            };
+            DeleteUser.Location = Location;
         }
 
         private void CBinstSelect2_SelectedIndexChanged(object sender, EventArgs e)

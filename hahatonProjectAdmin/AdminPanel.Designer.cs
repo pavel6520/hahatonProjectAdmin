@@ -28,19 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series16 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series17 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series18 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series19 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series20 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title4 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.TSMIdb = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMIdbShow = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,6 +50,10 @@
             this.TSMIOptionsSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.TabControl = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.CBQuarterCompReport = new System.Windows.Forms.ComboBox();
+            this.LabelQuarterCompReport = new System.Windows.Forms.Label();
+            this.LabelYearCompReport = new System.Windows.Forms.Label();
+            this.TBYearCompReport = new System.Windows.Forms.TextBox();
             this.CBinstSelect = new System.Windows.Forms.ComboBox();
             this.DGVcompReport = new System.Windows.Forms.DataGridView();
             this.compName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -79,10 +83,13 @@
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MC1 = new System.Windows.Forms.MonthCalendar();
-            this.TBYearCompReport = new System.Windows.Forms.TextBox();
-            this.LabelYearCompReport = new System.Windows.Forms.Label();
-            this.LabelQuarterCompReport = new System.Windows.Forms.Label();
-            this.CBQuarterCompReport = new System.Windows.Forms.ComboBox();
+            this.TSMIuserChange = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMIuserDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMIadmin = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMIadminCreate = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMIadminChange = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMIadminDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMIadminLog = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.TabControl.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -100,6 +107,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TSMIdb,
             this.TSMIuser,
+            this.TSMIadmin,
             this.TSMIOptions});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -120,14 +128,16 @@
             this.TSMIdbShow.Name = "TSMIdbShow";
             this.TSMIdbShow.ShortcutKeyDisplayString = "F1";
             this.TSMIdbShow.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.TSMIdbShow.Size = new System.Drawing.Size(150, 22);
-            this.TSMIdbShow.Text = "&Просмотр";
+            this.TSMIdbShow.Size = new System.Drawing.Size(180, 22);
+            this.TSMIdbShow.Text = "&Загрузить";
             this.TSMIdbShow.Click += new System.EventHandler(this.TSMIbdShow_Click);
             // 
             // TSMIuser
             // 
             this.TSMIuser.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TSMIuserCreate});
+            this.TSMIuserCreate,
+            this.TSMIuserChange,
+            this.TSMIuserDelete});
             this.TSMIuser.Name = "TSMIuser";
             this.TSMIuser.Size = new System.Drawing.Size(97, 20);
             this.TSMIuser.Text = "Пользователи";
@@ -136,8 +146,7 @@
             // 
             this.TSMIuserCreate.Name = "TSMIuserCreate";
             this.TSMIuserCreate.ShortcutKeyDisplayString = "";
-            this.TSMIuserCreate.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.TSMIuserCreate.Size = new System.Drawing.Size(136, 22);
+            this.TSMIuserCreate.Size = new System.Drawing.Size(180, 22);
             this.TSMIuserCreate.Text = "&Создать";
             this.TSMIuserCreate.Click += new System.EventHandler(this.TSMIuserCreate_Click);
             // 
@@ -152,7 +161,7 @@
             // TSMIOptionsSettings
             // 
             this.TSMIOptionsSettings.Name = "TSMIOptionsSettings";
-            this.TSMIOptionsSettings.Size = new System.Drawing.Size(134, 22);
+            this.TSMIOptionsSettings.Size = new System.Drawing.Size(180, 22);
             this.TSMIOptionsSettings.Text = "Настройки";
             this.TSMIOptionsSettings.Click += new System.EventHandler(this.TSMIOptionsSettings_Click);
             // 
@@ -185,6 +194,46 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Институты поддержки";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // CBQuarterCompReport
+            // 
+            this.CBQuarterCompReport.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CBQuarterCompReport.FormattingEnabled = true;
+            this.CBQuarterCompReport.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4"});
+            this.CBQuarterCompReport.Location = new System.Drawing.Point(379, 0);
+            this.CBQuarterCompReport.Name = "CBQuarterCompReport";
+            this.CBQuarterCompReport.Size = new System.Drawing.Size(53, 21);
+            this.CBQuarterCompReport.TabIndex = 5;
+            // 
+            // LabelQuarterCompReport
+            // 
+            this.LabelQuarterCompReport.AutoSize = true;
+            this.LabelQuarterCompReport.Location = new System.Drawing.Point(321, 3);
+            this.LabelQuarterCompReport.Name = "LabelQuarterCompReport";
+            this.LabelQuarterCompReport.Size = new System.Drawing.Size(52, 13);
+            this.LabelQuarterCompReport.TabIndex = 4;
+            this.LabelQuarterCompReport.Text = "Квартал:";
+            // 
+            // LabelYearCompReport
+            // 
+            this.LabelYearCompReport.AutoSize = true;
+            this.LabelYearCompReport.Location = new System.Drawing.Point(246, 3);
+            this.LabelYearCompReport.Name = "LabelYearCompReport";
+            this.LabelYearCompReport.Size = new System.Drawing.Size(28, 13);
+            this.LabelYearCompReport.TabIndex = 3;
+            this.LabelYearCompReport.Text = "Год:";
+            // 
+            // TBYearCompReport
+            // 
+            this.TBYearCompReport.Location = new System.Drawing.Point(280, 0);
+            this.TBYearCompReport.MaxLength = 4;
+            this.TBYearCompReport.Name = "TBYearCompReport";
+            this.TBYearCompReport.Size = new System.Drawing.Size(35, 20);
+            this.TBYearCompReport.TabIndex = 2;
             // 
             // CBinstSelect
             // 
@@ -221,17 +270,17 @@
             this.DGVcompReport.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.DGVcompReport.Location = new System.Drawing.Point(0, 22);
             this.DGVcompReport.Name = "DGVcompReport";
-            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.Color.Silver;
-            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.Color.Black;
-            this.DGVcompReport.RowsDefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Silver;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
+            this.DGVcompReport.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.DGVcompReport.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.DGVcompReport.Size = new System.Drawing.Size(885, 421);
             this.DGVcompReport.TabIndex = 0;
             // 
             // compName
             // 
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.compName.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.compName.DefaultCellStyle = dataGridViewCellStyle1;
             this.compName.HeaderText = "Компания";
             this.compName.Name = "compName";
             this.compName.ReadOnly = true;
@@ -253,9 +302,9 @@
             // 
             // pschr
             // 
-            dataGridViewCellStyle17.Format = "N2";
-            dataGridViewCellStyle17.NullValue = null;
-            this.pschr.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle2.Format = "N2";
+            dataGridViewCellStyle2.NullValue = null;
+            this.pschr.DefaultCellStyle = dataGridViewCellStyle2;
             this.pschr.HeaderText = "Прирост среднесписочной численности работников, %";
             this.pschr.Name = "pschr";
             this.pschr.ReadOnly = true;
@@ -270,9 +319,9 @@
             // 
             // pvPercents
             // 
-            dataGridViewCellStyle18.Format = "N2";
-            dataGridViewCellStyle18.NullValue = null;
-            this.pvPercents.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle3.Format = "N2";
+            dataGridViewCellStyle3.NullValue = null;
+            this.pvPercents.DefaultCellStyle = dataGridViewCellStyle3;
             this.pvPercents.HeaderText = "Прирост выручки, %";
             this.pvPercents.Name = "pvPercents";
             this.pvPercents.ReadOnly = true;
@@ -366,46 +415,46 @@
             // 
             this.Dia1.BackSecondaryColor = System.Drawing.Color.White;
             this.Dia1.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-            chartArea4.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
-            chartArea4.AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Years;
-            chartArea4.BackColor = System.Drawing.Color.Wheat;
-            chartArea4.BorderWidth = 3;
-            chartArea4.Name = "ChartArea1";
-            this.Dia1.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.Dia1.Legends.Add(legend4);
+            chartArea1.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
+            chartArea1.AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Years;
+            chartArea1.BackColor = System.Drawing.Color.Wheat;
+            chartArea1.BorderWidth = 3;
+            chartArea1.Name = "ChartArea1";
+            this.Dia1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.Dia1.Legends.Add(legend1);
             this.Dia1.Location = new System.Drawing.Point(0, 0);
             this.Dia1.Name = "Dia1";
-            series16.ChartArea = "ChartArea1";
-            series16.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            series16.Legend = "Legend1";
-            series16.MarkerStep = 4;
-            series16.Name = "Фонд Микрофинансирования";
-            series16.YValuesPerPoint = 4;
-            series17.ChartArea = "ChartArea1";
-            series17.Legend = "Legend1";
-            series17.Name = "Гарантийный фонд";
-            series18.ChartArea = "ChartArea1";
-            series18.Legend = "Legend1";
-            series18.Name = "Центр кластерного развития";
-            series19.ChartArea = "ChartArea1";
-            series19.Legend = "Legend1";
-            series19.Name = "Центр поддержки предпринимательства";
-            series20.ChartArea = "ChartArea1";
-            series20.Legend = "Legend1";
-            series20.Name = "Центр экспорта";
-            this.Dia1.Series.Add(series16);
-            this.Dia1.Series.Add(series17);
-            this.Dia1.Series.Add(series18);
-            this.Dia1.Series.Add(series19);
-            this.Dia1.Series.Add(series20);
+            series1.ChartArea = "ChartArea1";
+            series1.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            series1.Legend = "Legend1";
+            series1.MarkerStep = 4;
+            series1.Name = "Фонд Микрофинансирования";
+            series1.YValuesPerPoint = 4;
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Гарантийный фонд";
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Центр кластерного развития";
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Центр поддержки предпринимательства";
+            series5.ChartArea = "ChartArea1";
+            series5.Legend = "Legend1";
+            series5.Name = "Центр экспорта";
+            this.Dia1.Series.Add(series1);
+            this.Dia1.Series.Add(series2);
+            this.Dia1.Series.Add(series3);
+            this.Dia1.Series.Add(series4);
+            this.Dia1.Series.Add(series5);
             this.Dia1.Size = new System.Drawing.Size(926, 214);
             this.Dia1.TabIndex = 0;
             this.Dia1.Text = "Hello";
-            title4.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            title4.Name = "Title1";
-            title4.Text = "Созданные рабочие места";
-            this.Dia1.Titles.Add(title4);
+            title1.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            title1.Name = "Title1";
+            title1.Text = "Созданные рабочие места";
+            this.Dia1.Titles.Add(title1);
             // 
             // tabPage4
             // 
@@ -468,8 +517,8 @@
             // 
             // dataGridViewTextBoxColumn1
             // 
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridViewTextBoxColumn1.HeaderText = "Компания";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
@@ -516,45 +565,53 @@
             this.MC1.Visible = false;
             this.MC1.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.MC1_DateSelected_1);
             // 
-            // TBYearCompReport
+            // TSMIuserChange
             // 
-            this.TBYearCompReport.Location = new System.Drawing.Point(280, 0);
-            this.TBYearCompReport.MaxLength = 4;
-            this.TBYearCompReport.Name = "TBYearCompReport";
-            this.TBYearCompReport.Size = new System.Drawing.Size(35, 20);
-            this.TBYearCompReport.TabIndex = 2;
+            this.TSMIuserChange.Name = "TSMIuserChange";
+            this.TSMIuserChange.Size = new System.Drawing.Size(180, 22);
+            this.TSMIuserChange.Text = "Изменить";
             // 
-            // LabelYearCompReport
+            // TSMIuserDelete
             // 
-            this.LabelYearCompReport.AutoSize = true;
-            this.LabelYearCompReport.Location = new System.Drawing.Point(246, 3);
-            this.LabelYearCompReport.Name = "LabelYearCompReport";
-            this.LabelYearCompReport.Size = new System.Drawing.Size(28, 13);
-            this.LabelYearCompReport.TabIndex = 3;
-            this.LabelYearCompReport.Text = "Год:";
+            this.TSMIuserDelete.Name = "TSMIuserDelete";
+            this.TSMIuserDelete.Size = new System.Drawing.Size(180, 22);
+            this.TSMIuserDelete.Text = "Удалить";
+            this.TSMIuserDelete.Click += new System.EventHandler(this.TSMIuserDelete_Click);
             // 
-            // LabelQuarterCompReport
+            // TSMIadmin
             // 
-            this.LabelQuarterCompReport.AutoSize = true;
-            this.LabelQuarterCompReport.Location = new System.Drawing.Point(321, 3);
-            this.LabelQuarterCompReport.Name = "LabelQuarterCompReport";
-            this.LabelQuarterCompReport.Size = new System.Drawing.Size(52, 13);
-            this.LabelQuarterCompReport.TabIndex = 4;
-            this.LabelQuarterCompReport.Text = "Квартал:";
+            this.TSMIadmin.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TSMIadminCreate,
+            this.TSMIadminChange,
+            this.TSMIadminDelete,
+            this.TSMIadminLog});
+            this.TSMIadmin.Name = "TSMIadmin";
+            this.TSMIadmin.Size = new System.Drawing.Size(115, 20);
+            this.TSMIadmin.Text = "Администраторы";
             // 
-            // CBQuarterCompReport
+            // TSMIadminCreate
             // 
-            this.CBQuarterCompReport.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CBQuarterCompReport.FormattingEnabled = true;
-            this.CBQuarterCompReport.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4"});
-            this.CBQuarterCompReport.Location = new System.Drawing.Point(379, 0);
-            this.CBQuarterCompReport.Name = "CBQuarterCompReport";
-            this.CBQuarterCompReport.Size = new System.Drawing.Size(53, 21);
-            this.CBQuarterCompReport.TabIndex = 5;
+            this.TSMIadminCreate.Name = "TSMIadminCreate";
+            this.TSMIadminCreate.Size = new System.Drawing.Size(180, 22);
+            this.TSMIadminCreate.Text = "Создать";
+            // 
+            // TSMIadminChange
+            // 
+            this.TSMIadminChange.Name = "TSMIadminChange";
+            this.TSMIadminChange.Size = new System.Drawing.Size(180, 22);
+            this.TSMIadminChange.Text = "Изменить";
+            // 
+            // TSMIadminDelete
+            // 
+            this.TSMIadminDelete.Name = "TSMIadminDelete";
+            this.TSMIadminDelete.Size = new System.Drawing.Size(180, 22);
+            this.TSMIadminDelete.Text = "Удалить";
+            // 
+            // TSMIadminLog
+            // 
+            this.TSMIadminLog.Name = "TSMIadminLog";
+            this.TSMIadminLog.Size = new System.Drawing.Size(180, 22);
+            this.TSMIadminLog.Text = "История действий";
             // 
             // AdminPanelForm
             // 
@@ -633,5 +690,12 @@
         private System.Windows.Forms.Label LabelQuarterCompReport;
         private System.Windows.Forms.Label LabelYearCompReport;
         private System.Windows.Forms.TextBox TBYearCompReport;
+        private System.Windows.Forms.ToolStripMenuItem TSMIuserChange;
+        private System.Windows.Forms.ToolStripMenuItem TSMIuserDelete;
+        private System.Windows.Forms.ToolStripMenuItem TSMIadmin;
+        private System.Windows.Forms.ToolStripMenuItem TSMIadminCreate;
+        private System.Windows.Forms.ToolStripMenuItem TSMIadminChange;
+        private System.Windows.Forms.ToolStripMenuItem TSMIadminDelete;
+        private System.Windows.Forms.ToolStripMenuItem TSMIadminLog;
     }
 }
