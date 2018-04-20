@@ -68,13 +68,31 @@
     <Compile Include="CreateUser.Designer.cs">
       <DependentUpon>CreateUser.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings.cs">
+    <Compile Include="DeleteUser.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Settings.designer.cs">
-      <DependentUpon>Settings.cs</DependentUpon>
+    <Compile Include="DeleteUser.Designer.cs">
+      <DependentUpon>DeleteUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LoadingMessege.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoadingMessege.Designer.cs">
+      <DependentUpon>LoadingMessege.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingsAdminClient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingsAdminClient.Designer.cs">
+      <DependentUpon>SettingsAdminClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsConnect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingsConnect.designer.cs">
+      <DependentUpon>SettingsConnect.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="AdminPanel.resx">
       <DependentUpon>AdminPanel.cs</DependentUpon>
@@ -85,6 +103,9 @@
     <EmbeddedResource Include="CreateUser.resx">
       <DependentUpon>CreateUser.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="LoadingMessege.resx">
+      <DependentUpon>LoadingMessege.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -94,8 +115,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Settings.resx">
-      <DependentUpon>Settings.cs</DependentUpon>
+    <EmbeddedResource Include="SettingsAdminClient.resx">
+      <DependentUpon>SettingsAdminClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingsConnect.resx">
+      <DependentUpon>SettingsConnect.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
