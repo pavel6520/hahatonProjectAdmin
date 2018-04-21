@@ -15,6 +15,7 @@ namespace hahatonProjectAdmin
     {
 
         public CreateUserForm CreateUser;
+        public SettingsForm SettingsForm;
         private string ConnectStr;
         protected struct Report
         {
@@ -292,6 +293,13 @@ namespace hahatonProjectAdmin
                     this.Size = new Size(818, 531);
                     break;
             }
+        }
+
+        private void TSMsettings_Click(object sender, EventArgs e)
+        {
+            SettingsForm = new SettingsForm();
+            Enabled = false;
+            SettingsForm.Show();
         }
 
         private void MC1_DateSelected_1(object sender, DateRangeEventArgs e)
