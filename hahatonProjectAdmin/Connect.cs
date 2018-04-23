@@ -71,7 +71,10 @@ namespace hahatonProjectAdmin
         {
             try
             {
-                if (TBLogin.Text != "" && TBPass.Text != "")
+                if (TBPass.Text.IndexOf('\'') != -1 || TBPass.Text.IndexOf('`') != -1){
+                    MessageBox.Show("Недопустимые символы в пароле", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (TBLogin.Text != "" && TBPass.Text != "")
                 {
                     ConnectStr = 
                         $"server={Program.IF.ReadINI("ConnSett", "Adress")};" +
@@ -83,13 +86,13 @@ namespace hahatonProjectAdmin
                     conn.Open();
                     conn.Close();
                     login = TBLogin.Text;
-                    AdminPanel = new AdminPanelForm(ConnectStr);
+                    AdminPanel = new AdminPanelForm();
                     this.Hide();
                     AdminPanel.Show();
                 }
                 else
                 {
-                    MessageBox.Show("Введите логин и пароль");
+                    MessageBox.Show("Введите логин и пароль", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
@@ -119,7 +122,8 @@ namespace hahatonProjectAdmin
         {
             if ((e.KeyChar <= 64 || e.KeyChar >= 91) && (e.KeyChar <= 96 || e.KeyChar >= 123)
                 && (e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8 && e.KeyChar != 35 && e.KeyChar != 36
-                && e.KeyChar != 38 && e.KeyChar != 63 && e.KeyChar != 64 && e.KeyChar != 37)
+                && e.KeyChar != 38 && e.KeyChar != 63 && e.KeyChar != 64 && e.KeyChar != 37 &&
+                e.KeyChar != 22)
                 e.Handled = true;
         }
     }
