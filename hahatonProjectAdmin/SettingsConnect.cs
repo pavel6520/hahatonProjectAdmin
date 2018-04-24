@@ -23,7 +23,10 @@ namespace hahatonProjectAdmin
 
         private void BSave_Click(object sender, EventArgs e)
         {
-            // if (TBip.Text.Length == 0 && TBdatabase.Text.Length == 0 && TBport.Text.Length == 0)
+            if (TBip.Text.IndexOf('`') != -1 || TBdatabase.Text.IndexOf('`') != -1 || TBport.Text.IndexOf('`') != -1)
+            {
+                MessageBox.Show("Символ '`' запрещен", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             if (TBip.Text.Length == 0)
             {
                 LipErr.Show();
@@ -49,17 +52,13 @@ namespace hahatonProjectAdmin
                 LportErr.Hide();
             }
 
-                if (TBip.Text.Length != 0 && TBdatabase.Text.Length != 0 && TBport.Text.Length != 0)
+            if (TBip.Text.Length != 0 && TBdatabase.Text.Length != 0 && TBport.Text.Length != 0)
             {
                 Program.IF.WriteINI("ConnSett", "Adress", TBip.Text);
                 Program.IF.WriteINI("ConnSett", "DBname", TBdatabase.Text);
                 Program.IF.WriteINI("ConnSett", "Port", TBport.Text);
                 this.Close();
             }
-            /*else
-            {
-                MessageBox.Show("Несколько полей пусты", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }*/
         }
 
         private void SettingsForm_Load(object sender, EventArgs e)
