@@ -35,18 +35,16 @@ namespace hahatonProjectAdmin
                     HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create("http://www.google.ru/");
                     request.UserAgent = "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)";
                     request.Timeout = 10000;
-
                     HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                     Stream ReceiveStream1 = response.GetResponseStream();
                     StreamReader sr = new StreamReader(ReceiveStream1, true);
                     string responseFromServer = sr.ReadToEnd();
-
                     response.Close();
                     break;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    DialogResult = MessageBox.Show("Нет подключения к интернету\nПроверьте Ваш фаервол или настройки сетевого подключения", "", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+                    DialogResult = MessageBox.Show($"Нет подключения к интернету\n{ex.Message}", "", MessageBoxButtons.RetryCancel, MessageBoxIcon.Warning);
                     if(DialogResult == DialogResult.Cancel)
                     {
                         Environment.Exit(0);
@@ -57,11 +55,11 @@ namespace hahatonProjectAdmin
             if (!Program.IF.KeyExists("ConnSett", "Adress") || !Program.IF.KeyExists("ConnSett", "DBname") || !Program.IF.KeyExists("ConnSett", "Port"))//Проверка файла настроек
             {
                 SetForm = new SettingsConnectForm();
-                this.Hide();
+                Hide();
                 MessageBox.Show("Первый запуск. Введите настройки.", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 SetForm.FormClosing += (obj, arg) =>
                 {
-                    this.Show();
+                    Show();
                 };
                 SetForm.ShowDialog();
             }
@@ -71,8 +69,15 @@ namespace hahatonProjectAdmin
         {
             try
             {
-                if (TBPass.Text.IndexOf('\'') != -1 || TBPass.Text.IndexOf('`') != -1){
+                if (!Validation.StringValidation(Validation.ValidationType.LoginType, TBLogin.Text))
+                {
+                    MessageBox.Show("Недопустимые символы в логине", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                if (!Validation.StringValidation(Validation.ValidationType.LoginType, TBPass.Text))
+                {
                     MessageBox.Show("Недопустимые символы в пароле", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
                 else if (TBLogin.Text != "" && TBPass.Text != "")
                 {
@@ -84,15 +89,18 @@ namespace hahatonProjectAdmin
                         $"database={Program.IF.ReadINI("ConnSett", "DBname")};";
                     conn = new MySqlConnection(ConnectStr);
                     conn.Open();
-                    conn.Close();
-                    login = TBLogin.Text;
-                    AdminPanel = new AdminPanelForm();
-                    this.Hide();
-                    AdminPanel.Show();
+                    if (conn.State == ConnectionState.Open)
+                    {
+                        conn.Close();
+                        login = TBLogin.Text;
+                        AdminPanel = new AdminPanelForm();
+                        Hide();
+                        AdminPanel.Show();
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Введите логин и пароль", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Введите логин и пароль", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             catch (Exception ex)
@@ -104,27 +112,22 @@ namespace hahatonProjectAdmin
         private void ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SetForm = new SettingsConnectForm();
-
-            SetForm.FormClosing += (obj, arg) =>
-            {
-            };
             SetForm.ShowDialog();
         }
 
         private void TBLogin_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if ((e.KeyChar <= 64 || e.KeyChar >= 91) && (e.KeyChar <= 96 || e.KeyChar >= 123)
-                && (e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8 && e.KeyChar != 45 && e.KeyChar != 95)
-                e.Handled = true;
+            e.Handled = !Validation.CharValidation(Validation.ValidationType.LoginType, e.KeyChar, PasteMode: true);
         }
 
         private void TBPass_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if ((e.KeyChar <= 64 || e.KeyChar >= 91) && (e.KeyChar <= 96 || e.KeyChar >= 123)
-                && (e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8 && e.KeyChar != 35 && e.KeyChar != 36
-                && e.KeyChar != 38 && e.KeyChar != 63 && e.KeyChar != 64 && e.KeyChar != 37 &&
-                e.KeyChar != 22)
-                e.Handled = true;
+            e.Handled = !Validation.CharValidation(Validation.ValidationType.PasswordType, e.KeyChar, PasteMode: true);
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            TBPass.UseSystemPasswordChar = !checkBox1.Checked;
         }
     }
 }

@@ -55,8 +55,7 @@
             this.TSMIdbShow = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMIuser = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMIuserCreate = new System.Windows.Forms.ToolStripMenuItem();
-            this.TSMIuserChange = new System.Windows.Forms.ToolStripMenuItem();
-            this.TSMIuserDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMIuserChangeDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMIadmin = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMIadminCreate = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMIadminChange = new System.Windows.Forms.ToolStripMenuItem();
@@ -140,8 +139,7 @@
             // 
             this.TSMIuser.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TSMIuserCreate,
-            this.TSMIuserChange,
-            this.TSMIuserDelete});
+            this.TSMIuserChangeDelete});
             this.TSMIuser.Name = "TSMIuser";
             this.TSMIuser.Size = new System.Drawing.Size(97, 20);
             this.TSMIuser.Text = "Пользователи";
@@ -150,22 +148,16 @@
             // 
             this.TSMIuserCreate.Name = "TSMIuserCreate";
             this.TSMIuserCreate.ShortcutKeyDisplayString = "";
-            this.TSMIuserCreate.Size = new System.Drawing.Size(128, 22);
+            this.TSMIuserCreate.Size = new System.Drawing.Size(180, 22);
             this.TSMIuserCreate.Text = "&Создать";
             this.TSMIuserCreate.Click += new System.EventHandler(this.TSMIuserCreate_Click);
             // 
-            // TSMIuserChange
+            // TSMIuserChangeDelete
             // 
-            this.TSMIuserChange.Name = "TSMIuserChange";
-            this.TSMIuserChange.Size = new System.Drawing.Size(128, 22);
-            this.TSMIuserChange.Text = "Изменить";
-            // 
-            // TSMIuserDelete
-            // 
-            this.TSMIuserDelete.Name = "TSMIuserDelete";
-            this.TSMIuserDelete.Size = new System.Drawing.Size(128, 22);
-            this.TSMIuserDelete.Text = "Удалить";
-            this.TSMIuserDelete.Click += new System.EventHandler(this.TSMIuserDelete_Click);
+            this.TSMIuserChangeDelete.Name = "TSMIuserChangeDelete";
+            this.TSMIuserChangeDelete.Size = new System.Drawing.Size(180, 22);
+            this.TSMIuserChangeDelete.Text = "Изменить/Удалить";
+            this.TSMIuserChangeDelete.Click += new System.EventHandler(this.TSMIuserChangeDelete_Click);
             // 
             // TSMIadmin
             // 
@@ -741,8 +733,7 @@
         private System.Windows.Forms.Label LabelQuarterCompReport;
         private System.Windows.Forms.Label LabelYearCompReport;
         private System.Windows.Forms.TextBox TBYearCompReport;
-        private System.Windows.Forms.ToolStripMenuItem TSMIuserChange;
-        private System.Windows.Forms.ToolStripMenuItem TSMIuserDelete;
+        private System.Windows.Forms.ToolStripMenuItem TSMIuserChangeDelete;
         private System.Windows.Forms.ToolStripMenuItem TSMIadmin;
         private System.Windows.Forms.ToolStripMenuItem TSMIadminCreate;
         private System.Windows.Forms.ToolStripMenuItem TSMIadminChange;
