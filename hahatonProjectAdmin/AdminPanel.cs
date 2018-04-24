@@ -13,9 +13,7 @@ namespace hahatonProjectAdmin
 {
     public partial class AdminPanelForm : Form
     {
-        public CreateUserForm CreateUser;
-        LoadingMessegeForm loadingMessege = new LoadingMessegeForm();
-        private string ConnectStr;
+        LoadingMessegeForm loadingMessege;
         private DateTime SelectedPeriodStart = DateTime.MinValue, SelectedPeriodEnd = DateTime.MinValue;
         private DateTime SelectedPeriodStartBuf = DateTime.MinValue;
         public int PlanSettingsParam1;
@@ -43,7 +41,7 @@ namespace hahatonProjectAdmin
             }
             catch (MySqlException ex)
             {
-                throw new MySqlQueryException(ex.Message);
+                throw new ExceptionShowMessageException(ex.Message);
             }
             return MasCompany;
         }
@@ -69,7 +67,7 @@ namespace hahatonProjectAdmin
             }
             catch (MySqlException ex)
             {
-                throw new MySqlQueryException(ex.Message);
+                throw new ExceptionShowMessageException(ex.Message);
             }
             try
             {
@@ -88,7 +86,7 @@ namespace hahatonProjectAdmin
             }
             catch (MySqlException ex)
             {
-                throw new MySqlQueryException(ex.Message);
+                throw new ExceptionShowMessageException(ex.Message);
             }
             return MasUsers;
         }
@@ -111,7 +109,7 @@ namespace hahatonProjectAdmin
             }
             else
             {
-                com = new MySqlCommand($"select distinct date from project.`{CompanyRef.inn}` where date <= '{StartSelect} and date >= '{EndSelected}' " +
+                com = new MySqlCommand($"select distinct date from project.`{CompanyRef.inn}` where date >= '{StartSelect}' and date <= '{EndSelected}' " +
                     $"order by date desc", Program.ConnectForm.conn);
             }
             MySqlDataReader reader;
@@ -123,7 +121,6 @@ namespace hahatonProjectAdmin
                 {
                     Array.Resize(ref MasReportTime, (MasReportTime == null ? 1 : MasReportTime.Length + 1));
                     MasReportTime[MasReportTime.Length - 1] = Convert.ToDateTime(reader[0].ToString());
-                    //MessageBox.Show("1. " + MasReportQuarter[countReports - 1].ToString("yyyy.MM.dd"));
                 }
                 reader.Close();
                 if (MasReportTime == null)
@@ -141,7 +138,7 @@ namespace hahatonProjectAdmin
             }
             catch (MySqlException ex)
             {
-                throw new MySqlQueryException(ex.Message);
+                throw new ExceptionShowMessageException(ex.Message);
             }
             return MasReportTime;
         }
@@ -155,7 +152,7 @@ namespace hahatonProjectAdmin
         {
             MySqlCommand com;
             MySqlDataReader reader;
-            Report[] MasCompanyReports = null;
+            Report[] MasCompanyReports = new Report[MasReportTimeSended.Length];
             try
             {
                 for (int i = 0; i < MasReportTimeSended.Length; i++)
@@ -165,7 +162,6 @@ namespace hahatonProjectAdmin
                         $"' order by DateReport desc limit 1", Program.ConnectForm.conn);
                     reader = com.ExecuteReader();
                     reader.Read();
-                    Array.Resize(ref MasCompanyReports, i + 1);
                     MasCompanyReports[i].DateQuarter = Convert.ToDateTime(reader[0].ToString());
                     MasCompanyReports[i].DateReportSend = Convert.ToDateTime(reader[1].ToString());
                     MasCompanyReports[i].param1 = new int[5];
@@ -191,108 +187,12 @@ namespace hahatonProjectAdmin
             }
             catch (MySqlException ex)
             {
-                throw new MySqlQueryException(ex.Message);
+                throw new ExceptionShowMessageException(ex.Message);
             }
             return MasCompanyReports;
         }
 
-        public AdminPanelForm(string str)
-        {
-            InitializeComponent();
-            ConnectStr = str;
-        }
-
-        private void AdminPanelForm_Load(object sender, EventArgs e)
-        {
-            TabControl.SelectedIndex = 0;
-            CBinstSelect.SelectedIndex = 0;
-            CBinstSelect3.SelectedIndex = 0;
-            //Загрузка параметров плана
-            try
-            {
-                if (Program.IF.KeyExists("PlanSettings", "Number"))
-                {
-                    PlanSettingsParam1 = Convert.ToInt32(Program.IF.ReadINI("PlanSettings", "Number"));
-                }
-                if (Program.IF.KeyExists("PlanSettings", "Workplaces"))
-                {
-                    PlanSettingsParam2 = Convert.ToDouble(Program.IF.ReadINI("PlanSettings", "Workplaces"));
-                }
-                if (Program.IF.KeyExists("PlanSettings", "Proceeds"))
-                {
-                    PlanSettingsParam3 = Convert.ToDouble(Program.IF.ReadINI("PlanSettings", "Proceeds"));
-                }
-                if (Program.IF.KeyExists("PlanSettings", "Proceeds1"))
-                {
-                    PlanSettingsParam4 = Convert.ToDouble(Program.IF.ReadINI("PlanSettings", "Proceeds1"));
-                }
-            }
-            catch (FormatException)
-            {
-                MessageBox.Show("Неверные настройки параметров плана", "Ошибка чтения настроек", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                SettingsAdminClient SACForm = new SettingsAdminClient();
-                SACForm.ShowDialog();
-            }
-            int Year = DateTime.Now.Year;
-            DateTime Quarter = Convert.ToDateTime($"1001.{DateTime.Now.Month}.{DateTime.Now.Day}");
-            if (Quarter >= Convert.ToDateTime("1001.1.1") && Quarter < Convert.ToDateTime("1001.03.25"))
-            {
-                TBYearCompReport.Text = $"{Year - 1}";
-                CBQuarterCompReport.SelectedIndex = 3;
-            }
-            else if (Quarter >= Convert.ToDateTime("1001.03.25") && Quarter < Convert.ToDateTime("1001.06.25"))
-            {
-                TBYearCompReport.Text = $"{Year}";
-                CBQuarterCompReport.SelectedIndex = 0;
-            }
-            else if (Quarter >= Convert.ToDateTime("1001.06.25") && Quarter < Convert.ToDateTime("1001.09.25"))
-            {
-                TBYearCompReport.Text = $"{Year}";
-                CBQuarterCompReport.SelectedIndex = 1;
-            }
-            else if (Quarter >= Convert.ToDateTime("1001.09.25") && Quarter < Convert.ToDateTime("1001.12.25"))
-            {
-                TBYearCompReport.Text = $"{Year}";
-                CBQuarterCompReport.SelectedIndex = 2;
-            }
-            else
-            {
-                TBYearCompReport.Text = $"{Year}";
-                CBQuarterCompReport.SelectedIndex = 3;
-            }
-
-            Dia1.Series[0].Points.DataBindY(
-                new int[] { 15, 20 });
-            Dia1.Series[1].Points.DataBindY(
-                new int[] { 25, 35 });
-            Dia1.Series[2].Points.DataBindY(
-                new int[] { 35, 45 });
-            Dia1.Series[3].Points.DataBindY(
-                new int[] { 45, 55 });
-            Dia1.Series[4].Points.DataBindY(
-                new int[] { 55, 65 });
-        }
-
-        private void AdminPanelForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Environment.Exit(0);
-        }
-
-        private void TSMIuserCreate_Click(object sender, EventArgs e)
-        {
-            CreateUser = new CreateUserForm(ConnectStr);
-            CreateUser.Show();
-            TSMIuserCreate.Enabled = false;
-            CreateUser.FormClosing += (obj, arg) =>
-            {
-                CenterToScreen();
-                Activate();
-                TSMIuserCreate.Enabled = true;
-            };
-            CreateUser.Location = this.Location;
-        }
-
-        private void TSMIbdShow_Click(object sender, EventArgs e)
+        private void LoadCompReports(ref object sender, ref EventArgs e)
         {
             try
             {
@@ -323,37 +223,32 @@ namespace hahatonProjectAdmin
                     Quarter = ".12.25";
                     break;
             }
-            loadingMessege.Show();
-            loadingMessege.Update();
-            DGVcompReport.Rows.Clear();
             try
             {
                 Program.ConnectForm.conn.Open();
             }
             catch (MySqlException ex)
             {
-                loadingMessege.Hide();
                 MessageBox.Show($"Не удалось подключится к базе данных.\n{ex.Message}", "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            DGVcompReport.Rows.Clear();
             Company[] MasCompany;
             //Загрузка ИНН, имен компаний
             try
             {
                 MasCompany = GetCompany();
             }
-            catch (MySqlQueryException ex)
+            catch (ExceptionShowMessageException ex)
             {
-                loadingMessege.Hide();
                 Program.ConnectForm.conn.Close();
                 MessageBox.Show($"Ошибка загрузки списка компаний\n{ex.Message}", "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (MasCompany == null)
             {
-                loadingMessege.Hide();
                 Program.ConnectForm.conn.Close();
-                MessageBox.Show("Компании не найдены", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Компании не найдены", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             bool ReportSearchError = true;
@@ -363,14 +258,13 @@ namespace hahatonProjectAdmin
                 //Загрузка даты двух последних отчетов компании
                 try
                 {
-                    if((MasReportTimeSended = GetLastReportDateTime(ref MasCompany[i], TBYearCompReport.Text + Quarter, 2)) == null)
+                    if ((MasReportTimeSended = GetLastReportDateTime(ref MasCompany[i], TBYearCompReport.Text + Quarter, 2)) == null)
                     {
                         continue;
                     }
                 }
-                catch (MySqlQueryException ex)
+                catch (ExceptionShowMessageException ex)
                 {
-                    loadingMessege.Hide();
                     Program.ConnectForm.conn.Close();
                     MessageBox.Show($"Ошибка загрузки ключей отчетов\n{ex.Message}", "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -385,16 +279,16 @@ namespace hahatonProjectAdmin
                 {
                     MasCompanyReports = GetReports(ref MasCompany[i], ref MasReportTimeSended);
                 }
-                catch (MySqlQueryException ex)
+                catch (ExceptionShowMessageException ex)
                 {
-                    loadingMessege.Hide();
                     Program.ConnectForm.conn.Close();
                     MessageBox.Show($"Ошибка загрузки отчетов\n{ex.Message}", "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+                //Добавление непустых отчетов в таблицу
                 for (int j = 0; j <= 4; j++)
                 {
-                    if(MasCompanyReports[0].param1[j] > 0)
+                    if (MasCompanyReports[0].param1[j] > 0)
                     {
                         if (MasCompanyReports.Length == 1)
                         {
@@ -417,21 +311,310 @@ namespace hahatonProjectAdmin
             }
             if (ReportSearchError)
             {
-                MessageBox.Show("Отчеты не найдены", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Отчеты не найдены", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             Program.ConnectForm.conn.Close();
-            if (CBinstSelect.SelectedIndex == 0)
+            CBinstSelect_SelectedIndexChanged(sender, e);
+        }
+
+        private void LoadInstStat(ref object sender, ref EventArgs e)
+        {
+            try
             {
-                CBinstSelect2_SelectedIndexChanged(sender, e);
+                if (Convert.ToInt32(TBInstStatYear1.Text) < 1000 || Convert.ToInt32(TBInstStatYear2.Text) < 1000)
+                {
+                    MessageBox.Show("Неверный формат года", "Неверный формат", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Неверный формат года", "Неверный формат", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            string StartQuarter = "";
+            string EndQuarter = "";
+            switch (CBInstStatQuarter1.SelectedIndex)
+            {
+                case 0:
+                    StartQuarter = $"{TBInstStatYear1.Text}.03.25";
+                    break;
+                case 1:
+                    StartQuarter = $"{TBInstStatYear1.Text}.06.25";
+                    break;
+                case 2:
+                    StartQuarter = $"{TBInstStatYear1.Text}.09.25";
+                    break;
+                case 3:
+                    StartQuarter = $"{TBInstStatYear1.Text}.12.25";
+                    break;
+            }
+            switch (CBInstStatQuarter2.SelectedIndex)
+            {
+                case 0:
+                    EndQuarter = $"{TBInstStatYear2.Text}.03.25";
+                    break;
+                case 1:
+                    EndQuarter = $"{TBInstStatYear2.Text}.06.25";
+                    break;
+                case 2:
+                    EndQuarter = $"{TBInstStatYear2.Text}.09.25";
+                    break;
+                case 3:
+                    EndQuarter = $"{TBInstStatYear2.Text}.12.25";
+                    break;
+            }
+            if(Convert.ToDateTime(StartQuarter) > Convert.ToDateTime(EndQuarter))
+            {
+                MessageBox.Show("Выбранный квартал начала отбора больше выбранного квартала конца отбора", "Неверный период", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            try
+            {
+                Program.ConnectForm.conn.Open();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show($"Не удалось подключится к базе данных.\n{ex.Message}", "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            Company[] MasCompany;
+            //Загрузка ИНН, имен компаний
+            try
+            {
+                MasCompany = GetCompany();
+            }
+            catch (ExceptionShowMessageException ex)
+            {
+                Program.ConnectForm.conn.Close();
+                MessageBox.Show($"Ошибка загрузки списка компаний\n{ex.Message}", "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (MasCompany == null)
+            {
+                Program.ConnectForm.conn.Close();
+                MessageBox.Show("Компании не найдены", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            bool ReportSearchError = true;
+            for (int j = 0; j < 5; j++)
+            {
+                DGVinstStat.Rows[j].Cells[1].Value = 0;
+                DGVinstStat.Rows[j].Cells[2].Value = 0;
+                DGVinstStat.Rows[j].Cells[3].Value = 0.0;
+            }
+            for (int i = 0; i < MasCompany.Length; i++)
+            {
+                DateTime[] MasReportTimeSended;
+                //Загрузка отчетов компании за указанный период
+                try
+                {
+                    if ((MasReportTimeSended = GetLastReportDateTime(ref MasCompany[i], StartQuarter, EndSelected: EndQuarter)) == null || MasReportTimeSended.Length <= 1)
+                    {
+                        continue;
+                    }
+                }
+                catch (ExceptionShowMessageException ex)
+                {
+                    Program.ConnectForm.conn.Close();
+                    MessageBox.Show($"Ошибка загрузки ключей отчетов\n{ex.Message}", "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                if (ReportSearchError)
+                {
+                    ReportSearchError = false;
+                }
+                //Получаем отчеты по ключу-дате
+                Report[] MasCompanyReports = null;
+                try
+                {
+                    MasCompanyReports = GetReports(ref MasCompany[i], ref MasReportTimeSended);
+                }
+                catch (ExceptionShowMessageException ex)
+                {
+                    Program.ConnectForm.conn.Close();
+                    MessageBox.Show($"Ошибка загрузки отчетов\n{ex.Message}", "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                int[] param1StartValue = { 0, 0, 0, 0, 0 };
+                int[] param1EndValue = { 0, 0, 0, 0, 0 };
+                int[] param2Buf = { 0, 0, 0, 0, 0 };
+                double[] param3Buf = { 0.0, 0.0, 0.0, 0.0, 0.0 };
+                int[] CountNotNullReport = new int[] { 0, 0, 0, 0, 0 };
+                for (int j = 0; j < MasCompanyReports.Length; j++)
+                {
+                    for (int k = 0; k <= 4; k++)
+                    {
+                        if (MasCompanyReports[j].param1[k] > 0)
+                        {
+                            CountNotNullReport[k]++;
+                            if (CountNotNullReport[k] == 1)
+                            {
+                                param1StartValue[k] = MasCompanyReports[j].param1[k];
+                            }
+                            else
+                            {
+                                param1EndValue[k] = MasCompanyReports[j].param1[k];
+                            }
+                            param2Buf[k] += MasCompanyReports[j].param2[k];
+                            param3Buf[k] += MasCompanyReports[j].param3[k];
+                        }
+                    }
+                }
+                for (int j = 0; j < 5; j++)
+                {
+                    if (CountNotNullReport[j] > 1)
+                    {
+                        DGVinstStat.Rows[j].Cells[1].Value = Convert.ToInt32(DGVinstStat.Rows[j].Cells[1].Value.ToString()) + param1StartValue[j] - param1EndValue[j];
+                        DGVinstStat.Rows[j].Cells[2].Value = Convert.ToInt32(DGVinstStat.Rows[j].Cells[2].Value.ToString()) + param2Buf[j];
+                        DGVinstStat.Rows[j].Cells[3].Value = Convert.ToDouble(DGVinstStat.Rows[j].Cells[3].Value.ToString()) + param3Buf[j];
+                    }
+                }
+                Diagram.Series[0].Points.DataBindY(new int[] { Convert.ToInt32(DGVinstStat.Rows[0].Cells[2].Value.ToString()) });
+                Diagram.Series[5].Points.DataBindY(new double[] { Convert.ToDouble(DGVinstStat.Rows[0].Cells[3].Value.ToString()) });
+                Diagram.Series[1].Points.DataBindY(new int[] { Convert.ToInt32(DGVinstStat.Rows[1].Cells[2].Value.ToString()) });
+                Diagram.Series[6].Points.DataBindY(new double[] { Convert.ToDouble(DGVinstStat.Rows[1].Cells[3].Value.ToString()) });
+                Diagram.Series[2].Points.DataBindY(new int[] { Convert.ToInt32(DGVinstStat.Rows[2].Cells[2].Value.ToString()) });
+                Diagram.Series[7].Points.DataBindY(new double[] { Convert.ToDouble(DGVinstStat.Rows[2].Cells[3].Value.ToString()) });
+                Diagram.Series[3].Points.DataBindY(new int[] { Convert.ToInt32(DGVinstStat.Rows[3].Cells[2].Value.ToString()) });
+                Diagram.Series[8].Points.DataBindY(new double[] { Convert.ToDouble(DGVinstStat.Rows[3].Cells[3].Value.ToString()) });
+                Diagram.Series[4].Points.DataBindY(new int[] { Convert.ToInt32(DGVinstStat.Rows[4].Cells[2].Value.ToString()) });
+                Diagram.Series[9].Points.DataBindY(new double[] { Convert.ToDouble(DGVinstStat.Rows[4].Cells[3].Value.ToString()) });
+            }
+            if (ReportSearchError)
+            {
+                MessageBox.Show("Отчеты не найдены", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            Program.ConnectForm.conn.Close();
+        }
+
+        public AdminPanelForm()
+        {
+            InitializeComponent();
+        }
+
+        private void AdminPanelForm_Load(object sender, EventArgs e)
+        {
+            TabControl.SelectedIndex = 0;
+            CBinstSelect.SelectedIndex = 0;
+            CBInstStatQuarter1.SelectedIndex = 0;
+            CBInstStatQuarter2.SelectedIndex = 3;
+            for(int i = 0; i < 5; i++)
+            {
+                DGVinstStat.Rows.Add(CBinstSelect.Items[i].ToString(), 0, 0, 0.0);
+            }
+            int Year = DateTime.Now.Year;
+            DateTime Quarter = Convert.ToDateTime($"1001.{DateTime.Now.Month}.{DateTime.Now.Day}");
+            if (Quarter >= Convert.ToDateTime("1001.1.1") && Quarter < Convert.ToDateTime("1001.03.25"))
+            {
+                TBYearCompReport.Text = $"{Year - 1}";
+                CBQuarterCompReport.SelectedIndex = 3;
+            }
+            else if (Quarter >= Convert.ToDateTime("1001.03.25") && Quarter < Convert.ToDateTime("1001.06.25"))
+            {
+                TBYearCompReport.Text = $"{Year}";
+                CBQuarterCompReport.SelectedIndex = 0;
+            }
+            else if (Quarter >= Convert.ToDateTime("1001.06.25") && Quarter < Convert.ToDateTime("1001.09.25"))
+            {
+                TBYearCompReport.Text = $"{Year}";
+                CBQuarterCompReport.SelectedIndex = 1;
+            }
+            else if (Quarter >= Convert.ToDateTime("1001.09.25") && Quarter < Convert.ToDateTime("1001.12.25"))
+            {
+                TBYearCompReport.Text = $"{Year}";
+                CBQuarterCompReport.SelectedIndex = 2;
             }
             else
             {
-                CBinstSelect.SelectedIndex = 0;
+                TBYearCompReport.Text = $"{Year}";
+                CBQuarterCompReport.SelectedIndex = 3;
             }
-            loadingMessege.Hide();
+            //Загрузка параметров плана
+            try
+            {
+                if (Program.IF.KeyExists("PlanSettings", "Workplaces"))
+                {
+                    PlanSettingsParam1 = Convert.ToInt32(Program.IF.ReadINI("PlanSettings", "Workplaces"));
+                }
+                if (Program.IF.KeyExists("PlanSettings", "Number"))
+                {
+                    PlanSettingsParam2 = Convert.ToDouble(Program.IF.ReadINI("PlanSettings", "Number"));
+                }
+                if (Program.IF.KeyExists("PlanSettings", "Proceeds"))
+                {
+                    PlanSettingsParam3 = Convert.ToDouble(Program.IF.ReadINI("PlanSettings", "Proceeds"));
+                }
+                if (Program.IF.KeyExists("PlanSettings", "Proceeds1"))
+                {
+                    PlanSettingsParam4 = Convert.ToDouble(Program.IF.ReadINI("PlanSettings", "Proceeds1"));
+                }
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Неверные настройки параметров плана", "Ошибка чтения настроек", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                SettingsAdminClient SACForm = new SettingsAdminClient();
+                SACForm.ShowDialog();
+            }
+
         }
 
-        private void CBinstSelect2_SelectedIndexChanged(object sender, EventArgs e)
+        private void AdminPanelForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
+        private void TSMIbdShow_Click(object sender, EventArgs e)
+        {
+            loadingMessege = new LoadingMessegeForm();
+            loadingMessege.Show();
+            loadingMessege.Update();
+            switch (TabControl.SelectedIndex)
+            {
+                case 0:
+                    LoadCompReports(ref sender, ref e);
+                    break;
+                case 1:
+                    LoadInstStat(ref sender, ref e);
+                    break;
+                case 2:
+                    LoadInstStat(ref sender, ref e);
+                    break;
+                case 3:
+                    break;
+            }
+            loadingMessege.Close();
+        }
+
+        private void TSMIuserCreate_Click(object sender, EventArgs e)
+        {
+            CreateUserForm CreateUser = new CreateUserForm();
+            CreateUser.Show();
+            TSMIuserCreate.Enabled = false;
+            CreateUser.FormClosing += (obj, arg) =>
+            {
+                CenterToScreen();
+                Activate();
+                TSMIuserCreate.Enabled = true;
+            };
+            CreateUser.Location = Location;
+        }
+
+        private void TSMIuserChangeDelete_Click(object sender, EventArgs e)
+        {
+            ChangeDeleteUserForm ChangeDeleteUser = new ChangeDeleteUserForm();
+            TSMIuserChangeDelete.Enabled = false;
+            ChangeDeleteUser.FormClosing += (obj, arg) =>
+            {
+                CenterToScreen();
+                Activate();
+                TSMIuserChangeDelete.Enabled = true;
+            };
+            ChangeDeleteUser.Show();
+            ChangeDeleteUser.Location = Location;
+        }
+
+        private void CBinstSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DGVcompReport.RowCount > 0)
             {
@@ -441,36 +624,23 @@ namespace hahatonProjectAdmin
                 }
             }
         }
-        
-        private void Bselect_date1_Click(object sender, EventArgs e)
-        {
-            MC1.Location = new Point(406, 68);
-            MC1.Show();
-        }
-
-        private void Bselect_date2_Click(object sender, EventArgs e)
-        {
-            MC1.Location = new Point(634, 66);
-            MC1.Show();
-        }
 
         private void TabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             SelectedPeriodStartBuf = DateTime.MinValue;
-            MC1.Hide();
             switch (TabControl.SelectedIndex)
             {
                 case 0:
-                    this.Size = new Size(909, 531);
+                    Size = new Size(909, 531);
                     break;
                 case 1:
-                    this.Size = new Size(587, 531);
+                    Size = new Size(612, 531);
                     break;
                 case 2:
-                    this.Size = new Size(926, 531);
+                    Size = new Size(926, 531);
                     break;
                 case 3:
-                    this.Size = new Size(818, 531);
+                    Size = new Size(818, 531);
                     break;
             }
         }
@@ -480,34 +650,15 @@ namespace hahatonProjectAdmin
             SettingsAdminClient SACForm = new SettingsAdminClient();
             SACForm.ShowDialog();
         }
-
-        private void MC1_DateSelected_1(object sender, DateRangeEventArgs e)
-        {
-            if (SelectedPeriodStartBuf == DateTime.MinValue)
-            {
-                SelectedPeriodStartBuf = MC1.SelectionStart;
-                return;
-            }
-            else
-            {
-                SelectedPeriodEnd = MC1.SelectionStart;
-                MC1.Hide();
-                SelectedPeriodStart = SelectedPeriodStartBuf;
-                SelectedPeriodStartBuf = DateTime.MinValue;
-                //MessageBox.Show(date1.ToString("yyyy.MM.dd") + " - " + date2.ToString("yyyy.MM.dd"));
-                //Выбранный период находится в SelectedPeriodStart и SelectedPeriodEnd
-                return;
-            }
-        }
     }
     
     [Serializable]
-    public class MySqlQueryException : ApplicationException
+    public class ExceptionShowMessageException : ApplicationException
     {
-        public MySqlQueryException() { }
-        public MySqlQueryException(string message) : base(message) { }
-        public MySqlQueryException(string message, Exception inner) : base(message, inner) { }
-        protected MySqlQueryException(
+        public ExceptionShowMessageException() { }
+        public ExceptionShowMessageException(string message) : base(message) { }
+        public ExceptionShowMessageException(string message, Exception inner) : base(message, inner) { }
+        protected ExceptionShowMessageException(
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
@@ -528,5 +679,5 @@ namespace hahatonProjectAdmin
     {
         public string login;
         public Company[] MasCompany;
-    }
+    }  
 }

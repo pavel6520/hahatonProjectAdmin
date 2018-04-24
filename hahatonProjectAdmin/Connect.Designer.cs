@@ -35,12 +35,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // TBLogin
             // 
             this.TBLogin.Location = new System.Drawing.Point(75, 63);
+            this.TBLogin.MaxLength = 20;
             this.TBLogin.Name = "TBLogin";
             this.TBLogin.Size = new System.Drawing.Size(128, 20);
             this.TBLogin.TabIndex = 0;
@@ -50,9 +52,9 @@
             // 
             this.TBPass.Location = new System.Drawing.Point(75, 107);
             this.TBPass.Name = "TBPass";
-            this.TBPass.PasswordChar = '*';
             this.TBPass.Size = new System.Drawing.Size(128, 20);
             this.TBPass.TabIndex = 1;
+            this.TBPass.UseSystemPasswordChar = true;
             this.TBPass.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBPass_KeyPress);
             // 
             // ButtonConnect
@@ -100,10 +102,21 @@
             this.настройкиToolStripMenuItem.Text = "Настройки";
             this.настройкиToolStripMenuItem.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(209, 110);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(15, 14);
+            this.checkBox1.TabIndex = 6;
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
             // ConnectForm
             // 
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(239, 191);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ButtonConnect);
@@ -133,6 +146,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem настройкиToolStripMenuItem;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
 
