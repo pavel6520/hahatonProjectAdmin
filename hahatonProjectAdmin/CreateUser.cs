@@ -26,10 +26,8 @@ namespace hahatonProjectAdmin
         private void Bgenerate_Click(object sender, EventArgs e)
         {
             const string tmp = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-                "abcdefghijklmnopqrstuvwxyz" + "#$&@?%"; //"{#$<^(&*@}?%>"
+                "abcdefghijklmnopqrstuvwxyz" + "#$&@?%"; //"*<>^({}"
             string pas = "";
-
-
             Random r = new Random();
             for(int i = 1; i < 15; i++)
             {
@@ -64,7 +62,6 @@ namespace hahatonProjectAdmin
                 return;
             }
             LerrLoginIncorrect.Hide();
-            //Добавить проверку корректности логина -_
 
             for (int i = 0; i < TableINN.RowCount; i++)
             {
@@ -82,7 +79,7 @@ namespace hahatonProjectAdmin
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Не удалось подключится к базе данных.\n" + ex, "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Не удалось подключится к базе данных.\n" + ex.Message, "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             MySqlCommand com;
@@ -114,7 +111,7 @@ namespace hahatonProjectAdmin
                     {
                         if (TableINN.Rows[i].Cells[0].Value.ToString() == readed[0].ToString())
                         {
-                            MessageBox.Show("ИНН компании " + TableINN.Rows[i].Cells[1].Value.ToString() + " уже зарегистрирован.", "ИНН занят", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show($"ИНН компании {TableINN.Rows[i].Cells[1].Value.ToString()} уже зарегистрирован.", "ИНН занят", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             readed.Close();
                             Program.ConnectForm.conn.Close();
                             return;
@@ -124,8 +121,8 @@ namespace hahatonProjectAdmin
                 readed.Close();
 
                 //Создание пользователя и выдача права на чтение project.login_inn
-                com = new MySqlCommand("create user `" + TBlogin.Text + "`@'%' identified by '" + TBpass.Text + "';" +
-                    "grant select on project.login_inn to `" + TBlogin.Text + "`@`%`;"
+                com = new MySqlCommand($"create user `{TBlogin.Text}`@'%' identified by '{TBpass.Text}';" +
+                    $"grant select on project.login_inn to `{TBlogin.Text}`@`%`;"
                     , Program.ConnectForm.conn);
                 com.ExecuteNonQuery();
                 
@@ -133,15 +130,16 @@ namespace hahatonProjectAdmin
                 {
                     //создание таблицы с именем ИНН для отчетов и выдача прав на чтение и дополнение
                     com = new MySqlCommand(
-                        "CREATE TABLE project.`" + TableINN.Rows[i].Cells[0].Value + "` (" +
-                        "Date date DEFAULT NULL, DateReport DATETIME NOT NULL," + 
-                        "FM1 int(11) DEFAULT NULL, FM2 int(11) DEFAULT NULL, FM3 decimal(10, 6) DEFAULT NULL, " +
-                        "GF1 int(11) DEFAULT NULL, GF2 int(11) DEFAULT NULL, GF3 decimal(10, 6) DEFAULT NULL, " +
-                        "CKR1 int(11) DEFAULT NULL, CKR2 int(11) DEFAULT NULL, CKR3 decimal(10, 6) DEFAULT NULL, " +
-                        "CPP1 int(11) DEFAULT NULL, CPP2 int(11) DEFAULT NULL, CPP3 decimal(10, 6) DEFAULT NULL, " +
-                        "CE1 int(11) DEFAULT NULL, CE2 int(11) DEFAULT NULL, CE3 decimal(10, 6) DEFAULT NULL) DEFAULT CHARSET=utf8;" +
-                        "grant select, insert on project.`" + TableINN.Rows[i].Cells[0].Value + "` to `" + TBlogin.Text + "`@'%';" +
-                        "insert into project.login_inn values('" + TBlogin.Text + "', '" + TableINN.Rows[i].Cells[0].Value + "', '" + TableINN.Rows[i].Cells[1].Value.ToString() + "')",
+                        $"CREATE TABLE project.`{TableINN.Rows[i].Cells[0].Value}` (" +
+                        $"Date date DEFAULT NULL, DateReport DATETIME NOT NULL, " +
+                        $"FM1 int(11) DEFAULT NULL, FM2 int(11) DEFAULT NULL, FM3 decimal(10, 6) DEFAULT NULL, " +
+                        $"GF1 int(11) DEFAULT NULL, GF2 int(11) DEFAULT NULL, GF3 decimal(10, 6) DEFAULT NULL, " +
+                        $"CKR1 int(11) DEFAULT NULL, CKR2 int(11) DEFAULT NULL, CKR3 decimal(10, 6) DEFAULT NULL, " +
+                        $"CPP1 int(11) DEFAULT NULL, CPP2 int(11) DEFAULT NULL, CPP3 decimal(10, 6) DEFAULT NULL, " +
+                        $"CE1 int(11) DEFAULT NULL, CE2 int(11) DEFAULT NULL, CE3 decimal(10, 6) DEFAULT NULL" +
+                        $", PRIMARY KEY (`DateReport`)) DEFAULT CHARSET=utf8;" +
+                        $"grant select, insert on project.`{TableINN.Rows[i].Cells[0].Value}` to `{TBlogin.Text}`@'%';" +
+                        $"insert into project.login_inn values('{TBlogin.Text}', '{TableINN.Rows[i].Cells[0].Value}', '{TableINN.Rows[i].Cells[1].Value.ToString()}')",
                         Program.ConnectForm.conn);
                     com.ExecuteNonQuery();
                 }
@@ -150,7 +148,7 @@ namespace hahatonProjectAdmin
             catch (MySqlException ex)
             {
                 Program.ConnectForm.conn.Close();
-                MessageBox.Show("Ошибка выполнения запроса. Обратитесь к администратору.\n" + ex, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Ошибка выполнения запроса. Обратитесь к администратору.\n" + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             MessageBox.Show("Успешно добавлено.", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
