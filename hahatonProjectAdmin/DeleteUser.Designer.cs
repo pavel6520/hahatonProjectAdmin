@@ -29,12 +29,11 @@
         private void InitializeComponent()
         {
             this.DGV_archive = new System.Windows.Forms.DataGridView();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.TB_query = new System.Windows.Forms.TextBox();
+            this.BTSearch = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_archive)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,15 +48,10 @@
             this.DGV_archive.Location = new System.Drawing.Point(0, 20);
             this.DGV_archive.Name = "DGV_archive";
             this.DGV_archive.ReadOnly = true;
-            this.DGV_archive.Size = new System.Drawing.Size(576, 234);
+            this.DGV_archive.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.DGV_archive.Size = new System.Drawing.Size(592, 242);
             this.DGV_archive.TabIndex = 0;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(41, 0);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(133, 20);
-            this.textBox1.TabIndex = 1;
+            this.DGV_archive.DoubleClick += new System.EventHandler(this.DGV_archive_DoubleClick);
             // 
             // Column1
             // 
@@ -80,31 +74,34 @@
             this.Column3.ReadOnly = true;
             this.Column3.Width = 250;
             // 
-            // textBox2
+            // TB_query
             // 
-            this.textBox2.Location = new System.Drawing.Point(173, 0);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(150, 20);
-            this.textBox2.TabIndex = 2;
+            this.TB_query.Location = new System.Drawing.Point(41, 0);
+            this.TB_query.Name = "TB_query";
+            this.TB_query.Size = new System.Drawing.Size(181, 20);
+            this.TB_query.TabIndex = 1;
             // 
-            // textBox3
+            // BTSearch
             // 
-            this.textBox3.Location = new System.Drawing.Point(322, 0);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(252, 20);
-            this.textBox3.TabIndex = 3;
+            this.BTSearch.Location = new System.Drawing.Point(228, 0);
+            this.BTSearch.Name = "BTSearch";
+            this.BTSearch.Size = new System.Drawing.Size(75, 20);
+            this.BTSearch.TabIndex = 2;
+            this.BTSearch.Text = "Поиск";
+            this.BTSearch.UseVisualStyleBackColor = true;
+            this.BTSearch.Click += new System.EventHandler(this.BTSearch_Click);
             // 
             // DeleteUserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(815, 411);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.ClientSize = new System.Drawing.Size(592, 262);
+            this.Controls.Add(this.BTSearch);
+            this.Controls.Add(this.TB_query);
             this.Controls.Add(this.DGV_archive);
             this.Name = "DeleteUserForm";
             this.Text = "Удаление пользователя";
+            this.Load += new System.EventHandler(this.DeleteUserForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DGV_archive)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -114,11 +111,10 @@
         #endregion
 
         private System.Windows.Forms.DataGridView DGV_archive;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox TB_query;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Button BTSearch;
     }
 }
