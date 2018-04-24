@@ -126,5 +126,10 @@ namespace hahatonProjectAdmin
                 e.KeyChar != 22)
                 e.Handled = true;
         }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            TBPass.UseSystemPasswordChar = !checkBox1.Checked;
+        }
     }
 }
