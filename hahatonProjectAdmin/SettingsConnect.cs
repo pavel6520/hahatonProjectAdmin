@@ -26,6 +26,7 @@ namespace hahatonProjectAdmin
             if (TBip.Text.IndexOf('`') != -1 || TBdatabase.Text.IndexOf('`') != -1 || TBport.Text.IndexOf('`') != -1)
             {
                 MessageBox.Show("Символ '`' запрещен", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
             if (TBip.Text.Length == 0)
             {

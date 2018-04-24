@@ -13,7 +13,7 @@ namespace hahatonProjectAdmin
 {
     public partial class AdminPanelForm : Form
     {
-        LoadingMessegeForm loadingMessege = new LoadingMessegeForm();
+        LoadingMessegeForm loadingMessege;
         private DateTime SelectedPeriodStart = DateTime.MinValue, SelectedPeriodEnd = DateTime.MinValue;
         private DateTime SelectedPeriodStartBuf = DateTime.MinValue;
         public int PlanSettingsParam1;
@@ -41,7 +41,7 @@ namespace hahatonProjectAdmin
             }
             catch (MySqlException ex)
             {
-                throw new MySqlQueryException(ex.Message);
+                throw new ExceptionShowMessageException(ex.Message);
             }
             return MasCompany;
         }
@@ -67,7 +67,7 @@ namespace hahatonProjectAdmin
             }
             catch (MySqlException ex)
             {
-                throw new MySqlQueryException(ex.Message);
+                throw new ExceptionShowMessageException(ex.Message);
             }
             try
             {
@@ -86,7 +86,7 @@ namespace hahatonProjectAdmin
             }
             catch (MySqlException ex)
             {
-                throw new MySqlQueryException(ex.Message);
+                throw new ExceptionShowMessageException(ex.Message);
             }
             return MasUsers;
         }
@@ -121,7 +121,6 @@ namespace hahatonProjectAdmin
                 {
                     Array.Resize(ref MasReportTime, (MasReportTime == null ? 1 : MasReportTime.Length + 1));
                     MasReportTime[MasReportTime.Length - 1] = Convert.ToDateTime(reader[0].ToString());
-                    //MessageBox.Show("1. " + MasReportQuarter[countReports - 1].ToString("yyyy.MM.dd"));
                 }
                 reader.Close();
                 if (MasReportTime == null)
@@ -139,7 +138,7 @@ namespace hahatonProjectAdmin
             }
             catch (MySqlException ex)
             {
-                throw new MySqlQueryException(ex.Message);
+                throw new ExceptionShowMessageException(ex.Message);
             }
             return MasReportTime;
         }
@@ -188,7 +187,7 @@ namespace hahatonProjectAdmin
             }
             catch (MySqlException ex)
             {
-                throw new MySqlQueryException(ex.Message);
+                throw new ExceptionShowMessageException(ex.Message);
             }
             return MasCompanyReports;
         }
@@ -240,7 +239,7 @@ namespace hahatonProjectAdmin
             {
                 MasCompany = GetCompany();
             }
-            catch (MySqlQueryException ex)
+            catch (ExceptionShowMessageException ex)
             {
                 Program.ConnectForm.conn.Close();
                 MessageBox.Show($"Ошибка загрузки списка компаний\n{ex.Message}", "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -249,7 +248,7 @@ namespace hahatonProjectAdmin
             if (MasCompany == null)
             {
                 Program.ConnectForm.conn.Close();
-                MessageBox.Show("Компании не найдены", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Компании не найдены", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             bool ReportSearchError = true;
@@ -264,7 +263,7 @@ namespace hahatonProjectAdmin
                         continue;
                     }
                 }
-                catch (MySqlQueryException ex)
+                catch (ExceptionShowMessageException ex)
                 {
                     Program.ConnectForm.conn.Close();
                     MessageBox.Show($"Ошибка загрузки ключей отчетов\n{ex.Message}", "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -280,7 +279,7 @@ namespace hahatonProjectAdmin
                 {
                     MasCompanyReports = GetReports(ref MasCompany[i], ref MasReportTimeSended);
                 }
-                catch (MySqlQueryException ex)
+                catch (ExceptionShowMessageException ex)
                 {
                     Program.ConnectForm.conn.Close();
                     MessageBox.Show($"Ошибка загрузки отчетов\n{ex.Message}", "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -312,7 +311,7 @@ namespace hahatonProjectAdmin
             }
             if (ReportSearchError)
             {
-                MessageBox.Show("Отчеты не найдены", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Отчеты не найдены", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             Program.ConnectForm.conn.Close();
             CBinstSelect_SelectedIndexChanged(sender, e);
@@ -324,13 +323,13 @@ namespace hahatonProjectAdmin
             {
                 if (Convert.ToInt32(TBInstStatYear1.Text) < 1000 || Convert.ToInt32(TBInstStatYear2.Text) < 1000)
                 {
-                    MessageBox.Show("Неверный формат года", "Неверный формат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Неверный формат года", "Неверный формат", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
             }
             catch (FormatException)
             {
-                MessageBox.Show("Неверный формат года", "Неверный формат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Неверный формат года", "Неверный формат", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             string StartQuarter = "";
@@ -367,7 +366,7 @@ namespace hahatonProjectAdmin
             }
             if(Convert.ToDateTime(StartQuarter) > Convert.ToDateTime(EndQuarter))
             {
-                MessageBox.Show("Выбранный квартал начала отбора больше выбранного квартала конца отбора", "Неверный период", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Выбранный квартал начала отбора больше выбранного квартала конца отбора", "Неверный период", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             try
@@ -385,7 +384,7 @@ namespace hahatonProjectAdmin
             {
                 MasCompany = GetCompany();
             }
-            catch (MySqlQueryException ex)
+            catch (ExceptionShowMessageException ex)
             {
                 Program.ConnectForm.conn.Close();
                 MessageBox.Show($"Ошибка загрузки списка компаний\n{ex.Message}", "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -394,7 +393,7 @@ namespace hahatonProjectAdmin
             if (MasCompany == null)
             {
                 Program.ConnectForm.conn.Close();
-                MessageBox.Show("Компании не найдены", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Компании не найдены", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             bool ReportSearchError = true;
@@ -415,7 +414,7 @@ namespace hahatonProjectAdmin
                         continue;
                     }
                 }
-                catch (MySqlQueryException ex)
+                catch (ExceptionShowMessageException ex)
                 {
                     Program.ConnectForm.conn.Close();
                     MessageBox.Show($"Ошибка загрузки ключей отчетов\n{ex.Message}", "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -431,7 +430,7 @@ namespace hahatonProjectAdmin
                 {
                     MasCompanyReports = GetReports(ref MasCompany[i], ref MasReportTimeSended);
                 }
-                catch (MySqlQueryException ex)
+                catch (ExceptionShowMessageException ex)
                 {
                     Program.ConnectForm.conn.Close();
                     MessageBox.Show($"Ошибка загрузки отчетов\n{ex.Message}", "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -484,7 +483,7 @@ namespace hahatonProjectAdmin
             }
             if (ReportSearchError)
             {
-                MessageBox.Show("Отчеты не найдены", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Отчеты не найдены", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             Program.ConnectForm.conn.Close();
         }
@@ -567,6 +566,7 @@ namespace hahatonProjectAdmin
 
         private void TSMIbdShow_Click(object sender, EventArgs e)
         {
+            loadingMessege = new LoadingMessegeForm();
             loadingMessege.Show();
             loadingMessege.Update();
             switch (TabControl.SelectedIndex)
@@ -583,7 +583,7 @@ namespace hahatonProjectAdmin
                 case 3:
                     break;
             }
-            loadingMessege.Hide();
+            loadingMessege.Close();
         }
 
         private void TSMIuserCreate_Click(object sender, EventArgs e)
@@ -600,18 +600,18 @@ namespace hahatonProjectAdmin
             CreateUser.Location = Location;
         }
 
-        private void TSMIuserDelete_Click(object sender, EventArgs e)
+        private void TSMIuserChangeDelete_Click(object sender, EventArgs e)
         {
-            DeleteUserForm DeleteUser = new DeleteUserForm();
-            DeleteUser.Show();
-            TSMIuserDelete.Enabled = false;
-            DeleteUser.FormClosing += (obj, arg) =>
+            ChangeDeleteUserForm ChangeDeleteUser = new ChangeDeleteUserForm();
+            TSMIuserChangeDelete.Enabled = false;
+            ChangeDeleteUser.FormClosing += (obj, arg) =>
             {
                 CenterToScreen();
                 Activate();
-                TSMIuserDelete.Enabled = true;
+                TSMIuserChangeDelete.Enabled = true;
             };
-            DeleteUser.Location = Location;
+            ChangeDeleteUser.Show();
+            ChangeDeleteUser.Location = Location;
         }
 
         private void CBinstSelect_SelectedIndexChanged(object sender, EventArgs e)
@@ -653,12 +653,12 @@ namespace hahatonProjectAdmin
     }
     
     [Serializable]
-    public class MySqlQueryException : ApplicationException
+    public class ExceptionShowMessageException : ApplicationException
     {
-        public MySqlQueryException() { }
-        public MySqlQueryException(string message) : base(message) { }
-        public MySqlQueryException(string message, Exception inner) : base(message, inner) { }
-        protected MySqlQueryException(
+        public ExceptionShowMessageException() { }
+        public ExceptionShowMessageException(string message) : base(message) { }
+        public ExceptionShowMessageException(string message, Exception inner) : base(message, inner) { }
+        protected ExceptionShowMessageException(
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }

@@ -71,11 +71,11 @@
     <Compile Include="CreateUser.Designer.cs">
       <DependentUpon>CreateUser.cs</DependentUpon>
     </Compile>
-    <Compile Include="DeleteUser.cs">
+    <Compile Include="ChangeDeleteUser.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DeleteUser.Designer.cs">
-      <DependentUpon>DeleteUser.cs</DependentUpon>
+    <Compile Include="ChangeDeleteUser.Designer.cs">
+      <DependentUpon>ChangeDeleteUser.cs</DependentUpon>
     </Compile>
     <Compile Include="LoadingMessege.cs">
       <SubType>Form</SubType>
@@ -107,8 +107,8 @@
     <EmbeddedResource Include="CreateUser.resx">
       <DependentUpon>CreateUser.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DeleteUser.resx">
-      <DependentUpon>DeleteUser.cs</DependentUpon>
+    <EmbeddedResource Include="ChangeDeleteUser.resx">
+      <DependentUpon>ChangeDeleteUser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoadingMessege.resx">
       <DependentUpon>LoadingMessege.cs</DependentUpon>

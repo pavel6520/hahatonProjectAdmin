@@ -1,6 +1,6 @@
 ﻿namespace hahatonProjectAdmin
 {
-    partial class DeleteUserForm
+    partial class ChangeDeleteUserForm
     {
         /// <summary>
         /// Required designer variable.
@@ -39,6 +39,10 @@
             // 
             // DGV_archive
             // 
+            this.DGV_archive.AllowUserToAddRows = false;
+            this.DGV_archive.AllowUserToDeleteRows = false;
+            this.DGV_archive.AllowUserToResizeColumns = false;
+            this.DGV_archive.AllowUserToResizeRows = false;
             this.DGV_archive.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.DGV_archive.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV_archive.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -80,6 +84,7 @@
             this.TB_query.Name = "TB_query";
             this.TB_query.Size = new System.Drawing.Size(181, 20);
             this.TB_query.TabIndex = 1;
+            this.TB_query.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TB_query_KeyPress);
             // 
             // BTSearch
             // 
