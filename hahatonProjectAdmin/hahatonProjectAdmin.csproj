@@ -107,6 +107,9 @@
     <EmbeddedResource Include="CreateUser.resx">
       <DependentUpon>CreateUser.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DeleteUser.resx">
+      <DependentUpon>DeleteUser.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LoadingMessege.resx">
       <DependentUpon>LoadingMessege.cs</DependentUpon>
     </EmbeddedResource>
