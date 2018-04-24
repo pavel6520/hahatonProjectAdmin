@@ -679,5 +679,5 @@ namespace hahatonProjectAdmin
     {
         public string login;
         public Company[] MasCompany;
-    }
+    }  
 }
