@@ -97,8 +97,8 @@ namespace hahatonProjectAdmin
         /// <param name="CompanyRef">Структура, содержащая ИНН компании, для которой необходимо загрузить ключи отчетов</param>
         /// <param name="StartSelect">Дата квартала, с которого начинать отбор отчетов</param>
         /// <param name="CountQuarter">Число кварталов, если не важна конечная дата отбора</param>
-        /// <param name="EndSelected">Дата квартала, на котором заканчивается отбор отчетов</param>
-        public static DateTime[] GetLastReportDateTime(ref Company CompanyRef, string StartSelect, int CountQuarter = 0, string EndSelected = "")
+        /// <param name="EndSelect">Дата квартала, на котором заканчивается отбор отчетов</param>
+        public static DateTime[] GetLastReportDateTime(ref Company CompanyRef, string StartSelect, int CountQuarter = 0, string EndSelect = "")
         {
             MySqlCommand com;
             if (CountQuarter > 0)
@@ -109,7 +109,7 @@ namespace hahatonProjectAdmin
             }
             else
             {
-                com = new MySqlCommand($"select distinct date from project.`{CompanyRef.inn}` where date >= '{StartSelect}' and date <= '{EndSelected}' " +
+                com = new MySqlCommand($"select distinct date from project.`{CompanyRef.inn}` where date >= '{EndSelect}' and date <= '{StartSelect}' " +
                     $"order by date desc", Program.ConnectForm.conn);
             }
             MySqlDataReader reader;
@@ -208,19 +208,35 @@ namespace hahatonProjectAdmin
                 return;
             }
             string Quarter = "";
+            string Quarter1 = "";
             switch (CBQuarterCompReport.SelectedIndex)
             {
                 case 0:
-                    Quarter = ".03.25";
+                    Quarter = TBYearCompReport.Text + ".03.25";
                     break;
                 case 1:
-                    Quarter = ".06.25";
+                    Quarter = TBYearCompReport.Text + ".06.25";
                     break;
                 case 2:
-                    Quarter = ".09.25";
+                    Quarter = TBYearCompReport.Text + ".09.25";
                     break;
                 case 3:
-                    Quarter = ".12.25";
+                    Quarter = TBYearCompReport.Text + ".12.25";
+                    break;
+            }
+            switch (CBQuarterCompReport.SelectedIndex)
+            {
+                case 0:
+                    Quarter1 = $"{Convert.ToInt32(TBYearCompReport.Text) - 1}.12.25";
+                    break;
+                case 1:
+                    Quarter1 = TBYearCompReport.Text + ".03.25";
+                    break;
+                case 2:
+                    Quarter1 = TBYearCompReport.Text + ".06.25";
+                    break;
+                case 3:
+                    Quarter1 = TBYearCompReport.Text + ".09.25";
                     break;
             }
             try
@@ -258,7 +274,7 @@ namespace hahatonProjectAdmin
                 //Загрузка даты двух последних отчетов компании
                 try
                 {
-                    if ((MasReportTimeSended = GetLastReportDateTime(ref MasCompany[i], TBYearCompReport.Text + Quarter, 2)) == null)
+                    if ((MasReportTimeSended = GetLastReportDateTime(ref MasCompany[i], Quarter, EndSelect: Quarter1)) == null)
                     {
                         continue;
                     }
@@ -334,37 +350,37 @@ namespace hahatonProjectAdmin
             }
             string StartQuarter = "";
             string EndQuarter = "";
-            switch (CBInstStatQuarter1.SelectedIndex)
-            {
-                case 0:
-                    StartQuarter = $"{TBInstStatYear1.Text}.03.25";
-                    break;
-                case 1:
-                    StartQuarter = $"{TBInstStatYear1.Text}.06.25";
-                    break;
-                case 2:
-                    StartQuarter = $"{TBInstStatYear1.Text}.09.25";
-                    break;
-                case 3:
-                    StartQuarter = $"{TBInstStatYear1.Text}.12.25";
-                    break;
-            }
             switch (CBInstStatQuarter2.SelectedIndex)
             {
                 case 0:
-                    EndQuarter = $"{TBInstStatYear2.Text}.03.25";
+                    StartQuarter = $"{TBInstStatYear2.Text}.03.25";
                     break;
                 case 1:
-                    EndQuarter = $"{TBInstStatYear2.Text}.06.25";
+                    StartQuarter = $"{TBInstStatYear2.Text}.06.25";
                     break;
                 case 2:
-                    EndQuarter = $"{TBInstStatYear2.Text}.09.25";
+                    StartQuarter = $"{TBInstStatYear2.Text}.09.25";
                     break;
                 case 3:
-                    EndQuarter = $"{TBInstStatYear2.Text}.12.25";
+                    StartQuarter = $"{TBInstStatYear2.Text}.12.25";
                     break;
             }
-            if(Convert.ToDateTime(StartQuarter) > Convert.ToDateTime(EndQuarter))
+            switch (CBInstStatQuarter1.SelectedIndex)
+            {
+                case 0:
+                    EndQuarter = $"{TBInstStatYear1.Text}.03.25";
+                    break;
+                case 1:
+                    EndQuarter = $"{TBInstStatYear1.Text}.06.25";
+                    break;
+                case 2:
+                    EndQuarter = $"{TBInstStatYear1.Text}.09.25";
+                    break;
+                case 3:
+                    EndQuarter = $"{TBInstStatYear1.Text}.12.25";
+                    break;
+            }
+            if(Convert.ToDateTime(StartQuarter) < Convert.ToDateTime(EndQuarter))
             {
                 MessageBox.Show("Выбранный квартал начала отбора больше выбранного квартала конца отбора", "Неверный период", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -409,7 +425,7 @@ namespace hahatonProjectAdmin
                 //Загрузка отчетов компании за указанный период
                 try
                 {
-                    if ((MasReportTimeSended = GetLastReportDateTime(ref MasCompany[i], StartQuarter, EndSelected: EndQuarter)) == null || MasReportTimeSended.Length <= 1)
+                    if ((MasReportTimeSended = GetLastReportDateTime(ref MasCompany[i], StartQuarter, EndSelect: EndQuarter)) == null || MasReportTimeSended.Length <= 1)
                     {
                         continue;
                     }
