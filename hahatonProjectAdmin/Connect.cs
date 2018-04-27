@@ -74,7 +74,7 @@ namespace hahatonProjectAdmin
                     MessageBox.Show("Недопустимые символы в логине", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                if (!Validation.StringValidation(Validation.ValidationType.LoginType, TBPass.Text))
+                if (!Validation.StringValidation(Validation.ValidationType.PasswordType, TBPass.Text))
                 {
                     MessageBox.Show("Недопустимые символы в пароле", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
