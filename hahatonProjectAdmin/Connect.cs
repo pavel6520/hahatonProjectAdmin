@@ -52,7 +52,7 @@ namespace hahatonProjectAdmin
                     continue;
                 }
             }
-            if (!Program.IF.KeyExists("ConnSett", "Adress") || !Program.IF.KeyExists("ConnSett", "DBname") || !Program.IF.KeyExists("ConnSett", "Port"))//Проверка файла настроек
+            if (!Program.IF.KeyExists("ConnSett", "Address") || !Program.IF.KeyExists("ConnSett", "DBname") || !Program.IF.KeyExists("ConnSett", "Port"))//Проверка файла настроек
             {
                 SetForm = new SettingsConnectForm();
                 Hide();
@@ -74,7 +74,7 @@ namespace hahatonProjectAdmin
                     MessageBox.Show("Недопустимые символы в логине", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                if (!Validation.StringValidation(Validation.ValidationType.LoginType, TBPass.Text))
+                if (!Validation.StringValidation(Validation.ValidationType.PasswordType, TBPass.Text))
                 {
                     MessageBox.Show("Недопустимые символы в пароле", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -82,7 +82,7 @@ namespace hahatonProjectAdmin
                 else if (TBLogin.Text != "" && TBPass.Text != "")
                 {
                     ConnectStr = 
-                        $"server={Program.IF.ReadINI("ConnSett", "Adress")};" +
+                        $"server={Program.IF.ReadINI("ConnSett", "Address")};" +
                         $"port={Program.IF.ReadINI("ConnSett", "Port")};" +
                         $"user={TBLogin.Text};" +
                         $"password={TBPass.Text};" +

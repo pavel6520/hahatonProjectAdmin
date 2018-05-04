@@ -1,18 +1,14 @@
-﻿using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
 
 namespace hahatonProjectAdmin
 {
     public partial class ChangeDeleteUserForm : Form
     {
+        static public User[] MasUsers;
+        static public int countUsers;
+        static public string SelectedValue;
+
         private void DGVupdate()
         {
             for (int i = 0; i < DGV_archive.RowCount; i++)
@@ -39,7 +35,10 @@ namespace hahatonProjectAdmin
             {
                 MessageBox.Show($"Не удалось подключится к базе данных.\n{ex.Message}", "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            User[] MasUsers = null;
+
+            //User[] MasUsers = null;
+            MasUsers = null; 
+
             try
             {
                 MasUsers = AdminPanelForm.GetUserCompanies();
@@ -76,8 +75,20 @@ namespace hahatonProjectAdmin
 
         private void DGV_archive_DoubleClick(object sender, EventArgs e)
         {
-            MessageBox.Show(DGV_archive.SelectedCells[0].Value.ToString()); //Содержимое ячейки
             int ColoumnIndex = DGV_archive.SelectedCells[0].ColumnIndex; //Номер столбца
+            SelectedValue = DGV_archive.SelectedCells[0].Value.ToString(); //Содержимое ячейки
+
+            countUsers = 0;
+            for(int i = 0; i < DGV_archive.RowCount; i++)
+            {
+                if(DGV_archive.Rows[i].Cells[0].Value.ToString() == SelectedValue)
+                {
+                    countUsers++;
+                }
+            }
+
+            UserInfoForm UserInfo = new UserInfoForm();
+            UserInfo.Show();
         }
     }
 }
