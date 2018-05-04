@@ -1,12 +1,4 @@
-﻿using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
 
 namespace hahatonProjectAdmin
@@ -76,8 +68,11 @@ namespace hahatonProjectAdmin
 
         private void DGV_archive_DoubleClick(object sender, EventArgs e)
         {
-            MessageBox.Show(DGV_archive.SelectedCells[0].Value.ToString()); //Содержимое ячейки
             int ColoumnIndex = DGV_archive.SelectedCells[0].ColumnIndex; //Номер столбца
+            //MessageBox.Show(DGV_archive.SelectedCells[0].Value.ToString()); //Содержимое ячейки
+
+            UserInfoForm UserInfo = new UserInfoForm();
+            UserInfo.Show();
         }
     }
 }
