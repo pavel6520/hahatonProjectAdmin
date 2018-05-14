@@ -2,10 +2,8 @@
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace hahatonProjectAdmin
 {
@@ -32,6 +30,31 @@ namespace hahatonProjectAdmin
             if (Char.IsDigit(x))
                 return true;
             else return false;
+        }
+
+        public static bool Query(string query)
+        {
+            try
+            {
+                Program.ConnectForm.conn.Open();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Не удалось подключится к базе данных.\n" + ex.Message, "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            try
+            {
+                MySqlCommand qr = new MySqlCommand(query, Program.ConnectForm.conn);
+                qr.ExecuteScalar();
+                Program.ConnectForm.conn.Close();
+                return true;
+            }
+            catch (MySqlException ex)
+            {
+                throw new ExceptionShowMessageException(ex.Message);
+            }
         }
     }
 

@@ -96,15 +96,15 @@
             this.BTSearch.UseVisualStyleBackColor = true;
             this.BTSearch.Click += new System.EventHandler(this.BTSearch_Click);
             // 
-            // DeleteUserForm
+            // ChangeDeleteUserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(592, 262);
+            this.Controls.Add(this.DGV_archive);
             this.Controls.Add(this.BTSearch);
             this.Controls.Add(this.TB_query);
-            this.Controls.Add(this.DGV_archive);
-            this.Name = "DeleteUserForm";
+            this.Name = "ChangeDeleteUserForm";
             this.Text = "Удаление пользователя";
             this.Load += new System.EventHandler(this.DeleteUserForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DGV_archive)).EndInit();

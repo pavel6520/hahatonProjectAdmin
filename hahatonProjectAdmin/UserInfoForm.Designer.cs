@@ -28,10 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.DGV_Users = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.компанияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.пользовательToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMI_CompDel = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMI_UserDel = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Users)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // DGV_Users
@@ -61,6 +68,44 @@
             this.Column2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Column2.Width = 250;
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.компанияToolStripMenuItem,
+            this.пользовательToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 70);
+            // 
+            // компанияToolStripMenuItem
+            // 
+            this.компанияToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TSMI_CompDel});
+            this.компанияToolStripMenuItem.Name = "компанияToolStripMenuItem";
+            this.компанияToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.компанияToolStripMenuItem.Text = "Компания";
+            // 
+            // пользовательToolStripMenuItem
+            // 
+            this.пользовательToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TSMI_UserDel});
+            this.пользовательToolStripMenuItem.Name = "пользовательToolStripMenuItem";
+            this.пользовательToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.пользовательToolStripMenuItem.Text = "Пользователь";
+            // 
+            // TSMI_CompDel
+            // 
+            this.TSMI_CompDel.Name = "TSMI_CompDel";
+            this.TSMI_CompDel.Size = new System.Drawing.Size(180, 22);
+            this.TSMI_CompDel.Text = "Удалить";
+            this.TSMI_CompDel.Click += new System.EventHandler(this.TSMI_CompDel_Click);
+            // 
+            // TSMI_UserDel
+            // 
+            this.TSMI_UserDel.Name = "TSMI_UserDel";
+            this.TSMI_UserDel.Size = new System.Drawing.Size(180, 22);
+            this.TSMI_UserDel.Text = "Удалить";
+            this.TSMI_UserDel.Click += new System.EventHandler(this.TSMI_UserDel_Click);
+            // 
             // UserInfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -73,6 +118,7 @@
             this.Text = "Пользователь";
             this.Load += new System.EventHandler(this.UserInfoForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Users)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -82,5 +128,10 @@
         private System.Windows.Forms.DataGridView DGV_Users;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem компанияToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem TSMI_CompDel;
+        private System.Windows.Forms.ToolStripMenuItem пользовательToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem TSMI_UserDel;
     }
 }
