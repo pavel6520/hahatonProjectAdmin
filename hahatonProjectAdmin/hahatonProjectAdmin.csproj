@@ -93,6 +93,7 @@
     <Compile Include="ChangeDeleteUser.Designer.cs">
       <DependentUpon>ChangeDeleteUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Functions.cs" />
     <Compile Include="LoadingMessege.cs">
       <SubType>Form</SubType>
     </Compile>
