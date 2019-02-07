@@ -80,6 +80,7 @@
     <Compile Include="Connect.designer.cs">
       <DependentUpon>Connect.cs</DependentUpon>
     </Compile>
+    <Compile Include="Connection.cs" />
     <Compile Include="CreateUser.cs">
       <SubType>Form</SubType>
     </Compile>

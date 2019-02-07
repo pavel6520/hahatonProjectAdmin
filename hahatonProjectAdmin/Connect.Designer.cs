@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.TBLogin = new System.Windows.Forms.TextBox();
-            this.TBPass = new System.Windows.Forms.TextBox();
-            this.ButtonConnect = new System.Windows.Forms.Button();
+            this.TB_Login = new System.Windows.Forms.TextBox();
+            this.TB_Pass = new System.Windows.Forms.TextBox();
+            this.BT_Connect = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -39,33 +39,33 @@
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // TBLogin
+            // TB_Login
             // 
-            this.TBLogin.Location = new System.Drawing.Point(75, 63);
-            this.TBLogin.MaxLength = 20;
-            this.TBLogin.Name = "TBLogin";
-            this.TBLogin.Size = new System.Drawing.Size(128, 20);
-            this.TBLogin.TabIndex = 0;
-            this.TBLogin.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBLogin_KeyPress);
+            this.TB_Login.Location = new System.Drawing.Point(75, 63);
+            this.TB_Login.MaxLength = 20;
+            this.TB_Login.Name = "TB_Login";
+            this.TB_Login.Size = new System.Drawing.Size(128, 20);
+            this.TB_Login.TabIndex = 0;
+            this.TB_Login.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBLogin_KeyPress);
             // 
-            // TBPass
+            // TB_Pass
             // 
-            this.TBPass.Location = new System.Drawing.Point(75, 107);
-            this.TBPass.Name = "TBPass";
-            this.TBPass.Size = new System.Drawing.Size(128, 20);
-            this.TBPass.TabIndex = 1;
-            this.TBPass.UseSystemPasswordChar = true;
-            this.TBPass.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBPass_KeyPress);
+            this.TB_Pass.Location = new System.Drawing.Point(75, 107);
+            this.TB_Pass.Name = "TB_Pass";
+            this.TB_Pass.Size = new System.Drawing.Size(128, 20);
+            this.TB_Pass.TabIndex = 1;
+            this.TB_Pass.UseSystemPasswordChar = true;
+            this.TB_Pass.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBPass_KeyPress);
             // 
-            // ButtonConnect
+            // BT_Connect
             // 
-            this.ButtonConnect.Location = new System.Drawing.Point(90, 150);
-            this.ButtonConnect.Name = "ButtonConnect";
-            this.ButtonConnect.Size = new System.Drawing.Size(75, 23);
-            this.ButtonConnect.TabIndex = 2;
-            this.ButtonConnect.Text = "Войти";
-            this.ButtonConnect.UseVisualStyleBackColor = true;
-            this.ButtonConnect.Click += new System.EventHandler(this.ButtonConnect_Click);
+            this.BT_Connect.Location = new System.Drawing.Point(90, 150);
+            this.BT_Connect.Name = "BT_Connect";
+            this.BT_Connect.Size = new System.Drawing.Size(75, 23);
+            this.BT_Connect.TabIndex = 2;
+            this.BT_Connect.Text = "Войти";
+            this.BT_Connect.UseVisualStyleBackColor = true;
+            this.BT_Connect.Click += new System.EventHandler(this.BT_Connect_Click);
             // 
             // label1
             // 
@@ -119,9 +119,9 @@
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.ButtonConnect);
-            this.Controls.Add(this.TBPass);
-            this.Controls.Add(this.TBLogin);
+            this.Controls.Add(this.BT_Connect);
+            this.Controls.Add(this.TB_Pass);
+            this.Controls.Add(this.TB_Login);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
@@ -139,9 +139,9 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox TBLogin;
-        private System.Windows.Forms.TextBox TBPass;
-        private System.Windows.Forms.Button ButtonConnect;
+        private System.Windows.Forms.TextBox TB_Login;
+        private System.Windows.Forms.TextBox TB_Pass;
+        private System.Windows.Forms.Button BT_Connect;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.MenuStrip menuStrip1;

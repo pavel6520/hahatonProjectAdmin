@@ -60,47 +60,42 @@ namespace hahatonProjectAdmin
             }
         }
 
-        private void ButtonConnect_Click(object sender, EventArgs e)
+        private void BT_Connect_Click(object sender, EventArgs e)
         {
-            try
+            if (!Validation.StringValidation(Validation.ValidationType.LoginType, TB_Login.Text))
             {
-                if (!Validation.StringValidation(Validation.ValidationType.LoginType, TBLogin.Text))
+                MessageBox.Show("Недопустимые символы в логине", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (!Validation.StringValidation(Validation.ValidationType.PasswordType, TB_Pass.Text))
+            {
+                MessageBox.Show("Недопустимые символы в пароле", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            
+            if (TB_Login.Text != "" && TB_Pass.Text != "")
+            {
+                ConnectStr = 
+                    $"server={Program.IF.ReadINI("ConnSett", "Address")};" +
+                    $"port={Program.IF.ReadINI("ConnSett", "Port")};" +
+                    $"user={TB_Login.Text};" +
+                    $"password={TB_Pass.Text};" +
+                    $"database={Program.IF.ReadINI("ConnSett", "DBname")};";
+                conn = new MySqlConnection(ConnectStr);
+                conn.Open();
+                if (conn.State == ConnectionState.Open)
                 {
-                    MessageBox.Show("Недопустимые символы в логине", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                if (!Validation.StringValidation(Validation.ValidationType.PasswordType, TBPass.Text))
-                {
-                    MessageBox.Show("Недопустимые символы в пароле", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                else if (TBLogin.Text != "" && TBPass.Text != "")
-                {
-                    ConnectStr = 
-                        $"server={Program.IF.ReadINI("ConnSett", "Address")};" +
-                        $"port={Program.IF.ReadINI("ConnSett", "Port")};" +
-                        $"user={TBLogin.Text};" +
-                        $"password={TBPass.Text};" +
-                        $"database={Program.IF.ReadINI("ConnSett", "DBname")};";
-                    conn = new MySqlConnection(ConnectStr);
-                    conn.Open();
-                    if (conn.State == ConnectionState.Open)
-                    {
-                        conn.Close();
-                        login = TBLogin.Text;
-                        AdminPanel = new AdminPanelForm();
-                        Hide();
-                        AdminPanel.Show();
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Введите логин и пароль", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    conn.Close();
+                    login = TB_Login.Text;
+                    AdminPanel = new AdminPanelForm();
+                    Hide();
+                    AdminPanel.Show();
                 }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Не удалось подключится к базе данных. Проверьте настройки.\n{ex.Message}", "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Введите логин и пароль", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -122,7 +117,7 @@ namespace hahatonProjectAdmin
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            TBPass.UseSystemPasswordChar = !checkBox1.Checked;
+            TB_Pass.UseSystemPasswordChar = !checkBox1.Checked;
         }
     }
 }
