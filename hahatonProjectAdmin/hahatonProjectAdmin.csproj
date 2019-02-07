@@ -113,6 +113,7 @@
     <Compile Include="SettingsConnect.designer.cs">
       <DependentUpon>SettingsConnect.cs</DependentUpon>
     </Compile>
+    <Compile Include="Structs.cs" />
     <Compile Include="UserInfoForm.cs">
       <SubType>Form</SubType>
     </Compile>
